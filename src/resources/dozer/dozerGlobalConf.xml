@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<configuration>
+		<stop-on-errors>true</stop-on-errors>
+		<date-format>dd/MM/yyyy HH:mm:ss.SSS</date-format>
+		<wildcard>true</wildcard>
+		<relationship-type>non-cumulative</relationship-type>
+		<custom-converters> 
+		<!-- These are always bi-directional  -->
+      		<converter type="org.universe.core.utils.dozer.converter.BigDecimalCustomConverter" >
+        		<class-a>org.universe.core.utils.BigDecimalWithoutTypeAdapting</class-a>
+        		<class-b>java.math.BigDecimal</class-b>
+	      	</converter>
+		</custom-converters>
+	</configuration>
+
+	<mapping>
+		<class-a>org.kairos.tripSplitterClone.model.account.Movement</class-a>
+		<class-b>org.kairos.tripSplitterClone.vo.account.MovementVo</class-b>
+
+		<field>
+			<a>to.id</a>
+			<b>toId</b>
+		</field>
+
+		<field>
+			<a>from.id</a>
+			<b>fromId</b>
+		</field>
+	</mapping>
+</mappings>
