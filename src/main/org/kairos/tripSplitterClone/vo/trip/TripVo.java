@@ -1,6 +1,8 @@
 package org.kairos.tripSplitterClone.vo.trip;
 
 import org.kairos.tripSplitterClone.vo.AbstractVo;
+import org.kairos.tripSplitterClone.vo.destination.CityVo;
+import org.kairos.tripSplitterClone.vo.destination.CountryVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 
 import java.io.Serializable;
@@ -19,6 +21,10 @@ public class TripVo extends AbstractVo implements Serializable {
 	 * Creator and owner of the trip
 	 */
 	private UserVo owner;
+
+	private CountryVo country;
+
+	private CityVo city;
 
 	/**
 	 * Empty Constructor
@@ -47,5 +53,21 @@ public class TripVo extends AbstractVo implements Serializable {
 
 	public void setOwner(UserVo owner) {
 		this.owner = owner;
+	}
+
+	public CountryVo getCountry() {
+		return country;
+	}
+
+	public void setCountry(CountryVo country) {
+		this.country = country;
+	}
+
+	public CityVo getCity() {
+		return city;
+	}
+
+	public void setCity(CityVo city) {
+		this.city = city;
 	}
 }

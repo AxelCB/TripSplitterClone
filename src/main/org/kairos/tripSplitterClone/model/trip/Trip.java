@@ -1,6 +1,8 @@
 package org.kairos.tripSplitterClone.model.trip;
 
 import org.kairos.tripSplitterClone.model.I_Model;
+import org.kairos.tripSplitterClone.model.destination.City;
+import org.kairos.tripSplitterClone.model.destination.Country;
 import org.kairos.tripSplitterClone.model.user.User;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
@@ -44,6 +46,20 @@ public class Trip implements Serializable,I_Model {
 	@ManyToOne
 	@Property(policy = PojomaticPolicy.NONE)
 	private User owner;
+
+	/**
+	 * Destination's city
+	 */
+	@ManyToOne
+	@Property(policy = PojomaticPolicy.NONE)
+	private City city;
+
+	/**
+	 * Destination's country
+	 */
+	@ManyToOne
+	@Property(policy = PojomaticPolicy.NONE)
+	private Country country;
 
 	/**
 	 * Empty Constructor
@@ -92,5 +108,21 @@ public class Trip implements Serializable,I_Model {
 
 	public void setOwner(User owner) {
 		this.owner = owner;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 }
