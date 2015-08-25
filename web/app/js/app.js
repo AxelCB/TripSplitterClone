@@ -9,125 +9,15 @@ angular.module('universeApp', ['ngRoute','universeControllers','filters', 'direc
 		$rootScope.lang = defaultLang;
 		$rootScope.canSubscribe = canSubscribe;
 		
-		UniverseService.post("/lang/l", "", function(res) {
-			if (supported.indexOf(res) != -1) {
-				defaultLang = res;
-			}
-			$rootScope.lang = defaultLang;
-			_run();
-		}, _run);
+		//UniverseService.post("/lang/l", "", function(res) {
+		//	if (supported.indexOf(res) != -1) {
+		//		defaultLang = res;
+		//	}
+		//	$rootScope.lang = defaultLang;
+		//	_run();
+		//}, _run);
 		
-		/**
-		 * Returns the constructed name for an array of names.
-		 */
-		$rootScope.constructName = function(index, array) {
-			var toReturn = 'menu.';
-			
-			for (var i = 0; i < (index+1); i++) {
-				toReturn += array[i] + '.';
-			}
-			
-			return toReturn + 'name';
-		};
-		
-		/**
-		 * Translates Functions. 
-		 */
-		$rootScope.translateFunctions = function(roleFunctions) {
-			$.each(roleFunctions, function() {
-				var namesArray = [];
-				if (this.menuName) {
-					namesArray.push(this.menuName);
-				}
-				if (this.submenuName) {
-					namesArray.push(this.submenuName);
-				}
-				namesArray.push(this.actionName);
-				namesArray.push(this.name);
-				
-				var constructedNamesArray = [];
-				var translatedNamesArray = [];
-				for (var i = 0; i < namesArray.length; i++) {
-					constructedNamesArray.push($rootScope.constructName(i, namesArray));
-					translatedNamesArray.push(i18n.t(constructedNamesArray[i]));
-				}
-				this.translatedNamesArray = translatedNamesArray;
-			});
-		};
-		
-		/**
-		 * Orders the role functions.
-		 */
-		$rootScope.orderRoleFunctions = function(roleFunctions) {
-			roleFunctions.sort(function(roleFunctionA, roleFunctionB) {
-				if (roleFunctionA.menuOrder != null && roleFunctionB.menuOrder == null) {
-					return -1;
-				} else if (roleFunctionA.menuOrder == null && roleFunctionB.menuOrder != null) {
-					return 1;
-				} else if (roleFunctionA.menuOrder != null && roleFunctionB.menuOrder != null) {
-					return roleFunctionA.menuOrder - roleFunctionB.menuOrder;
-				} else {
-					var stop = false;
-					var i = 0;
-					while (!stop) {
-						if (i < roleFunctionA.translatedNamesArray.length && i < roleFunctionB.translatedNamesArray.length) {
-							if (roleFunctionA.translatedNamesArray[i] == roleFunctionB.translatedNamesArray[i]) {
-								i++;
-							} else {
-								stop = true;
-								if (roleFunctionA.translatedNamesArray[i] < roleFunctionB.translatedNamesArray[i]) {
-									return -1;
-								} else {
-									return 1;
-								}
-							}
-						} else if (i < roleFunctionA.translatedNamesArray.length) {
-							// we can't compare, and we have a winner with the smallest name
-							// here the roleFunctionA is bigger, so we return 1 (roleFunctionB wins)
-							stop = true;
-							return 1;
-						} else {
-							stop = true;
-							// here the roleFunctionB is bigger, so we return 1 (roleFunctionA wins)
-							return -1;
-						}
-					}
-				}
-			});
-		};
-		
-		$rootScope.generatePermissions = function(user) {
-			var permissions = [];
-			var functions = user.role.roleFunctions;
-			var index;
-			
-			$rootScope.translateFunctions(user.role.roleFunctions);
-			$rootScope.orderRoleFunctions(user.role.roleFunctions);
-			
-			for (index = 0; index < user.role.roleFunctions.length; index++) {
-				if (functions[index].enabled) {
-					var menuPath = "";
-					if (functions[index].menuName) {
-						menuPath += "/" + functions[index].menuName;
-					}
-					if (functions[index].submenuName) {
-						menuPath += "/" + functions[index].submenuName;
-					}
-					if (functions[index].actionName) {
-						menuPath += "/" + functions[index].actionName;
-					}
-					if (functions[index].name) {
-						menuPath += ":" + functions[index].name;
-					}
-					if (permissions.indexOf(menuPath) == -1) {
-						permissions.push(menuPath);
-					}		
-				}
-			}
-			
-			return permissions;
-		};	
-		
+
 		$rootScope.$on('$routeChangeStart', function (event, next, current) {
 			$("body").removeClass("modal-open");
 			$(".modal-backdrop").remove();
@@ -182,7 +72,6 @@ angular.module('universeApp', ['ngRoute','universeControllers','filters', 'direc
 		$rootScope.messages = [];
 		$rootScope.areErrorMessages = false;
 		$rootScope.keepMessages = false;
-		$rootScope.permissions = [];
 		$rootScope.loggedUser = $cookieStore.get("loggedUser");
 		
 		$rootScope.go = function(path, removeParams) {
@@ -204,9 +93,9 @@ angular.module('universeApp', ['ngRoute','universeControllers','filters', 'direc
 		
 		$rootScope.errorManager = $rootScope.manageError;
 		
-		$rootScope.canAccess = function(uri) {
-			return $rootScope.permissions.indexOf(uri) != -1;
-		};
+		//$rootScope.canAccess = function(uri) {
+		//	return $rootScope.permissions.indexOf(uri) != -1;
+		//};
 		
 
 		$rootScope.showErrorMessage = function(message, error) {
@@ -232,16 +121,10 @@ angular.module('universeApp', ['ngRoute','universeControllers','filters', 'direc
 			// save the logged user to the rootscope (for global accessing)
 			$rootScope.loggedUser = loggedUser;
 			
-			// generate permissions
-			$rootScope.permissions = $rootScope.generatePermissions($rootScope.loggedUser);
-
 			// sets the cookie with the user
 			var userCookie = {};
 			angular.copy($rootScope.loggedUser, userCookie);
-			// before, delete all the big data so the cookie is not overflown
-			userCookie.role = null;
-			userCookie.roleType = null;
-			userCookie.menuOrder = null;
+
 			// store the cookie
 			$cookieStore.put("loggedUser", userCookie);
 			
@@ -387,20 +270,7 @@ angular.module('universeApp', ['ngRoute','universeControllers','filters', 'direc
 				// when the i18n system has been initialized
 				$rootScope.readyToConstructTooltip = true;
 				$rootScope.$digest();
-			});	
-			
-			//if ($rootScope.loggedUser) {
-			//	LoginService.getLoggedUser(
-			//		function(response){
-			//			if (response.ok) {
-			//				$rootScope.loggedUser = JSON.parse(response.data);
-			//				$rootScope.permissions = $rootScope.generatePermissions($rootScope.loggedUser);
-			//			}
-			//		},
-			//		function(){
-			//
-			//	});
-			//}
+			});
 			
 		}
 		
