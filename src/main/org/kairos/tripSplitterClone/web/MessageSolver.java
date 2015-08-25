@@ -1,9 +1,8 @@
 package org.kairos.tripSplitterClone.web;
 
+import org.kairos.tripSplitterClone.json.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.universe.core.json.JsonResponse;
-import org.universe.core.utils.ErrorCodes;
 
 import java.util.Locale;
 
@@ -123,8 +122,8 @@ public class MessageSolver implements I_MessageSolver {
 	 */
 	@Override
 	public JsonResponse unexpectedErrorResponse() {
-		return this.unexpectedErrorResponse(ErrorCodes.ERROR_UNEXPECTED);
-	}
+		return this.unexpectedErrorResponse("0");
+	}//ErrorCodes.ERROR_UNEXPECTED
 
 	/**
 	 * 
@@ -223,7 +222,7 @@ public class MessageSolver implements I_MessageSolver {
 	 */
 	public JsonResponse unexpectedErrorResponse(Locale locale) {
 		return this
-				.unexpectedErrorResponse(ErrorCodes.ERROR_UNEXPECTED, locale);
+				.unexpectedErrorResponse("0", locale);//ErrorCodes.ERROR_UNEXPECTED
 	}
 
 	/**

@@ -1,0 +1,25 @@
+<div ng-show='pagNameSpace.pageTotal > 0'>
+	<ul class="pagination">
+		<li ng-class="{disabled: pagNameSpace.page == 1}">
+			<a href="" ng-show="pagNameSpace.page > 1" ng-click="first();">&lt;&lt;</a>
+			<a href="" ng-show="pagNameSpace.page == 1">&lt;&lt;</a>
+		</li>
+		<li ng-class="{disabled: pagNameSpace.page == 1}">
+			<a href="" ng-show="pagNameSpace.page > 1" ng-click="previous();">&lt;</a>
+			<a href="" ng-show="pagNameSpace.page == 1">&lt;</a>
+		</li>
+		<li>
+			<span class="paginator-input"><input id="{{ pagNameSpace.name + 'InputId' }}" class="form-control input-sm" type="text" ng-model="pagNameSpace.inputPage" ng-enter="enterPage();" ng-blur="blurInput();"></span>
+			<span>/</span>
+			<span>{{pagNameSpace.pages}}</span>
+		</li>
+		<li ng-class="{disabled: pagNameSpace.page == pagNameSpace.pages}">
+			<a href="" ng-show="pagNameSpace.page < pagNameSpace.pages" ng-click="next();">&gt;</a>
+			<a href="" ng-show="pagNameSpace.page == pagNameSpace.pages">&gt;</a>
+		</li>
+		<li ng-class="{disabled: pagNameSpace.page == pagNameSpace.pages}">
+			<a href="" ng-show="pagNameSpace.page < pagNameSpace.pages" ng-click="last();">&gt;&gt;</a>
+			<a href="" ng-show="pagNameSpace.page == pagNameSpace.pages">&gt;&gt;</a>
+		</li>
+	</ul>
+</div>

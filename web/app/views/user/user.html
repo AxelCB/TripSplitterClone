@@ -1,0 +1,68 @@
+<div class="row">
+   	<div class="col-xs-6">
+   		<form class="form-horizontal" role="form">
+   		
+			<div class="form-group">
+	   			<label for="name" class="col-xs-4 control-label">{{ 'roleType.label.name' | translate }}</label>				
+				<div class="col-xs-8">
+					<input type="text" id="name" placeholder="{{ 'roleType.placeholder.name' | translate }}" class="form-control" ng-model="user.username"/>
+				</div>
+			</div>
+   		
+			<div class="form-group">
+				<label for="name" class="col-xs-4 control-label">{{ 'roleType.label.internalType' | translate }}</label>				
+				<div class="col-xs-8">
+					<select id="typeEnum" ng-model="user.role.roleType.roleTypeEnum" ng-options="rte as ('typeRole.name.' + rte | translate) for rte in roleTypeEnumsList" class="form-control"></select>
+				</div>
+			</div>
+   		</form>
+   	</div>
+</div>
+
+<div class="row">
+   	<div class="col-xs-12">
+		<div>
+			<button class="btn btn-default" id="btn_create" ng-show="canAccess('/configuration/user:createUser')" ng-click="create();">
+				{{ 'default.create.new' | translate }}
+			</button>
+
+			<button class="btn btn-default" id="btn_list" ng-show="canAccess('/configuration/user:listUser')" ng-click="list();">
+				{{ 'default.list.all' | translate }}
+			</button>
+
+			<button class="btn btn-default" id="btn_clean" ng-click="clean();">
+				{{ 'default.clean' | translate }}
+			</button>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<table class="table">
+		   	<thead>
+				<tr>
+					<th class="col-xs-4">{{ 'user.column.username' | translate }}</th>
+					<th class="col-xs-4">{{ 'user.column.roleType' | translate }}</th>
+					<th class="col-xs-4">{{ 'default.operations' | translate }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="user in users | orderBy:'username'">
+					<td class="col-xs-4">{{ user.username }}</td>
+					<td class="col-xs-4">{{ user.role.roleType.name }}</td>
+					<td class="col-xs-4">
+						<span class="glyphicon glyphicon-refresh operation" ng-click="resetPassword(user);" ng-show="canAccess('/configuration/user:resetAnyUserPassword') && (user.role.roleType.passwordReseterId == loggedUser.role.roleType.id)" data-toggle="tooltip" data-placement="right" title="{{ 'tooltip.resetPassword' | translate }}"></span>
+						<span class="glyphicon glyphicon-remove operation" ng-click="remove(user);" ng-show="canAccess('/configuration/user:deleteUser') && canDelete(user)" data-toggle="tooltip" data-placement="rigth" title="{{ 'tooltip.delete' | translate }}"></span>
+						
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<div ng-paginator="" name-space="userNameSpace"></div>
+	</div>
+</div>

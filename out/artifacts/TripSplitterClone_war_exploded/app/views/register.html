@@ -1,0 +1,80 @@
+<div class="row" ng-show="!enabling">
+	<div class="col-sm-8 col-sm-offset-2 col-xs-12">
+		<form class="form-horizontal" role="form">
+			<div class="form-group">
+				<label for="username" class="col-xs-4 control-label">{{ 'registration.label.username' | translate }}</label>
+				<div class="col-xs-8">
+					<input type="text" id="username" placeholder="{{ 'registration.placeholder.username' | translate }}" class="form-control" ng-model="registration.username"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="surname" class="col-xs-4 control-label">{{ 'registration.label.surname' | translate }}</label>
+				<div class="col-xs-8">
+					<input type="text" id="surname" placeholder="{{ 'registration.placeholder.surname' | translate }}" class="form-control" ng-model="registration.surname"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="name" class="col-xs-4 control-label">{{ 'registration.label.name' | translate }}</label>
+				<div class="col-xs-8">
+					<input type="text" id="name" placeholder="{{ 'registration.placeholder.name' | translate }}" class="form-control" ng-model="registration.name"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="documentType" class="col-xs-4 control-label">{{ 'registration.label.documentType' | translate }}</label>
+				<div class="col-xs-8">
+					<select id=documentType ng-options="type as type.acronym for type in documentTypes" class="form-control" ng-model="registration.documentType"></select>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="documentNumber" class="col-xs-4 control-label">{{ 'registration.label.documentNumber' | translate }}</label>
+				<div class="col-xs-8">
+					<input type="text" id="documentNumber" placeholder="{{ 'registration.placeholder.documentNumber' | translate }}" class="form-control" ng-model="registration.documentNumber"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="phoneNumber" class="col-xs-4 control-label">{{ 'registration.label.phoneNumber' | translate }}</label>
+				<div class="col-xs-8">
+					<input type="text" id="phoneNumber" placeholder="{{ 'registration.placeholder.phoneNumber' | translate }}" class="form-control" ng-model="registration.phoneNumber"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="cellphoneNumber" class="col-xs-4 control-label">{{ 'registration.label.cellphoneNumber' | translate }}</label>
+				<div class="col-xs-8">
+					<input type="text" id="cellphoneNumber" placeholder="{{ 'registration.placeholder.cellphoneNumber' | translate }}" class="form-control" ng-model="registration.cellphoneNumber"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="email" class="col-xs-4 control-label">{{ 'registration.label.email' | translate }}</label>
+				<div class="col-xs-8">
+					<input type="text" id="email" placeholder="{{ 'registration.placeholder.email' | translate }}" class="form-control" ng-model="registration.email"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="password" class="col-xs-4 control-label">{{ 'registration.label.password' | translate }}</label>
+				<div class="col-xs-8">
+					<input type="password" id="password" placeholder="{{ 'registration.placeholder.password' | translate }}" class="form-control" ng-model="registration.password"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="passwordConfirmation" class="col-xs-4 control-label">{{ 'registration.label.passwordConfirmation' | translate }}</label>
+				<div class="col-xs-8">
+					<input type="password" id="passwordConfirmation" placeholder="{{ 'registration.placeholder.passwordConfirmation' | translate }}" class="form-control" ng-model="registration.passwordConfirmation"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-8">
+					<div id="recaptcha"></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-8">
+					<button class="btn btn-default" id="btn_login" ng-click="register();">
+						{{ 'registration.button.register' | translate }}
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

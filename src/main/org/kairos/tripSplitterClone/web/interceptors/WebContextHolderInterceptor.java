@@ -1,11 +1,11 @@
 package org.kairos.tripSplitterClone.web.interceptors;
 
+import org.kairos.tripSplitterClone.utils.HttpUtils;
+import org.kairos.tripSplitterClone.web.WebContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.universe.core.utils.HttpUtils;
-import org.universe.core.web.WebContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

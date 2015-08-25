@@ -98,6 +98,7 @@ public class TripTest {
 			//TODO log this exception
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
+			this.getEntityManagerHolder().closeEntityManager(testEm);
 		}
 	}
 

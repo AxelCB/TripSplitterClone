@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.tests;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.kairos.tripSplitterClone.controller.DestinationCtrl;
 import org.kairos.tripSplitterClone.controller.TripCtrl;
 import org.kairos.tripSplitterClone.dao.EntityManagerHolder;
@@ -10,6 +11,7 @@ import org.kairos.tripSplitterClone.dao.trip.I_TripDao;
 import org.kairos.tripSplitterClone.json.JsonResponse;
 import org.kairos.tripSplitterClone.vo.destination.CityVo;
 import org.kairos.tripSplitterClone.vo.destination.CountryVo;
+import org.kairos.tripSplitterClone.vo.destination.DestinationVo;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -46,11 +49,12 @@ public class DestinationTest {
 
 	@BeforeTest
 	private void initialize() {
-		EntityManager em = null;
+		EntityManager em=null,testEm = null;
 		try{
+			testEm = this.getEntityManagerHolder().getTestEntityManager();
 			em = this.getEntityManagerHolder().getEntityManager();
 
-			UserVo sessionUser = (UserVo)this.getSession().getAttribute("loggedUser");
+			//TODO list all cities and countries from test and delete them from the database
 
 			//TODO que hago acá?
 
@@ -58,6 +62,7 @@ public class DestinationTest {
 			//TODO log this exception
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
+			this.getEntityManagerHolder().closeEntityManager(testEm);
 		}
 	}
 
@@ -67,8 +72,6 @@ public class DestinationTest {
 		try{
 			testEm = this.getEntityManagerHolder().getTestEntityManager();
 			em = this.getEntityManagerHolder().getEntityManager();
-
-			UserVo sessionUser = (UserVo)this.getSession().getAttribute("loggedUser");
 
 			List<CityVo> cityVoList = this.getCityDao().listAll(testEm);
 
@@ -92,6 +95,7 @@ public class DestinationTest {
 			//TODO log this exception
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
+			this.getEntityManagerHolder().closeEntityManager(testEm);
 		}
 	}
 
@@ -101,8 +105,6 @@ public class DestinationTest {
         try{
             testEm = this.getEntityManagerHolder().getTestEntityManager();
             em = this.getEntityManagerHolder().getEntityManager();
-
-            UserVo sessionUser = (UserVo)this.getSession().getAttribute("loggedUser");
 
             List<CountryVo> countryVoList = this.getCountryDao().listAll(testEm);
 
@@ -126,8 +128,49 @@ public class DestinationTest {
             //TODO log this exception
         }finally{
             this.getEntityManagerHolder().closeEntityManager(em);
+	        this.getEntityManagerHolder().closeEntityManager(testEm);
         }
     }
+
+	@Test(groups = {"destination"})
+	public void listDestinationsTest(){
+		EntityManager em = null;
+		try{
+			em = this.getEntityManagerHolder().getEntityManager();
+
+			Type type = new TypeToken<DestinationVo>() {}.getType();
+
+			List<DestinationVo> destinations = this.getGson().fromJson(this.getDestinationCtrl().listDestinations(""), type);
+
+			List<CityVo> cities = this.getCityDao().listAll(em);
+			List<CountryVo> countries = this.getCountryDao().listAll(em);
+
+			Long amountOfCities = this.getCityDao().countAll(em);
+			Long amountOfCountries = this.getCountryDao().countAll(em);
+			Long amountOfListedCities=0l;
+			Long amountOfListedCountries=0l;
+
+			for(DestinationVo destinationVo : destinations){
+				for (CityVo cityVo : cities){
+					if(cityVo.getName().equals(destinationVo.getCityName())){
+						amountOfListedCities++;
+					}
+				}
+				for (CountryVo countryVo : countries){
+					if(countryVo.getName().equals(destinationVo.getCountryName())){
+						amountOfListedCities++;
+					}
+				}
+			}
+			assert amountOfCities.equals(amountOfListedCities):"Amount of listed cities isn't the same as the ones in the DB";
+			assert amountOfCountries.equals(amountOfListedCountries):"Amount of listed cities isn't the same as the ones in the DB";
+
+		}catch(Exception ex){
+			//TODO log this exception
+		}finally{
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
+	}
 
 	public HttpSession getSession() {
 		return session;

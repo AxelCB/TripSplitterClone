@@ -1,0 +1,53 @@
+{
+	"title": "Universe Status Actual",
+	"content": {
+		"actualization": "Actualización",
+		"actualizationValue": "Cargando...",
+		"hourPrice": "Valor Hora",
+		"voluntaryPaymentPrice": "Valor PV",
+		"voluntaryPaymentPriceTitle": "Valor Pago Voluntario",
+		"maxBlocksCount": "Plazas Hist. Máx.",
+		"maxBlocksCountTitle": "Cantidad Plazas Históricas Máximas",
+		"historic": "Histórico",
+		"inspectorCount": "Cant. Inspectores",
+		"inspectorCountTitle": "Cantidad de Inspectores"
+	},
+	"parkings": {
+		"title": "Estacionamientos"
+	},
+	"fines": {
+		"title": "Infracciones",
+		"totalInspectorFine": "Cant. de insp. que infraccionaron",
+		"totalFineCancel": "Cant. de infracciones anuladas",
+		"totalFineType": "Cant. de infraccions por tipo"
+	},
+	"checks": {
+		"title": "Último chequeo"
+	},
+	"tows": {
+		"title": "Acarreos"
+	},
+	"cards": {
+		"title": "Tarjetas"
+	},
+	"revenue": {
+		"title": "Recaudación"
+	},
+	"lastFine": {
+		"title": "Última infracción"
+	},
+	"months": {
+		"0": "Ene",
+		"1": "Feb",
+		"2": "Mar",
+		"3": "Abr",
+		"4": "May",
+		"5": "Jun",
+		"6": "Jul",
+		"7": "Ago",
+		"8": "Sep",
+		"9": "Oct",
+		"10": "Nov",
+		"11": "Dic"
+	}
+}

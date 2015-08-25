@@ -1,0 +1,68 @@
+<div class="row">
+	<div class="col-xs-10">
+		<form class="form-horizontal" role="form" name="accountNumberForm">
+			<div class="form-group">
+				<div>
+					<span class="col-xs-12 help-block">{{ 'userCreditCharge.label.accountNumberFormat' | translate}} {{ accountNumberFormat }}</span>
+					<label style="text-align: left;" for="accountId" class="col-xs-5 control-label huge-label">{{ 'userCreditCharge.label.accountNumber' | translate }}</label>
+					<div class="col-xs-7" style="padding-right: 0;">
+						<input ng-required="true" ng-pattern="accountNumberPattern" type="text" id="accountId" class="form-control huge-input" ng-model="creditCharge.registeredUser.userAccountId"/>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="row" style="margin-top: 15px;">
+	<div class="col-xs-6">
+		<form class="form-horizontal" role="form">	
+			<div class="form-group">
+				<label for="amount" class="col-xs-5 control-label huge-label">{{ 'userCreditCharge.label.amount' | translate }}</label>
+				<div class="col-xs-7">
+					<input type="text" id="amount" class="form-control huge-input" ng-model="creditCharge.amount"/>
+				</div>
+			</div>
+		</form>
+		
+		<button class="btn btn-success huge-btn" id="btn_charge" ng-click="charge();" ng-show="canAccess('/creditCharge/userCreditCharge:creditCharge')">
+			{{ 'creditCharge.button.chargeCredit' | translate }}
+		</button>
+	</div>
+
+	<div class="col-xs-6" ng-show="emitsTickets">
+		<div class="panel panel-info big-panel">
+			<div class="panel-heading">{{ 'userCreditCharge.panel.lastTicket.title' | translate }}</div>
+			<div class="panel-body">
+				<div ng-show="lastCreditCharge.id">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{ 'userCreditCharge.panel.lastTicket.accountNumber' | translate }}</label>
+							<div class="col-xs-8">
+								<p class="form-control-static">{{ lastCreditCharge.registeredUser.userAccountId }}</p>
+							</div>
+							<label class="col-xs-4 control-label">{{ 'userCreditCharge.panel.lastTicket.amount' | translate }}</label>
+							<div class="col-xs-8">
+								<p class="form-control-static">{{ lastCreditCharge.amount }}</p>
+							</div>
+							<label class="col-xs-4 control-label">{{ 'userCreditCharge.panel.lastTicket.dateTime' | translate }}</label>
+							<div class="col-xs-8">
+								<p class="form-control-static">{{ lastCreditCharge.timestamp | dateFormat:'dateTime':false:false }}</p>
+							</div>
+							<label class="col-xs-4 control-label">{{ 'userCreditCharge.panel.lastTicket.transactionNumber' | translate }}</label>
+							<div class="col-xs-8">
+								<p class="form-control-static">{{ lastCreditCharge.pointOfSale.id }} - {{ lastCreditCharge.movement.transactionId }}</p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<button class="btn btn-success huge-btn" id="btn_reprint" ng-click="reprint();" ng-disabled="editing" ng-show="canAccess('/creditCharge/userCreditCharge:reprintCreditChargeTicket') && lastCreditCharge.id">
+			{{ 'userCreditCharge.button.reprint' | translate }}
+		</button>
+	</div>
+</div>
+
+<div class="clearfix"></div>
+
+<iframe style="display: none;" id="ticket" name="ticket"></iframe>

@@ -62,7 +62,7 @@ public class User implements Serializable,I_Model {
 	/**
 	 * Collection of trips in which the user participates in.
 	 */
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
 	@Property(policy = PojomaticPolicy.NONE)
 	private List<UserTrip> trips;
 
