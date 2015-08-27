@@ -2,9 +2,9 @@
 /**
  * Role Type Service
  */
-var universeModules = angular.module('services');
+var tripSplitterCloneModules = angular.module('services');
 
-universeModules.factory('RoleTypeService', function(UniverseService) {
+tripSplitterCloneModules.factory('RoleTypeService', function(UniverseService) {
 	return {
 		create: function (params, successFn, errorFn) {
 			return UniverseService.authPost('/roleType/create.json', params, successFn, errorFn);

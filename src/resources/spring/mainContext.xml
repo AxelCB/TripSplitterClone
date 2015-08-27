@@ -22,15 +22,15 @@
 			<!--destroy-method="close">-->
 			<!--<property name="driverClassName" value="org.postgresql.Driver" />-->
 			<!--<property name="url"-->
-				<!--value="jdbc:postgresql://163.10.20.116:5433/universe" />-->
+				<!--value="jdbc:postgresql://163.10.20.116:5433/tripSplitterClone" />-->
 			<!--<property name="username" value="postgres" />-->
 			<!--<property name="password" value="postgres" />-->
 			<!--<property name="maxActive" value="20" />-->
 			<!--<property name="maxIdle" value="10" />-->
 			<!--<property name="maxWait" value="-1" />-->
 		<!--</bean>-->
-		<!--<bean class="org.universe.core.test.jndi.JndiBinder" init-method="initBinder">-->
-			<!--<property name="jndiName" value="java:comp/env/universeDS"></property>-->
+		<!--<bean class="org.tripSplitterClone.core.test.jndi.JndiBinder" init-method="initBinder">-->
+			<!--<property name="jndiName" value="java:comp/env/tripSplitterCloneDS"></property>-->
 		<!--</bean>-->
 	</beans>
 

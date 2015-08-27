@@ -1,9 +1,9 @@
 /**
  * Menu Controller
  */
-var universeControllers = angular.module('universeControllers');
+var tripSplitterCloneControllers = angular.module('tripSplitterCloneControllers');
 
-universeControllers.controller('MenuCtrl',['$scope', '$rootScope', '$location', '$route',
+tripSplitterCloneControllers.controller('MenuCtrl',['$scope', '$rootScope', '$location', '$route',
 	function($scope, $rootScope, $location, $route) {
 
 		$scope.goTo = function(newUrl) {

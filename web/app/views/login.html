@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-sm-4 col-sm-offset-4 col-xs-12">
-		<img class="image-centered hidden-xs hidden-sm" alt="TripSplitterClone" src="{{ universeCoreServiceUrl + '/images/logo.png' }}">
+		<img class="image-centered hidden-xs hidden-sm" alt="TripSplitterClone" src="{{ tripSplitterCloneCoreServiceUrl + '/images/logo.png' }}">
 		<!-- Login Form -->
 		<form role="form">
 			<div class="form-group">	
@@ -25,7 +25,7 @@
 			<button ng-show="registrationEnabled" class="btn btn-default" id="btn_register" ng-click="register();">
 				{{ 'login.register' | translate }}
 			</button>
-			<!--<button ng-show="registrationEnabled && !globalInspectorFlag" class="btn btn-default" id="btn_login" ng-click="forwardRegisterEmail()">-->
+			<!--<button class="btn btn-default" id="btn_test" ng-click="forwardRegisterEmail()">-->
 				<!--{{ 'login.forward' | translate }}-->
 			<!--</button>-->
 			<div style="margin: 0 auto; margin-top: 15px; text-align: center;">

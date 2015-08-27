@@ -1,0 +1,7 @@
+<Context>
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <Resource name="tripSplitterCloneDS" auth="Container" type="javax.sql.DataSource"
+              maxActive="90" maxIdle="30" maxWait="1000" logAbandoned="true"
+              username="postgres" password="postgres" driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://localhost:5432/tripsplitterclone" />
+</Context>

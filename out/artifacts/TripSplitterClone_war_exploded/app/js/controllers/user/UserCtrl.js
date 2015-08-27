@@ -2,9 +2,9 @@
 /**
  * User Controller
  */
-var universeControllers = angular.module('universeControllers');
+var tripSplitterCloneControllers = angular.module('tripSplitterCloneControllers');
 
-universeControllers.controller('UserCtrl',['$scope', '$rootScope', 'UserService',
+tripSplitterCloneControllers.controller('UserCtrl',['$scope', '$rootScope', 'UserService',
 	function($scope, $rootScope, UserService) {
 
 		$rootScope.messages = [];

@@ -2,7 +2,7 @@
 /**
  * Main App Module. Includes all other modules.
  */
-angular.module('universeApp', ['ngRoute','universeControllers','filters', 'directives', 'routes', 'services','ngCookies','ui.bootstrap.typeahead','template/typeahead/typeahead-match.html','template/typeahead/typeahead-popup.html','ui.bootstrap.collapse','ui.bootstrap.tabs',"template/tabs/tab.html","template/tabs/tabset.html"]).
+angular.module('tripSplitterCloneApp', ['ngRoute','tripSplitterCloneControllers','filters', 'directives', 'routes', 'services','ngCookies','ui.bootstrap.typeahead','template/typeahead/typeahead-match.html','template/typeahead/typeahead-popup.html','ui.bootstrap.collapse','ui.bootstrap.tabs',"template/tabs/tab.html","template/tabs/tabset.html"]).
 	config(['$routeProvider', function($routeProvider) {
 	}])
 	.run(['$rootScope', '$window', '$location', '$cookieStore', 'UniverseService', function ($rootScope, $window, $location, $cookieStore, UniverseService) {

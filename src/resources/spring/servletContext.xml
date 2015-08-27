@@ -73,12 +73,12 @@ Repository and Service layers
    		
 		<!-- Utils -->
 		<!-- Password Utils -->
-		<!--<bean id="passwordUtils" class="org.universe.core.utils.PasswordUtils" scope="singleton" />-->
+		<!--<bean id="passwordUtils" class="org.tripSplitterClone.core.utils.PasswordUtils" scope="singleton" />-->
 		
 		<!-- BigDecimal Utils -->
-		<!--<bean id="bigDecimalUtils" class="org.universe.core.utils.BigDecimalUtils" scope="singleton" />-->
+		<!--<bean id="bigDecimalUtils" class="org.tripSplitterClone.core.utils.BigDecimalUtils" scope="singleton" />-->
 		
 		<!-- Date Utils -->
-		<!--<bean id="dateUtils" class="org.universe.core.utils.DateUtilsImpl" init-method="init" scope="singleton" />-->
+		<!--<bean id="dateUtils" class="org.tripSplitterClone.core.utils.DateUtilsImpl" init-method="init" scope="singleton" />-->
     </beans>
 </beans>

@@ -2,4 +2,4 @@
  *  Universe Controllers Module
  */
 
-angular.module('universeControllers',[]);
+angular.module('tripSplitterCloneControllers',[]);

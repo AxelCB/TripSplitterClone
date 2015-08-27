@@ -6,7 +6,7 @@ server.factory('UniverseService', ['$http', '$rootScope', '$location', '$cookieS
     function($http, $rootScope, $location,  $cookieStore, $injector) {
 	
     $rootScope.reLoginCount = 0;
-    $rootScope.universeCoreServiceUrl = universeServiceUrl;
+    $rootScope.tripSplitterCloneCoreServiceUrl = tripSplitterCloneServiceUrl;
 	
 	var wrapperFunction = function(originalFunction) {
 		
@@ -45,9 +45,9 @@ server.factory('UniverseService', ['$http', '$rootScope', '$location', '$cookieS
 							
 							$rootScope.reLoginCount++;
 							
-							var loginService = $injector.get('LoginService');
-							
-							loginService.login(userCredentials,
+							var userService = $injector.get('UserService');
+
+							userService.login(userCredentials,
 									function (secondResponse) {
 										if (secondResponse.ok) {
 											$rootScope.performLogin(JSON.parse(response.data), null, false);
@@ -90,7 +90,7 @@ server.factory('UniverseService', ['$http', '$rootScope', '$location', '$cookieS
     	 * Posts The Data As JSON, and expects JSON (without authorization header)
     	 */
     	post: function(url, params , successFn, errorFn) {
-        	$http({method: 'POST', url: universeServiceUrl + url, data: params,
+        	$http({method: 'POST', url: tripSplitterCloneServiceUrl + url, data: params,
         		headers: {
         			'Content-Type': 'text/json;charset=utf8'
         		}}).
@@ -101,7 +101,7 @@ server.factory('UniverseService', ['$http', '$rootScope', '$location', '$cookieS
          * Posts The Data As JSON, and expects JSON (WITH authorization header)
          */
         authPost: function(url, params , successFn, errorFn) {
-        	$http({method: 'POST', url: universeServiceUrl + url, data: params,
+        	$http({method: 'POST', url: tripSplitterCloneServiceUrl + url, data: params,
         		headers: {
         			'Content-Type': 'text/json;charset=utf8',
         			'Authorization': $rootScope.loggedUser.token}}).
@@ -112,7 +112,7 @@ server.factory('UniverseService', ['$http', '$rootScope', '$location', '$cookieS
          * Posts The Data As XML to a WS API, and expects XML (without authorization header)
          */
         postWs: function(params, successFn, errorFn) {
-        	$http({method: 'POST', url: universeServiceUrl + '/ws', data: params,
+        	$http({method: 'POST', url: tripSplitterCloneServiceUrl + '/ws', data: params,
         		headers: {
         			'Content-Type': 'text/xml; charset=utf8'
         			}}).
@@ -123,7 +123,7 @@ server.factory('UniverseService', ['$http', '$rootScope', '$location', '$cookieS
          * Posts The Data As XML to a WS API, and expects XML (WITH authorization header)
          */
         syncAuthPost: function(url, params, promiseFn) {
-        	return $http({method: 'POST', url: universeServiceUrl + url, data: params,
+        	return $http({method: 'POST', url: tripSplitterCloneServiceUrl + url, data: params,
         		headers: {
         			'Content-Type': 'text/xml;charset=utf8',
         			'Authorization': $rootScope.loggedUser.token}}).then(promiseFn);
@@ -132,7 +132,7 @@ server.factory('UniverseService', ['$http', '$rootScope', '$location', '$cookieS
     	 * Posts The Data As Form Encoded, and expects JSON (without authorization header)
     	 */
         postEncoded: function(url, params , successFn, errorFn) {
-        	$http({method: 'POST', url: universeServiceUrl + url, data: $.param(params),
+        	$http({method: 'POST', url: tripSplitterCloneServiceUrl + url, data: $.param(params),
         		headers: {
         			'Content-Type': 'application/x-www-form-urlencoded;charset=utf8'
         			}}).

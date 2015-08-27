@@ -2,9 +2,9 @@
 /**
  * Home Controller
  */
-var universeControllers = angular.module('universeControllers');
+var tripSplitterCloneControllers = angular.module('tripSplitterCloneControllers');
 
-universeControllers.controller('HomeCtrl',['$scope','$rootScope',
+tripSplitterCloneControllers.controller('HomeCtrl',['$scope','$rootScope',
 	function($scope, $rootScope) {
 	
 	}

@@ -2,9 +2,9 @@
 /**
  * No Page Controller
  */
-var universeControllers = angular.module('universeControllers');
+var tripSplitterCloneControllers = angular.module('tripSplitterCloneControllers');
 
-universeControllers.controller('NoPageCtrl',['$scope', '$rootScope',
+tripSplitterCloneControllers.controller('NoPageCtrl',['$scope', '$rootScope',
 	function($scope, $rootScope) {
 	
 		if (!$rootScope.keepMessages) {

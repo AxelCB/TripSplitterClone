@@ -2,9 +2,9 @@
 /**
  * User Credit Charge Service
  */
-var universeModules = angular.module('services');
+var tripSplitterCloneModules = angular.module('services');
 
-universeModules.factory('UserCreditChargeService', function(UniverseService){
+tripSplitterCloneModules.factory('UserCreditChargeService', function(UniverseService){
 	return {
 		info: function (successFn, errorFn) {
 			return UniverseService.authPost('/userAccount/info.json', "", successFn, errorFn);

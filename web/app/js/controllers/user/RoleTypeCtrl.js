@@ -2,9 +2,9 @@
 /**
  * RoleType Controller
  */
-var universeControllers = angular.module('universeControllers');
+var tripSplitterCloneControllers = angular.module('tripSplitterCloneControllers');
 
-universeControllers.controller('RoleTypeCtrl',['$scope', '$rootScope', 'RoleTypeService',
+tripSplitterCloneControllers.controller('RoleTypeCtrl',['$scope', '$rootScope', 'RoleTypeService',
 	function($scope, $rootScope, RoleTypeService) {
 	
 		$scope.roleType = {};

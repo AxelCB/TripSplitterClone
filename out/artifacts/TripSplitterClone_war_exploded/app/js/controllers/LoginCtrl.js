@@ -2,12 +2,12 @@
 /**
  * Login Controller
  */
-var universeControllers = angular.module('universeControllers');
+var tripSplitterCloneControllers = angular.module('tripSplitterCloneControllers');
 
-universeControllers.controller('LoginCtrl',['$scope', '$rootScope', 'LoginService', '$location', '$cookieStore',
-	function($scope, $rootScope, $location, $cookieStore) {
+tripSplitterCloneControllers.controller('LoginCtrl',['$scope', '$rootScope', '$location', '$cookieStore','UserService',
+	function($scope, $rootScope, $location, $cookieStore,UserService) {
 		// watches the $rootScope.readyToConstructTooltip flag, in order to construct the tooltip
-		// when we are surde that the i18n system is initialized
+		// when we are sure that the i18n system is initialized
 		var stopWatching = $rootScope.$watch(function() { return $rootScope.readyToConstructTooltip; }, function() {
 			if ($rootScope.readyToConstructTooltip) {
 				$(document).ready(function() {
@@ -33,14 +33,15 @@ universeControllers.controller('LoginCtrl',['$scope', '$rootScope', 'LoginServic
 				username: $("#username").val(),
 				password: $("#password").val()
 			};
-			//LoginService.login($scope.userCredentials,
-			//	function (response) {
-			//		if (response.ok) {
-			//			// performs the login on the client
-			//			$rootScope.performLogin(JSON.parse(response.data), $scope.rememberMe, true);
-			//		}
-			//		$rootScope.unDim();
-			//	}, $rootScope.errorManager);
+			UserService.login($scope.userCredentials,
+				function (response) {
+					if (response.ok) {
+						// performs the login on the client
+						//$rootScope.performLogin(JSON.parse(response.data), $scope.rememberMe, true);
+						alert("Login ok");
+					}
+					$rootScope.unDim();
+				}, $rootScope.errorManager);
 		};
 		
 		$scope.register = function() {

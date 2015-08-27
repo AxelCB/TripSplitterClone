@@ -2,9 +2,9 @@
 /**
  * User Credit Charge Controller
  */
-var universeControllers = angular.module('universeControllers');
+var tripSplitterCloneControllers = angular.module('tripSplitterCloneControllers');
 
-universeControllers.controller('UserCreditChargeCtrl',['$scope', '$rootScope', 'UserCreditChargeService', 
+tripSplitterCloneControllers.controller('UserCreditChargeCtrl',['$scope', '$rootScope', 'UserCreditChargeService',
                                                        'TicketPrintService', 'ParameterService', '$filter',
 	function($scope, $rootScope, UserCreditChargeService, TicketPrintService, ParameterService, $filter) {
 	

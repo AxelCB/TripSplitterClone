@@ -9,5 +9,83 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+    <!--<context-param>-->
+        <!--<param-name>spring.profiles.active</param-name>-->
+        <!--<param-value>development</param-value>-->
+    <!--</context-param>-->
+    <!--<context-param>-->
+        <!--<param-name>contextConfigLocation</param-name>-->
+        <!--<param-value>-->
+            <!--classpath:spring/mainContext.xml-->
+            <!--classpath:spring/servletContext.xml-->
+        <!--</param-value>-->
+    <!--</context-param>-->
+    <!--<listener>-->
+        <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+    <!--</listener>-->
+    <!--<listener>-->
+        <!--<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>-->
+    <!--</listener>-->
 
+    <!-- Spring Dispatcher Servlet Definition -->
+    <servlet>
+        <servlet-name>tripSplitterCloneMain</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/mainContext.xml</param-value>
+            <!--<param-value>classpath:spring/servletContextDummy.xml</param-value>-->
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>tripSplitterCloneMain</servlet-name>
+        <url-pattern>/core/*</url-pattern>
+    </servlet-mapping>
+        <!--<url-pattern>/*</url-pattern>-->
+
+    <filter>
+        <filter-name>corsFilter</filter-name>
+        <filter-class>org.kairos.tripSplitterClone.web.filters.CorsRequestFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>corsFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <!--<filter>-->
+        <!--<filter-name>cross-origin</filter-name>-->
+        <!--<filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>-->
+        <!--<async-supported>true</async-supported>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>cross-origin</filter-name>-->
+        <!--<url-pattern>/cometd/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <filter>
+        <filter-name>setCharacterFilter</filter-name>
+        <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>setCharacterFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <!-- DataSource loading -->
+    <resource-ref>
+        <description>postgreSQL TripSplitterClone DataSource</description>
+        <res-ref-name>tripSplitterCloneDS</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
 </web-app>

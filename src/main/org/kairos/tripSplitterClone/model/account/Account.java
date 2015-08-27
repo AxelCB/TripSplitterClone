@@ -80,7 +80,7 @@ public class Account implements Serializable, I_Model {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.universe.core.model.I_Model#getId()
+	 * @see org.tripSplitterClone.core.model.I_Model#getId()
 	 */
 	@Override
 	public Long getId() {
@@ -89,7 +89,7 @@ public class Account implements Serializable, I_Model {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.universe.core.model.I_Model#setId(java.lang.Long)
+	 * @see org.tripSplitterClone.core.model.I_Model#setId(java.lang.Long)
 	 */
 	@Override
 	public void setId(Long id) {
@@ -98,7 +98,7 @@ public class Account implements Serializable, I_Model {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.universe.core.model.I_Model#getDeleted()
+	 * @see org.tripSplitterClone.core.model.I_Model#getDeleted()
 	 */
 	@Override
 	public Boolean getDeleted() {
@@ -107,7 +107,7 @@ public class Account implements Serializable, I_Model {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.universe.core.model.I_Model#setDeleted(java.lang.Boolean)
+	 * @see org.tripSplitterClone.core.model.I_Model#setDeleted(java.lang.Boolean)
 	 */
 	@Override
 	public void setDeleted(Boolean deleted) {

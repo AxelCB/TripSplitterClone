@@ -7,10 +7,10 @@ angular.module('routes', []).config(['$routeProvider', function($routeProvider) 
 	
 	//routes definitions
 	var routes = [
-	    {path: '/login', template: prefix + 'app/views/login.html', controller: null},//'LoginCtrl'
+	    {path: '/login', template: prefix + 'app/views/login.html', controller: 'LoginCtrl'},
 	    {path: '/register', template: prefix + 'app/views/register.html', controller: null},//'RegisterCtrl'
 
-	    {path: '/404', template: prefix + 'app/views/404.html', controller: null}//'NoPageCtrl'
+	    {path: '/404', template: prefix + 'app/views/404.html', controller: 'NoPageCtrl'}
     ];
 
 	//for every route definition in the array, creates an Angular route definition

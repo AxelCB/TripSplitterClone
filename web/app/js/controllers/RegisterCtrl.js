@@ -2,9 +2,9 @@
 /**
  * Register Controller
  */
-var universeControllers = angular.module('universeControllers');
+var tripSplitterCloneControllers = angular.module('tripSplitterCloneControllers');
 
-universeControllers.controller('RegisterCtrl',['$scope','$rootScope','RegisterService','$location','$cookieStore','$routeParams',
+tripSplitterCloneControllers.controller('RegisterCtrl',['$scope','$rootScope','RegisterService','$location','$cookieStore','$routeParams',
 	function($scope, $rootScope, RegisterService, $location, $cookieStore, $routeParams) {
 	
 		$scope.registration = {};

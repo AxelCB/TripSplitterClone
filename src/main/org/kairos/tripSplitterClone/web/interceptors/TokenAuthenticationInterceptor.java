@@ -63,7 +63,7 @@ public class TokenAuthenticationInterceptor extends HandlerInterceptorAdapter {
 	 */
 	private Boolean letItPass(String uri) {
 		for (String itemToPass : this.letPass) {
-			if (uri.replace("/universe-core", "").startsWith(itemToPass)) {
+			if (uri.replace("/tripSplitterClone-core", "").startsWith(itemToPass)) {
 				return Boolean.TRUE;
 			}
 		}
@@ -109,7 +109,7 @@ public class TokenAuthenticationInterceptor extends HandlerInterceptorAdapter {
 
 						String uri = request.getRequestURI()
 								.replace(".json", "")
-								.replace("/universe-core", "");
+								.replace("/tripSplitterClone-core", "");
 
 						// if the handler doesn't implements the I_URIValidator
 						// interface

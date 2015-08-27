@@ -9,8 +9,8 @@
 		<relationship-type>non-cumulative</relationship-type>
 		<custom-converters> 
 		<!-- These are always bi-directional  -->
-      		<converter type="org.universe.core.utils.dozer.converter.BigDecimalCustomConverter" >
-        		<class-a>org.universe.core.utils.BigDecimalWithoutTypeAdapting</class-a>
+      		<converter type="org.tripSplitterClone.core.utils.dozer.converter.BigDecimalCustomConverter" >
+        		<class-a>org.tripSplitterClone.core.utils.BigDecimalWithoutTypeAdapting</class-a>
         		<class-b>java.math.BigDecimal</class-b>
 	      	</converter>
 		</custom-converters>
