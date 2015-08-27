@@ -9,7 +9,14 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<non-jta-data-source>java:comp/env/tripSplitterCloneDS</non-jta-data-source>
 		<mapping-file>jpa/schema.xml</mapping-file>
-		
+
+		<class>org.kairos.tripSplitterClone.model.account.Account</class>
+		<class>org.kairos.tripSplitterClone.model.account.Movement</class>
+		<class>org.kairos.tripSplitterClone.model.destination.City</class>
+		<class>org.kairos.tripSplitterClone.model.destination.Country</class>
+		<class>org.kairos.tripSplitterClone.model.trip.Trip</class>
+		<class>org.kairos.tripSplitterClone.model.trip.UserTrip</class>
+		<class>org.kairos.tripSplitterClone.model.user.User</class>
 
         <properties>
 			<!--<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.PostgreSQLPlatform"/> -->
