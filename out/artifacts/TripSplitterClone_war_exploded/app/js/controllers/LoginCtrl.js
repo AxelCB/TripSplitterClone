@@ -30,7 +30,7 @@ tripSplitterCloneControllers.controller('LoginCtrl',['$scope', '$rootScope', '$l
 		$scope.login = function() {
 			$rootScope.dim();
 			$scope.userCredentials = {
-				username: $("#username").val(),
+				email: $("#username").val(),
 				password: $("#password").val()
 			};
 			UserService.login($scope.userCredentials,

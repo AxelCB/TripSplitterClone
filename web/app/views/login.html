@@ -1,11 +1,12 @@
 <div class="row">
 	<div class="col-sm-4 col-sm-offset-4 col-xs-12">
-		<img class="image-centered hidden-xs hidden-sm" alt="TripSplitterClone" src="{{ tripSplitterCloneCoreServiceUrl + '/images/logo.png' }}">
+		<img class="image-centered hidden-xs hidden-sm" alt="TripSplitterClone" src="images/logo.png" height="200">
+		<br/>
 		<!-- Login Form -->
 		<form role="form">
 			<div class="form-group">	
 	   			<!-- username -->
-				<input type="text" id="username" placeholder="{{ 'login.placeholder.username' | translate }}" class="form-control" ng-model="userCredentials.username"/>
+				<input type="text" id="username" placeholder="{{ 'login.placeholder.username' | translate }}" class="form-control" ng-model="userCredentials.email"/>
 			</div>
 			<div class="form-group">
 				<!-- password -->
