@@ -37,8 +37,7 @@ tripSplitterCloneControllers.controller('LoginCtrl',['$scope', '$rootScope', '$l
 				function (response) {
 					if (response.ok) {
 						// performs the login on the client
-						//$rootScope.performLogin(JSON.parse(response.data), $scope.rememberMe, true);
-						alert("Login ok");
+						$rootScope.performLogin(JSON.parse(response.data), $scope.rememberMe, true);
 					}
 					$rootScope.unDim();
 				}, $rootScope.errorManager);

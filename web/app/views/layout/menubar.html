@@ -3,39 +3,41 @@
 		<div>
 			<div class="navbar-header" ng-class="{'hidden-xs': loggedUser}">
 				<a href="#">
-					<img class="image-menubar-logo" alt="TripSplitterClone" ng-src="{{ tripSplitterCloneCoreServiceUrl + '/images/logo.png' }}">
+					<img class="image-menubar-logo" alt="TripSplitterClone" src="images/logo.png">
 				</a>
 			</div>
-	
-			<div ng-show="loggedUser">
-				<div ng-repeat="m1 in menuItems">
-					<ul class="nav navbar-nav">
-						<li class="dropdown" ng-show="m1.options.length != 0">
-							<a href="" class="dropdown-toggle" data-toggle="dropdown">{{m1.title}} <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<div class="removeLater" ng-repeat="m2 in m1.options" remove-later>
-									<!-- Single Option Case -->
-									<li ng-show="m2.enabled && m2.options.length == 0">
-										<a href="" ng-click="goTo(m2.uri)">{{m2.title}}</a>
-									</li>
-									
-									<!-- Multiple SubOptions Case -->
-									<li class="divider" ng-show="m2.options.length != 0"></li>
-									<li class="dropdown-header" ng-show="m2.options.length != 0">{{m2.title}}</li>
-									<li ng-repeat="m3 in m2.options" ng-show="m3.enabled && m2.options.length != 0">
-										<a class="embed-right" href="" ng-click="goTo(m3.uri)">{{m3.title}}</a>
-									</li>
-									<li class="divider" ng-show="m2.options.length != 0"></li>
-								</div>
-							</ul>
-						</li>
-						<li class="dropdown" ng-show="m1.options.length == 0">
-							<a class="embed-right" href="" ng-click="goTo(m1.uri)">{{m1.title}}</a>
-						</li>
-					</ul>
-				</div>
-				<p class="navbar-text pull-right">{{ globalInspectorFlag | iif:'blank':'default.welcome' | translate }}{{ globalInspectorFlag | iif:'':', '}}{{ globalInspectorFlag | iif:'':loggedUser.username }}{{ globalInspectorFlag | iif:'':' - '}}<a href="" class="navbar-link" ng-click="logout()">{{ 'default.logout' | translate }}</a></p>
+			<div>
+				<p class="navbar-text pull-right">{{ 'default.welcome' | translate }} , {{ loggedUser.username }} - <a href="" class="navbar-link" ng-click="logout()">{{ 'default.logout' | translate }}</a></p>
 			</div>
+			<!--<div ng-show="loggedUser">-->
+				<!--<div ng-repeat="m1 in menuItems">-->
+					<!--<ul class="nav navbar-nav">-->
+						<!--<li class="dropdown" ng-show="m1.options.length != 0">-->
+							<!--<a href="" class="dropdown-toggle" data-toggle="dropdown">{{m1.title}} <b class="caret"></b></a>-->
+							<!--<ul class="dropdown-menu">-->
+								<!--<div class="removeLater" ng-repeat="m2 in m1.options" remove-later>-->
+									<!--&lt;!&ndash; Single Option Case &ndash;&gt;-->
+									<!--<li ng-show="m2.enabled && m2.options.length == 0">-->
+										<!--<a href="" ng-click="goTo(m2.uri)">{{m2.title}}</a>-->
+									<!--</li>-->
+									<!-- -->
+									<!--&lt;!&ndash; Multiple SubOptions Case &ndash;&gt;-->
+									<!--<li class="divider" ng-show="m2.options.length != 0"></li>-->
+									<!--<li class="dropdown-header" ng-show="m2.options.length != 0">{{m2.title}}</li>-->
+									<!--<li ng-repeat="m3 in m2.options" ng-show="m3.enabled && m2.options.length != 0">-->
+										<!--<a class="embed-right" href="" ng-click="goTo(m3.uri)">{{m3.title}}</a>-->
+									<!--</li>-->
+									<!--<li class="divider" ng-show="m2.options.length != 0"></li>-->
+								<!--</div>-->
+							<!--</ul>-->
+						<!--</li>-->
+						<!--<li class="dropdown" ng-show="m1.options.length == 0">-->
+							<!--<a class="embed-right" href="" ng-click="goTo(m1.uri)">{{m1.title}}</a>-->
+						<!--</li>-->
+					<!--</ul>-->
+				<!--</div>-->
+				<!--<p class="navbar-text pull-right">{{ globalInspectorFlag | iif:'blank':'default.welcome' | translate }}{{ globalInspectorFlag | iif:'':', '}}{{ globalInspectorFlag | iif:'':loggedUser.username }}{{ globalInspectorFlag | iif:'':' - '}}<a href="" class="navbar-link" ng-click="logout()">{{ 'default.logout' | translate }}</a></p>-->
+			<!--</div>-->
 		</div>
 	</div>
 </nav>

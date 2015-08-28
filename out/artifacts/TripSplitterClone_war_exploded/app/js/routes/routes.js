@@ -9,6 +9,7 @@ angular.module('routes', []).config(['$routeProvider', function($routeProvider) 
 	var routes = [
 	    {path: '/login', template: prefix + 'app/views/login.html', controller: 'LoginCtrl'},
 	    {path: '/register', template: prefix + 'app/views/register.html', controller: null},//'RegisterCtrl'
+		{path: '/', template: prefix + 'app/views/home.html', controller: 'HomeCtrl'},
 
 	    {path: '/404', template: prefix + 'app/views/404.html', controller: 'NoPageCtrl'}
     ];
