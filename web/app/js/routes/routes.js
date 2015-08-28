@@ -10,6 +10,7 @@ angular.module('routes', []).config(['$routeProvider', function($routeProvider) 
 	    {path: '/login', template: prefix + 'app/views/login.html', controller: 'LoginCtrl'},
 	    {path: '/register', template: prefix + 'app/views/register.html', controller: null},//'RegisterCtrl'
 		{path: '/', template: prefix + 'app/views/home.html', controller: 'HomeCtrl'},
+		{path: '/test', template: prefix + 'app/views/admin/test.html', controller: 'TestCtrl'},
 
 	    {path: '/404', template: prefix + 'app/views/404.html', controller: 'NoPageCtrl'}
     ];
