@@ -6,7 +6,11 @@ import org.kairos.tripSplitterClone.dao.EntityManagerHolder;
 import org.kairos.tripSplitterClone.dao.user.I_UserDao;
 import org.kairos.tripSplitterClone.json.JsonResponse;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -18,7 +22,13 @@ import java.util.List;
  *
  * @author AxelCollardBovy.
  */
-public class UserTest {
+//@ContextConfiguration(locations = {"classpath:spring/mainContext.xml"})
+public class UserTest{// extends AbstractTestNGSpringContextTests{
+
+	/**
+	 * Logger
+	 */
+	private Logger logger = LoggerFactory.getLogger(UserTest.class);
 
 	@Autowired
 	private UserCtrl userCtrl;
@@ -46,7 +56,7 @@ public class UserTest {
 			//TODO que hago acá?
 
 		}catch(Exception ex){
-			//TODO log this exception
+			this.logger.debug("User test could not be initialized",ex);
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 		}
@@ -83,14 +93,14 @@ public class UserTest {
 				}
 			}
 		}catch(Exception ex){
-			//TODO log this exception
+			this.logger.debug("User test failed running register test",ex);
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 			this.getEntityManagerHolder().closeEntityManager(testEm);
 		}
 	}
 
-	@Test(groups = {"trip"})
+	@Test(groups = {"user"})
 	public void loginUser(){
 		EntityManager em=null;
 		try {
@@ -122,7 +132,7 @@ public class UserTest {
 			assert (response.getOk()):"Couldn't login user correctly. User:"+userVo.toString();
 
 		}catch(Exception ex){
-			//TODO log this exception
+			this.logger.debug("User test failed running login test",ex);
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 		}

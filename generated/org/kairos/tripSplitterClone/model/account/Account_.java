@@ -8,15 +8,15 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import org.kairos.tripSplitterClone.model.account.Movement;
 
-@Generated(value="EclipseLink-2.6.0.v20150309-rNA", date="2015-08-28T00:34:25")
+@Generated(value="EclipseLink-2.6.0.v20150309-rNA", date="2015-08-29T16:48:37")
 @StaticMetamodel(Account.class)
 public class Account_ { 
 
-    public static volatile SingularAttribute<Account, Long> id;
+    public static volatile SingularAttribute<Account, Boolean> deleted;
     public static volatile ListAttribute<Account, Movement> inMovements;
-    public static volatile SingularAttribute<Account, Date> creation;
     public static volatile SingularAttribute<Account, BigDecimal> balance;
     public static volatile ListAttribute<Account, Movement> outMovements;
-    public static volatile SingularAttribute<Account, Boolean> deleted;
+    public static volatile SingularAttribute<Account, Long> id;
+    public static volatile SingularAttribute<Account, Date> creation;
 
 }

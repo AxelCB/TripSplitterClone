@@ -6,9 +6,20 @@
 					<img class="image-menubar-logo" alt="TripSplitterClone" src="images/logo.png">
 				</a>
 			</div>
-			<div>
+			<div ng-show="loggedUser">
+				<ul class="nav navbar-nav">
+					<li class="dropdown">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="" ng-click="goTo('/test')">{{ 'test.menu.name' | translate }}</a></li>
+							<li><a href="" ng-click="goTo('/register')">{{ 'register.menu.name' | translate }}</a></li>
+						</ul>
+					</li>
+					<li><a href="" ng-click="goTo('/trip')">{{ 'trip.menu.name' | translate }}</a></li>
+				</ul>
 				<p class="navbar-text pull-right">{{ 'default.welcome' | translate }} , {{ loggedUser.username }} - <a href="" class="navbar-link" ng-click="logout()">{{ 'default.logout' | translate }}</a></p>
 			</div>
+
 			<!--<div ng-show="loggedUser">-->
 				<!--<div ng-repeat="m1 in menuItems">-->
 					<!--<ul class="nav navbar-nav">-->

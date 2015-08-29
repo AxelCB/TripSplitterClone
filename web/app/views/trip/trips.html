@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="panel panel-default" ng-repeat="trip in trips">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{trip.destination.name}},{{trip.destination.country.name}}</h3>
+        </div>
+        <div class="panel-body">
+            <b>{{trip.travelers.name | translate }}:</b>
+            <p><span ng-repeat="traveler in trip.travelers">{{traveler.name}},</span></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-10">
+            <button class="btn btn-primary" id="btn_create" ng-click="go('/trip/new')" ng-disabled="editing">
+                {{ 'trip.new' | translate }}
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div ng-paginator="" name-space="tripNameSpace"></div>
+        </div>
+    </div>
+</div>

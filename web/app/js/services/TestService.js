@@ -4,10 +4,10 @@
  */
 var tripSplitterCloneModules = angular.module('services');
 
-tripSplitterCloneModules.factory('TestService', function(UniverseService) {
+tripSplitterCloneModules.factory('TestService', function(TripSplitterCloneService) {
 	return {
 		runTest: function (successFn, errorFn) {
-			return UniverseService.authPost('/test/run.json', "", successFn, errorFn);
+			return TripSplitterCloneService.authPost('/test/run.json', "", successFn, errorFn);
 		}
 	};
 });

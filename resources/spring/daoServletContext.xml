@@ -19,5 +19,12 @@ Repository and Service layers
     	<!-- DAOs -->
 		<!-- User -->
     	    <bean id="userDao" class="org.kairos.tripSplitterClone.dao.user.UserDaoJPAImpl" scope="prototype"/>
+
+		<!-- Trip -->
+		<bean id="tripDao" class="org.kairos.tripSplitterClone.dao.trip.TripDaoJPAImpl" scope="prototype"/>
+
+		<!-- Destination -->
+		<bean id="cityDao" class="org.kairos.tripSplitterClone.dao.destination.CityDaoJPAImpl" scope="prototype"/>
+		<bean id="countryDao" class="org.kairos.tripSplitterClone.dao.destination.CountryDaoJPAImpl" scope="prototype"/>
     </beans>
 </beans>

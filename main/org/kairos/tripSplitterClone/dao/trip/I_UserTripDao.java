@@ -10,5 +10,5 @@ import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
  *
  * @author AxelCollardBovy.
  */
-public interface I_UserTrip extends I_Dao<UserTripVo> {
+public interface I_UserTripDao extends I_Dao<UserTripVo> {
 }

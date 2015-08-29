@@ -5,7 +5,7 @@
 angular.module('tripSplitterCloneApp', ['ngRoute','tripSplitterCloneControllers','filters', 'directives', 'routes', 'services','ngCookies','ui.bootstrap.typeahead','template/typeahead/typeahead-match.html','template/typeahead/typeahead-popup.html','ui.bootstrap.collapse','ui.bootstrap.tabs',"template/tabs/tab.html","template/tabs/tabset.html"]).
 	config(['$routeProvider', function($routeProvider) {
 	}])
-	.run(['$rootScope', '$window', '$location', '$cookieStore', 'UniverseService', function ($rootScope, $window, $location, $cookieStore, UniverseService) {
+	.run(['$rootScope', '$window', '$location', '$cookieStore', function ($rootScope, $window, $location, $cookieStore) {
 		$rootScope.lang = defaultLang;
 		$rootScope.canSubscribe = canSubscribe;
 		
@@ -93,9 +93,10 @@ angular.module('tripSplitterCloneApp', ['ngRoute','tripSplitterCloneControllers'
 		
 		$rootScope.errorManager = $rootScope.manageError;
 		
-		//$rootScope.canAccess = function(uri) {
-		//	return $rootScope.permissions.indexOf(uri) != -1;
-		//};
+		$rootScope.canAccess = function(uri) {
+			return true;
+			//$rootScope.permissions.indexOf(uri) != -1;
+		};
 		
 
 		$rootScope.showErrorMessage = function(message, error) {
@@ -259,10 +260,6 @@ angular.module('tripSplitterCloneApp', ['ngRoute','tripSplitterCloneControllers'
 				useCookie: false,
 				supportedLngs: supported
 			};
-			
-			if (document.globalInspectorFlag) {
-				i18nextOptions.resGetPath = '../locales/__lng__/__ns__.json';
-			}
 			
 			i18n.init(i18nextOptions, function() {	
 				document.title = $rootScope.systemTitle;

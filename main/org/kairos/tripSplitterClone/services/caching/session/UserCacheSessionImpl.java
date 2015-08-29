@@ -151,6 +151,7 @@ public class UserCacheSessionImpl implements I_UserCacheManager {
 	public void putUser(String key, UserVo userInCache) {
 		try {
 			this.getSession().setAttribute(key,userInCache);
+
 			this.logger.info("Insertado Sync {}", key);
 
 		} catch (Exception e) {

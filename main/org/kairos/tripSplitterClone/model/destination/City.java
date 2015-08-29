@@ -37,6 +37,13 @@ public class City implements Serializable,I_Model{
      */
     private String name;
 
+    /**
+     * City's country
+     */
+    @ManyToOne
+    @Property(policy = PojomaticPolicy.NONE)
+    private Country country;
+
     public City(){}
 
     @Override
@@ -65,5 +72,13 @@ public class City implements Serializable,I_Model{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 }

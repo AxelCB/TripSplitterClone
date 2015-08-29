@@ -14,6 +14,11 @@ public class CityVo extends AbstractVo{
      */
     private String name;
 
+    /**
+     * City's country
+     */
+    private CountryVo country;
+
     public CityVo(){}
 
     public String getName() {
@@ -22,5 +27,13 @@ public class CityVo extends AbstractVo{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public CountryVo getCountry() {
+        return country;
+    }
+
+    public void setCountry(CountryVo country) {
+        this.country = country;
     }
 }

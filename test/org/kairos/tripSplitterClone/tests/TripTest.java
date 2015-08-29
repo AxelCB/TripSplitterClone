@@ -7,7 +7,11 @@ import org.kairos.tripSplitterClone.dao.trip.I_TripDao;
 import org.kairos.tripSplitterClone.json.JsonResponse;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -20,7 +24,13 @@ import java.util.List;
  *
  * @author AxelCollardBovy.
  */
-public class TripTest {
+//@ContextConfiguration(locations = {"classpath:spring/mainContext.xml"})
+public class TripTest {//extends AbstractTestNGSpringContextTests {
+
+	/**
+	 * Logger
+	 */
+	private Logger logger = LoggerFactory.getLogger(TripTest.class);
 
 	@Autowired
 	private TripCtrl tripCtrl;
@@ -52,7 +62,7 @@ public class TripTest {
 			//TODO que hago acá?
 
 		}catch(Exception ex){
-			//TODO log this exception
+			this.logger.debug("Trip test could not initalize",ex);
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 		}
@@ -79,8 +89,8 @@ public class TripTest {
                     assert lastAmountOfTrips.equals(amountOfTrips):"Trip not persisted correctly id:"+tripVo.getId();
                     if(persistedTripVo!=null){
                         assert persistedTripVo.getOwner().equals(tripVo.getOwner()):"Trip's owner wasn't persisted correctly id:"+tripVo.getId();
-                        for(int i=0;i<Math.max(tripVo.getParticipants().size(),persistedTripVo.getParticipants().size());i++){
-                            assert persistedTripVo.getParticipants().get(i).getUser().equals(tripVo.getParticipants().get(i).getUser()):
+                        for(int i=0;i<Math.max(tripVo.getTravelers().size(),persistedTripVo.getTravelers().size());i++){
+                            assert persistedTripVo.getTravelers().get(i).getUser().equals(tripVo.getTravelers().get(i).getUser()):
                                     "At least one of the trip's participants wasn't persisted correctly id:"+tripVo.getId()+" i:"+i;
                         }
                         lastAmountOfTrips = amountOfTrips;
@@ -89,13 +99,13 @@ public class TripTest {
 				}else{
 					Boolean ok = tripVo.getOwner()!=null;
 					//Trip doesn't need to have participants
-					//ok= ok && !tripVo.getParticipants().isEmpty();
+					//ok= ok && !tripVo.getTravelers().isEmpty();
 					ok = ok && tripVo.getCity()!=null && tripVo.getCountry()!=null;
 					assert ok:"Trip not persisted and none null fields";
 				}
 			}
 		}catch(Exception ex){
-			//TODO log this exception
+			this.logger.debug("Trip test failed running create test",ex);
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 			this.getEntityManagerHolder().closeEntityManager(testEm);
@@ -120,7 +130,7 @@ public class TripTest {
 			response = this.getGson().fromJson(this.getTripCtrl().delete(this.getGson().toJson(tripVo)),JsonResponse.class);
 			assert (persistedTripVo==null || !response.getOk()):"Shouldn't have been able to delete and returned ok, id:"+tripVo.getId();
 		}catch(Exception ex){
-			//TODO log this exception
+			this.logger.debug("User test failed running delete test",ex);
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 		}

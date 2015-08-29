@@ -14,7 +14,11 @@ import org.kairos.tripSplitterClone.vo.destination.CountryVo;
 import org.kairos.tripSplitterClone.vo.destination.DestinationVo;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -28,7 +32,13 @@ import java.util.List;
  *
  * @author AxelCollardBovy.
  */
-public class DestinationTest {
+//@ContextConfiguration(locations = {"classpath:spring/mainContext.xml"})
+public class DestinationTest{// extends AbstractTestNGSpringContextTests {
+
+	/**
+	 * Logger
+	 */
+	private Logger logger = LoggerFactory.getLogger(DestinationTest.class);
 
 	@Autowired
 	private DestinationCtrl destinationCtrl;
@@ -59,7 +69,7 @@ public class DestinationTest {
 			//TODO que hago acá?
 
 		}catch(Exception ex){
-			//TODO log this exception
+			this.logger.debug("Destination test could not be initialized",ex);
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 			this.getEntityManagerHolder().closeEntityManager(testEm);
@@ -92,7 +102,7 @@ public class DestinationTest {
 				}
 			}
 		}catch(Exception ex){
-			//TODO log this exception
+			this.logger.debug("Destination test failed running create city test",ex);
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 			this.getEntityManagerHolder().closeEntityManager(testEm);
@@ -125,7 +135,7 @@ public class DestinationTest {
                 }
             }
         }catch(Exception ex){
-            //TODO log this exception
+	        this.logger.debug("Destination test failed running create country test",ex);
         }finally{
             this.getEntityManagerHolder().closeEntityManager(em);
 	        this.getEntityManagerHolder().closeEntityManager(testEm);
@@ -166,7 +176,7 @@ public class DestinationTest {
 			assert amountOfCountries.equals(amountOfListedCountries):"Amount of listed cities isn't the same as the ones in the DB";
 
 		}catch(Exception ex){
-			//TODO log this exception
+			this.logger.debug("Destination test failed running list destinations test",ex);
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 		}

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class TripVo extends AbstractVo implements Serializable {
 
-	private List<UserTripVo> participants;
+	private List<UserTripVo> travelers;
 
 	/**
 	 * Creator and owner of the trip
@@ -39,12 +39,12 @@ public class TripVo extends AbstractVo implements Serializable {
 		}
 	}
 
-	public List<UserTripVo> getParticipants() {
-		return participants;
+	public List<UserTripVo> getTravelers() {
+		return travelers;
 	}
 
-	public void setParticipants(List<UserTripVo> participants) {
-		this.participants = participants;
+	public void setTravelers(List<UserTripVo> travelers) {
+		this.travelers = travelers;
 	}
 
 	public UserVo getOwner() {

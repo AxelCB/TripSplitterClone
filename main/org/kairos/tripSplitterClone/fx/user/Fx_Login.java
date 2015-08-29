@@ -135,8 +135,7 @@ public class Fx_Login extends AbstractFxImpl implements I_Fx {
 
 					this.logger.debug("storing the user to the cache");
 					this.getUserCacheManager().putUser(token, newUserVo);
-					this.getUserCacheManager().putUser(newUserVo.getUsername(),
-							newUserVo);
+					this.getUserCacheManager().putUser(newUserVo.getUsername(),newUserVo);
 				} else {
 					// we return the same user
 					newUserVo = cacheUserVo;

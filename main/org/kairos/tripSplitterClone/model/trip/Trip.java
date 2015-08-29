@@ -2,7 +2,6 @@ package org.kairos.tripSplitterClone.model.trip;
 
 import org.kairos.tripSplitterClone.model.I_Model;
 import org.kairos.tripSplitterClone.model.destination.City;
-import org.kairos.tripSplitterClone.model.destination.Country;
 import org.kairos.tripSplitterClone.model.user.User;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
@@ -38,7 +37,7 @@ public class Trip implements Serializable,I_Model {
 
 	@OneToMany(mappedBy="trip")
 	@Property(policy = PojomaticPolicy.NONE)
-	private List<UserTrip> participants;
+	private List<UserTrip> travelers;
 
 	/**
 	 * Creator and owner of the trip
@@ -48,18 +47,11 @@ public class Trip implements Serializable,I_Model {
 	private User owner;
 
 	/**
-	 * Destination's city
+	 * Destination
 	 */
 	@ManyToOne
 	@Property(policy = PojomaticPolicy.NONE)
-	private City city;
-
-	/**
-	 * Destination's country
-	 */
-	@ManyToOne
-	@Property(policy = PojomaticPolicy.NONE)
-	private Country country;
+	private City destination;
 
 	/**
 	 * Empty Constructor
@@ -94,12 +86,12 @@ public class Trip implements Serializable,I_Model {
 		this.deleted = deleted;
 	}
 
-	public List<UserTrip> getParticipants() {
-		return participants;
+	public List<UserTrip> getTravelers() {
+		return travelers;
 	}
 
-	public void setParticipants(List<UserTrip> participants) {
-		this.participants = participants;
+	public void setTravelers(List<UserTrip> participants) {
+		this.travelers = participants;
 	}
 
 	public User getOwner() {
@@ -110,19 +102,11 @@ public class Trip implements Serializable,I_Model {
 		this.owner = owner;
 	}
 
-	public City getCity() {
-		return city;
+	public City getDestination() {
+		return destination;
 	}
 
-	public void setCity(City city) {
-		this.city = city;
-	}
-
-	public Country getCountry() {
-		return country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
+	public void setDestination(City destination) {
+		this.destination = destination;
 	}
 }

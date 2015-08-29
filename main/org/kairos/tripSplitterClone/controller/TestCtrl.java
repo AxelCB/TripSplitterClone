@@ -5,6 +5,8 @@ import org.kairos.tripSplitterClone.json.JsonResponse;
 import org.kairos.tripSplitterClone.tests.DestinationTest;
 import org.kairos.tripSplitterClone.tests.TripTest;
 import org.kairos.tripSplitterClone.tests.UserTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +20,13 @@ import org.testng.TestNG;
  *
  * @author AxelCollardBovy.
  */
-@RequestMapping(value = "/test", produces = "text/json;charset=utf-8", method = RequestMethod.GET)
+@RequestMapping(value = "/test", produces = "text/json;charset=utf-8", method = RequestMethod.POST)
 public class TestCtrl {
+
+	/**
+	 * Logger
+	 */
+	private Logger logger = LoggerFactory.getLogger(TestCtrl.class);
 
 	@Autowired
 	private Gson gson;
@@ -41,6 +48,24 @@ public class TestCtrl {
 		tripSplitterCloneTests.run();
 
 		return this.getGson().toJson(JsonResponse.ok("","Everything was done correctly"));
+	}
+
+	private void exRun(){
+		/*XmlSuite suite = new XmlSuite();
+		suite.setName("CompleteTestSuite");
+
+		XmlTest test = new XmlTest(suite);
+		test.setName("CompleteTest");
+		List<XmlClass> classList = new ArrayList<>();
+		classList.add(new XmlClass("org.kairos.tripSplitterClone.tests.UserTest"));
+//		classList.add(new XmlClass("org.kairos.tripSplitterClone.tests.UserTest"));
+//		classList.add(new XmlClass("org.kairos.tripSplitterClone.tests.UserTest"));
+		test.setXmlClasses(classList);
+
+		List<XmlSuite> suites = new ArrayList<XmlSuite>();
+		suites.add(suite);
+
+		tripSplitterCloneTests.setXmlSuites(suites);*/
 	}
 
 	public Gson getGson() {

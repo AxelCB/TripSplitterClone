@@ -1,8 +1,8 @@
 var server = angular.module('services', []);
 /**
- * Main Universe Service Facade
+ * Main TripSplitterClone Service Facade
  */
-server.factory('UniverseService', ['$http', '$rootScope', '$location', '$cookieStore', '$injector',
+server.factory('TripSplitterCloneService', ['$http', '$rootScope', '$location', '$cookieStore', '$injector',
     function($http, $rootScope, $location,  $cookieStore, $injector) {
 	
     $rootScope.reLoginCount = 0;

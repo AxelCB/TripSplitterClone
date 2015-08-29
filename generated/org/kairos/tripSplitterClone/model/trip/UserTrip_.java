@@ -6,13 +6,13 @@ import javax.persistence.metamodel.StaticMetamodel;
 import org.kairos.tripSplitterClone.model.trip.Trip;
 import org.kairos.tripSplitterClone.model.user.User;
 
-@Generated(value="EclipseLink-2.6.0.v20150309-rNA", date="2015-08-28T00:34:25")
+@Generated(value="EclipseLink-2.6.0.v20150309-rNA", date="2015-08-29T16:48:37")
 @StaticMetamodel(UserTrip.class)
 public class UserTrip_ { 
 
-    public static volatile SingularAttribute<UserTrip, Long> id;
-    public static volatile SingularAttribute<UserTrip, Trip> trip;
     public static volatile SingularAttribute<UserTrip, Boolean> deleted;
+    public static volatile SingularAttribute<UserTrip, Trip> trip;
+    public static volatile SingularAttribute<UserTrip, Long> id;
     public static volatile SingularAttribute<UserTrip, User> user;
 
 }

@@ -74,7 +74,7 @@ public class UserCtrl {
 	@ResponseBody
 	@RequestMapping(value = "/login.json")
 	public String login(@RequestBody String data){
-		this.logger.debug("calling LoginCtrl.login()");
+		this.logger.debug("calling UserCtrl.login()");
 		EntityManager em = this.getEntityManagerHolder().getEntityManager();
 		JsonResponse jsonResponse = null;
 
