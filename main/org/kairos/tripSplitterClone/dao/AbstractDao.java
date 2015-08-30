@@ -438,7 +438,7 @@ public abstract class AbstractDao<T extends I_Model, E extends AbstractVo>
 	 */
 	@Override
 	public List<E> listAll(EntityManager em) {
-		return this.listAll(em, null);
+		return this.listAll(em, Boolean.FALSE);
 	}
 
 	/*

@@ -6,30 +6,13 @@
  */
 var universeControllers = angular.module('tripSplitterCloneControllers');
 
-universeControllers.controller('TripCtrl',['$scope', '$rootScope', 'TripService', '$filter',
-    function($scope, $rootScope, TripService, $filter) {
+universeControllers.controller('TripCtrl',['$scope', '$rootScope', 'TripService', '$filter','DestinationService',
+    function($scope, $rootScope, TripService, $filter,DestinationService) {
         $scope.trip = {};
         $scope.trips = [];
         $scope.editing = false;
 
         var paginationHelper;
-
-        $scope.create = function() {
-            if ($scope.myForm.$valid) {
-                TripService.create($scope.trip, function(response) {
-                    if (response.ok) {
-                        // trip successfully created
-                        var par = JSON.parse(response.data);
-
-                        $rootScope.keepMessages = true;
-                        $scope.initialize();
-                    }
-
-                }, $scope.errorManager);
-            } else {
-                $rootScope.showErrorMessage(i18n.t('commissionSchema.validation.numberFormat'), true);
-            }
-        };
 
         $scope.list = function(pagination) {
             TripService.list(pagination, function(response) {
@@ -95,30 +78,6 @@ universeControllers.controller('TripCtrl',['$scope', '$rootScope', 'TripService'
             }, this.errorManager);
         };
 
-        $scope.search = function(pagination) {
-            var data;
-
-            if (pagination) {
-                pagination.vo = $scope.trip;
-                data = pagination;
-            } else {
-                data = $scope.trip;
-            }
-
-            TripService.search(data, function(response) {
-                if (response.ok) {
-                    var responseObject = JSON.parse(response.data);
-
-                    if (responseObject.page) {
-                        $scope.trips = responseObject.items;
-                        paginationHelper.extendCallback(responseObject);
-                    } else {
-                        $scope.trips = responseObject;
-                    }
-                }
-            }, $rootScope.manageError);
-        };
-
         paginationHelper = PaginationHelper($scope, 'tripNameSpace', true);
 
         $scope.initialize = function() {
@@ -133,5 +92,6 @@ universeControllers.controller('TripCtrl',['$scope', '$rootScope', 'TripService'
             $rootScope.areErrorMessages = false;
         };
         $scope.initialize();
+
     }
 ]);

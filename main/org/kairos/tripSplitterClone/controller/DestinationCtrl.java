@@ -2,6 +2,8 @@ package org.kairos.tripSplitterClone.controller;
 
 import com.google.gson.Gson;
 import org.kairos.tripSplitterClone.dao.EntityManagerHolder;
+import org.kairos.tripSplitterClone.dao.destination.I_CityDao;
+import org.kairos.tripSplitterClone.dao.destination.I_CountryDao;
 import org.kairos.tripSplitterClone.fx.I_FxFactory;
 import org.kairos.tripSplitterClone.fx.destination.Fx_CreateCity;
 import org.kairos.tripSplitterClone.fx.destination.Fx_CreateCountry;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 /**
  * Created on 8/23/15 by
@@ -56,6 +59,17 @@ public class DestinationCtrl {
 	@Autowired
 	private WebContextHolder webContextHolder;
 
+	/**
+	 * City dao.
+	 */
+	@Autowired
+	private I_CityDao cityDao;
+
+	/**
+	 * Country dao.
+	 */
+	@Autowired
+	private I_CountryDao countryDao;
 
 	/**
 	 * Creates a city.
@@ -131,6 +145,55 @@ public class DestinationCtrl {
 		return null;
 	}
 
+	/**
+	 * Lists all cities.
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/listCities.json")
+	public String listCities(@RequestBody String data){
+		this.logger.debug("calling DestinationCtrl.listCities()");
+		EntityManager em = this.getEntityManagerHolder().getEntityManager();
+		JsonResponse jsonResponse = null;
+		try {
+				List<CityVo> cityVoList = this.getCityDao().listAll(em);
+
+			jsonResponse = JsonResponse.ok(this.getGson().toJson(cityVoList));
+		} catch (Exception e) {
+			this.logger.debug("unexpected error", e);
+
+			jsonResponse = this.getWebContextHolder().unexpectedErrorResponse();
+		} finally {
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
+		return this.getGson().toJson(jsonResponse);
+	}
+
+	/**
+	 * Lists all countries.
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/listCountries.json")
+	public String listCountries(@RequestBody String data){
+		this.logger.debug("calling DestinationCtrl.listCountries()");
+		EntityManager em = this.getEntityManagerHolder().getEntityManager();
+		JsonResponse jsonResponse = null;
+		try {
+			List<CountryVo> countryVoList = this.getCountryDao().listAll(em);
+
+			jsonResponse = JsonResponse.ok(this.getGson().toJson(countryVoList));
+		} catch (Exception e) {
+			this.logger.debug("unexpected error", e);
+
+			jsonResponse = this.getWebContextHolder().unexpectedErrorResponse();
+		} finally {
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
+		return this.getGson().toJson(jsonResponse);
+	}
 
 	public Gson getGson() {
 		return gson;
@@ -162,5 +225,21 @@ public class DestinationCtrl {
 
 	public void setWebContextHolder(WebContextHolder webContextHolder) {
 		this.webContextHolder = webContextHolder;
+	}
+
+	public I_CityDao getCityDao() {
+		return cityDao;
+	}
+
+	public void setCityDao(I_CityDao cityDao) {
+		this.cityDao = cityDao;
+	}
+
+	public I_CountryDao getCountryDao() {
+		return countryDao;
+	}
+
+	public void setCountryDao(I_CountryDao countryDao) {
+		this.countryDao = countryDao;
 	}
 }

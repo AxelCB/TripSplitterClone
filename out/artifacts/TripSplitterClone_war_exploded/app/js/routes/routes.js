@@ -11,7 +11,7 @@ angular.module('routes', []).config(['$routeProvider', function($routeProvider) 
 	    {path: '/register', template: prefix + 'app/views/register.html', controller: null},//'RegisterCtrl'
 		{path: '/', template: prefix + 'app/views/home.html', controller: 'HomeCtrl'},
 		{path: '/test', template: prefix + 'app/views/admin/test.html', controller: 'TestCtrl'},
-		{path: '/trip/new', template: prefix + 'app/views/trip/createTrip.html', controller: 'TripCtrl'},
+		{path: '/trip/new', template: prefix + 'app/views/trip/createTrip.html', controller: 'TripCreateCtrl'},
 		{path: '/trip', template: prefix + 'app/views/trip/trips.html', controller: 'TripCtrl'},
 
 

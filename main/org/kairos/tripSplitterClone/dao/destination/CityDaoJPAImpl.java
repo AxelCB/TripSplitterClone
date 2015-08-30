@@ -60,7 +60,7 @@ public class CityDaoJPAImpl extends AbstractDao<City, CityVo> implements I_CityD
 	}
 
 	@Override
-	public CountryVo findByName(EntityManager em, String name) {
+	public CityVo findByName(EntityManager em, String name) {
 		return null;
 	}
 

@@ -23,6 +23,9 @@ Repository and Service layers
 		<!-- Trip -->
 			<bean id="tripCtrl" class="org.kairos.tripSplitterClone.controller.TripCtrl" scope="request"/>
 
+		<!-- Destination -->
+			<bean id="destinationCtrl" class="org.kairos.tripSplitterClone.controller.DestinationCtrl" scope="request"/>
+
 		<!-- Test -->
 			<bean id="testCtrl" class="org.kairos.tripSplitterClone.controller.TestCtrl" scope="request"/>
 

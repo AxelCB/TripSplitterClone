@@ -64,7 +64,18 @@ public class DestinationTest{// extends AbstractTestNGSpringContextTests {
 			testEm = this.getEntityManagerHolder().getTestEntityManager();
 			em = this.getEntityManagerHolder().getEntityManager();
 
-			//TODO list all cities and countries from test and delete them from the database
+			List<CityVo> cities = this.getCityDao().listAll(testEm);
+			List<CountryVo> countries = this.getCountryDao().listAll(testEm);
+
+			for(CityVo cityVo : cities){
+				CityVo city = this.getCityDao().findByName(em,cityVo.getName());
+				this.getCityDao().delete(em,city);
+			}
+
+			for(CountryVo countryVo : countries){
+				CountryVo country = this.getCountryDao().findByName(em,countryVo.getName());
+				this.getCountryDao().delete(em,country);
+			}
 
 			//TODO que hago acá?
 

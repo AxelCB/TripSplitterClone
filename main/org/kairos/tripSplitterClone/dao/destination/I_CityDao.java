@@ -2,7 +2,6 @@ package org.kairos.tripSplitterClone.dao.destination;
 
 import org.kairos.tripSplitterClone.dao.I_Dao;
 import org.kairos.tripSplitterClone.vo.destination.CityVo;
-import org.kairos.tripSplitterClone.vo.destination.CountryVo;
 
 import javax.persistence.EntityManager;
 
@@ -26,7 +25,7 @@ public interface I_CityDao extends I_Dao<CityVo> {
 	 * @return ZoneVo or null
 	 *
 	 */
-	public CountryVo findByName(EntityManager em, String name);
+	public CityVo findByName(EntityManager em, String name);
 
 	/**
 	 * Checks that a country name is only used once.
