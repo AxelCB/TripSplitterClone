@@ -23,6 +23,14 @@ Repository and Service layers
 		<bean id="loginFx" class="org.kairos.tripSplitterClone.fx.user.Fx_Login" scope="prototype"/>
 		<bean id="logoutFx" class="org.kairos.tripSplitterClone.fx.user.Fx_Logout" scope="prototype"/>
 
+		<!-- Destination -->
+		<bean id="fxCreateCity" class="org.kairos.tripSplitterClone.fx.destination.Fx_CreateCity" scope="prototype"/>
+		<bean id="fxCreateCountry" class="org.kairos.tripSplitterClone.fx.destination.Fx_CreateCountry" scope="prototype"/>
+
+		<!-- Trip  -->
+		<bean id="fxCreateTrip" class="org.kairos.tripSplitterClone.fx.trip.Fx_CreateTrip" scope="prototype"/>
+		<bean id="fxDeleteTrip" class="org.kairos.tripSplitterClone.fx.trip.Fx_DeleteTrip" scope="prototype"/>
+
 		<!-- Ant Mark -->
     </beans>
 </beans>

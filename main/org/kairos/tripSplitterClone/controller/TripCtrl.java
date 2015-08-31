@@ -78,6 +78,7 @@ public class TripCtrl {
 
 		try {
 			TripVo tripVo = this.getGson().fromJson(data,TripVo.class);
+			tripVo.setOwner(this.getWebContextHolder().getUserVo());
 
 			Fx_CreateTrip fx = this.getFxFactory().getNewFxInstance(Fx_CreateTrip.class);
 			fx.setVo(tripVo);

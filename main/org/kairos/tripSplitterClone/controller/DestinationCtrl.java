@@ -98,6 +98,51 @@ public class DestinationCtrl {
 		} finally {
 			this.getEntityManagerHolder().closeEntityManager(em);
 		}
+		return this.getGson().toJson(jsonResponse);
+	}
+
+	/**
+	 * Creates a new Destination.
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/create.json")
+	public String create(@RequestBody String data){
+		this.logger.debug("calling DestinationCtrl.create()");
+		EntityManager em = this.getEntityManagerHolder().getEntityManager();
+		JsonResponse jsonResponse = null;
+
+		try {
+			CityVo cityVo = this.getGson().fromJson(data,CityVo.class);
+
+			if(cityVo.getCountry().getId()==null){
+				Fx_CreateCountry fx = this.getFxFactory().getNewFxInstance(Fx_CreateCountry.class);
+				fx.setVo(cityVo.getCountry());
+				fx.setEm(em);
+				this.logger.debug("executing Fx_CreateCountry");
+				jsonResponse = fx.execute();
+			}
+
+			if(cityVo.getCountry().getId()!=null || jsonResponse.getOk()){
+				cityVo.setCountry(this.getCountryDao().findByName(em,cityVo.getCountry().getName()));
+
+				Fx_CreateCity fx = this.getFxFactory().getNewFxInstance(Fx_CreateCity.class);
+				fx.setVo(cityVo);
+				fx.setEm(em);
+				this.logger.debug("executing Fx_CreateCity");
+				jsonResponse = fx.execute();
+			}else{
+				this.logger.debug("Couldn't create country, operation aborted");
+			}
+
+		} catch (Exception e) {
+			this.logger.debug("unexpected error", e);
+
+			jsonResponse = this.getWebContextHolder().unexpectedErrorResponse();
+		} finally {
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
 
 		return this.getGson().toJson(jsonResponse);
 	}
@@ -113,15 +158,15 @@ public class DestinationCtrl {
 		this.logger.debug("calling DestinationCtrl.createCountry()");
 		EntityManager em = this.getEntityManagerHolder().getEntityManager();
 		JsonResponse jsonResponse = null;
-
 		try {
-			CountryVo userVo = this.getGson().fromJson(data,CountryVo.class);
+			CountryVo countryVo = this.getGson().fromJson(data,CountryVo.class);
 
 			Fx_CreateCountry fx = this.getFxFactory().getNewFxInstance(Fx_CreateCountry.class);
-			fx.setVo(userVo);
+			fx.setVo(countryVo);
 			fx.setEm(em);
 			this.logger.debug("executing Fx_CreateCountry");
 			jsonResponse = fx.execute();
+
 		} catch (Exception e) {
 			this.logger.debug("unexpected error", e);
 

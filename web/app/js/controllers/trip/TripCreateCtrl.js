@@ -15,6 +15,7 @@ universeControllers.controller('TripCreateCtrl',['$scope', '$rootScope', 'TripSe
         $scope.otherCountry = false;
         $scope.city = {};
         $scope.country = {};
+        $scope.selectedCountry = {};
         $scope.cities = [];
         $scope.countries = [];
 
@@ -88,13 +89,15 @@ universeControllers.controller('TripCreateCtrl',['$scope', '$rootScope', 'TripSe
         };
         $scope.initialize();
 
-        $scope.createDestination=function(){
-            if($scope.otherCity){
-               $scope.city.country= $scope.country;
+        $scope.createDestination = function() {
+            if($scope.otherCountry){
+                $scope.city.country= $scope.country;
+            }else{
+                $scope.city.country = JSON.parse($scope.selectedCountry);
             };
             DestinationService.createCity($scope.city,function(response){
 
-            },$rootScope.manageError    );
+            },$rootScope.manageError);
         };
         $scope.listCities=function(){
             DestinationService.listCities({},function(response) {

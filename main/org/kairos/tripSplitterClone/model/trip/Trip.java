@@ -22,7 +22,13 @@ import java.util.List;
 public class Trip implements Serializable,I_Model {
 
 	/**
-	 * Entity ID.
+	 * Entity ID.	public CityVo getCity() {
+		return city;
+	}
+
+	public void setCity(CityVo city) {
+		this.city = city;
+	}
 	 */
 	@Id
 	@GeneratedValue(strategy= GenerationType.SEQUENCE, generator="trip_seq")

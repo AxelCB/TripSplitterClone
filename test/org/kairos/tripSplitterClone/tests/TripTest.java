@@ -100,7 +100,7 @@ public class TripTest {//extends AbstractTestNGSpringContextTests {
 					Boolean ok = tripVo.getOwner()!=null;
 					//Trip doesn't need to have participants
 					//ok= ok && !tripVo.getTravelers().isEmpty();
-					ok = ok && tripVo.getCity()!=null && tripVo.getCountry()!=null;
+					ok = ok && tripVo.getCity()!=null && tripVo.getCity().getCountry()!=null;
 					assert ok:"Trip not persisted and none null fields";
 				}
 			}

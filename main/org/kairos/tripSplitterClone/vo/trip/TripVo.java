@@ -22,9 +22,7 @@ public class TripVo extends AbstractVo implements Serializable {
 	 */
 	private UserVo owner;
 
-	private CountryVo country;
-
-	private CityVo city;
+	private CityVo destination;
 
 	/**
 	 * Empty Constructor
@@ -55,19 +53,19 @@ public class TripVo extends AbstractVo implements Serializable {
 		this.owner = owner;
 	}
 
-	public CountryVo getCountry() {
-		return country;
+	public CityVo getDestination() {
+		return destination;
 	}
 
-	public void setCountry(CountryVo country) {
-		this.country = country;
+	public void setDestination(CityVo destination) {
+		this.destination = destination;
 	}
 
 	public CityVo getCity() {
-		return city;
+		return destination;
 	}
 
 	public void setCity(CityVo city) {
-		this.city = city;
+		this.destination = city;
 	}
 }
