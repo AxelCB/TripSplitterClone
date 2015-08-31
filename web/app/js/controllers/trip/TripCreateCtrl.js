@@ -96,7 +96,11 @@ universeControllers.controller('TripCreateCtrl',['$scope', '$rootScope', 'TripSe
                 $scope.city.country = JSON.parse($scope.selectedCountry);
             };
             DestinationService.createCity($scope.city,function(response){
-
+                if(response.ok){
+                    $('#createDestinationModal').modal('hide');
+                    $scope.listCities();
+                    $scope.listCountries();
+                }
             },$rootScope.manageError);
         };
         $scope.listCities=function(){

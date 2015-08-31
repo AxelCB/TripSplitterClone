@@ -6,7 +6,9 @@ import org.kairos.tripSplitterClone.model.destination.City_;
 import org.kairos.tripSplitterClone.model.trip.Trip;
 import org.kairos.tripSplitterClone.model.trip.Trip_;
 import org.kairos.tripSplitterClone.model.trip.UserTrip;
+import org.kairos.tripSplitterClone.model.trip.UserTrip_;
 import org.kairos.tripSplitterClone.model.user.User;
+import org.kairos.tripSplitterClone.model.user.User_;
 import org.kairos.tripSplitterClone.utils.DozerUtils;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
@@ -70,16 +72,19 @@ public class TripDaoJPAImpl extends AbstractDao<Trip, TripVo> implements I_TripD
 	public List<TripVo> usersTrip(EntityManager em, UserVo userVo) throws Exception {
 		this.logger.debug("getting all trips for user: {}", userVo.getEmail());
 
+		List<TripVo> tripVoList = new ArrayList<>();
+
 		// builds the query
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Trip> query = builder.createQuery(this.getClazz());
 		Root<Trip> tripRoot = query.from(this.getClazz());
 		Join<Trip,UserTrip> userTripJoin = tripRoot.join(Trip_.travelers);
+		Join<UserTrip,User> userJoin = userTripJoin.join(UserTrip_.user);
 
 		Predicate filters = builder.conjunction();
 
 		// filters by name
-		filters = builder.and(filters, builder.);
+		filters = builder.and(filters, builder.equal(userJoin.get(User_.id),userVo.getId()));
 		// filters by the deleted flag
 		filters = builder.and(filters, builder.equal(tripRoot.get(Trip_.deleted)
 				.as(Boolean.class), Boolean.FALSE));
@@ -88,23 +93,13 @@ public class TripDaoJPAImpl extends AbstractDao<Trip, TripVo> implements I_TripD
 
 		try {
 			// fetch the document type
-			City city = em.createQuery(query).getSingleResult();
+			List<Trip> trips = em.createQuery(query).getResultList();
 
-			return this.map(city);
+			return this.map(trips);
 		} catch (NoResultException e) {
 			// there was no city with required name
 			return null;
 		}
-
-		List<TripVo> tripVoList = new ArrayList<>();
-		try{
-			User user = em.find(User.class, userVo.getId());
-			tripVoList = DozerUtils.map(this.getMapper(), user.getTrips(), TripVo.class, this.getMapId());
-
-		}catch (NoResultException nre) {
-			this.logger.debug("there was no result, we return 0");
-		}
-		return tripVoList;
 	}
 }
 

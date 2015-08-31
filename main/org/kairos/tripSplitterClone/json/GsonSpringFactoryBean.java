@@ -2,6 +2,8 @@ package org.kairos.tripSplitterClone.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
+import org.kairos.tripSplitterClone.vo.user.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
@@ -58,12 +60,16 @@ public class GsonSpringFactoryBean implements FactoryBean<Gson> {
 //					new BigDecimalTypeAdapter(this.bigDecimalUtils));
 
 			// exclude password from being exposed to the client
-//			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(
-//					UserVo.class, false, "password"));
+			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(
+					UserVo.class, false, "password"));
 
-			// point of sale circular reference avoidance
-//			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(
-//					AccountVo.class, false, "inMovements", "outMovements"));
+			// user vo trips circular reference avoidance
+			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(
+					UserVo.class, false, "trips"));
+
+			// user vo trips circular reference avoidance
+			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(
+					UserTripVo.class, false, "trip"));
 
 			// serializes complex map keys
 			gsb.enableComplexMapKeySerialization();

@@ -45,7 +45,7 @@ Repository and Service layers
     	<bean id="messageSolver" class="org.kairos.tripSplitterClone.web.MessageSolver" init-method="init">
     		<property name="defaultMessageLocale" value="${message.defaultMessageLocale}" />
     	</bean>
-    	<bean id="webContextHolder" class="org.kairos.tripSplitterClone.web.WebContextHolder" scope="request">
+    	<bean id="webContextHolder" class="org.kairos.tripSplitterClone.web.WebContextHolder" scope="session">
     		<aop:scoped-proxy/>
     	</bean>
     	

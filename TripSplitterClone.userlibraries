@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="aopalliance-1.0">
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/aopalliance-1.0.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/c3p0-0.9.1.1.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/commons-collections-3.2.1.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/commons-collections4-4.0.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/commons-io-2.0.1.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/commons-lang-2.6.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/commons-lang3-3.2.1.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/commons-pool-1.6.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/dozer-5.5.1.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/gson-2.2.4.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/javax.persistence-2.1.0.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/jcl-over-slf4j-1.7.5.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/log4j-1.2.17.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/pojomatic-1.0.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/postgresql-9.3-1101-jdbc4.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/slf4j-api-1.7.7.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/slf4j-log4j12-1.7.5.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-aop-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-beans-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-context-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-context-support-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-core-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-expression-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-jms-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-oxm-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-test-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-tx-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-web-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-webmvc-3.2.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-ws-core-2.1.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/spring-xml-2.1.4.RELEASE.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/testng-6.9.6.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/org.eclipse.persistence.antlr-2.6.0.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/org.eclipse.persistence.asm-2.6.0.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/org.eclipse.persistence.core-2.6.0.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/org.eclipse.persistence.jpa-2.6.0.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/org.eclipse.persistence.jpa.jpql-2.6.0.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/org.eclipse.persistence.jpa.modelgen.processor-2.6.0.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/eclipselink-2.6.0.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/commons-codec-1.6.jar" />
+    <archive path="E:/Workspaces/IntelliJ/TripSplitterClone/web/WEB-INF/lib/commons-beanutils-1.9.1.jar" />
+  </library>
+</eclipse-userlibraries>
+

@@ -4,6 +4,7 @@ import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +47,7 @@ public class UserVo extends AbstractVo implements Serializable {
 	/**
 	 * Collection of trips in which the user participates in.
 	 */
-	private List<UserTripVo> trips;
+	private List<UserTripVo> trips = new ArrayList<>();
 
 	/**
 	 * Empty Constructor

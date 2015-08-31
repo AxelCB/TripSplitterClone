@@ -27,6 +27,11 @@ public class UserTripVo extends AbstractVo implements Serializable{
 	 */
 	public UserTripVo() {}
 
+	public UserTripVo(UserVo user, TripVo trip) {
+		this.user = user;
+		this.trip = trip;
+	}
+
 	public UserVo getUser() {
 		return user;
 	}

@@ -6,6 +6,9 @@ import org.kairos.tripSplitterClone.fx.FxValidationResponse;
 import org.kairos.tripSplitterClone.fx.I_Fx;
 import org.kairos.tripSplitterClone.json.JsonResponse;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
+import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
+import org.kairos.tripSplitterClone.vo.user.UserVo;
+import org.kairos.tripSplitterClone.web.WebContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,11 @@ public class Fx_CreateTrip extends AbstractFxImpl implements I_Fx {
 	@Autowired
 	private I_TripDao dao;
 
+	/**
+	 * Owner (user)
+	 */
+	private UserVo owner;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -42,8 +50,12 @@ public class Fx_CreateTrip extends AbstractFxImpl implements I_Fx {
 		try {
 			this.beginTransaction();
 
+			this.getVo().setOwner(this.getOwner());
+			this.getVo().getTravelers().add(new UserTripVo(this.getOwner(),this.getVo()));
+
 			// we persist the entity
 			TripVo tripVo = this.getDao().persist(this.getEm(), this.getVo());
+
 			this.setVo(tripVo);
 
 			this.commitTransaction();
@@ -117,4 +129,11 @@ public class Fx_CreateTrip extends AbstractFxImpl implements I_Fx {
 		this.dao = dao;
 	}
 
+	public UserVo getOwner() {
+		return owner;
+	}
+
+	public void setOwner(UserVo owner) {
+		this.owner = owner;
+	}
 }

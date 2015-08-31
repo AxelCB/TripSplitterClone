@@ -6,6 +6,7 @@ import org.kairos.tripSplitterClone.vo.destination.CountryVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class TripVo extends AbstractVo implements Serializable {
 
-	private List<UserTripVo> travelers;
+	private List<UserTripVo> travelers = new ArrayList<>();
 
 	/**
 	 * Creator and owner of the trip

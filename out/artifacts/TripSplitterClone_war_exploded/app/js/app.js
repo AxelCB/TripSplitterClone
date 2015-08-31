@@ -262,7 +262,7 @@ angular.module('tripSplitterCloneApp', ['ngRoute','tripSplitterCloneControllers'
 			};
 			
 			i18n.init(i18nextOptions, function() {	
-				document.title = $rootScope.systemTitle;
+				document.title = "Trip Splitter Clone"; //$rootScope.systemTitle
 				// this flag is watched by the LoginCtrl, in order to construct the tooltip only
 				// when the i18n system has been initialized
 				$rootScope.readyToConstructTooltip = true;
