@@ -29,6 +29,7 @@ Repository and Service layers
 
 		<!-- Trip  -->
 		<bean id="fxCreateTrip" class="org.kairos.tripSplitterClone.fx.trip.Fx_CreateTrip" scope="prototype"/>
+		<bean id="fxModifyTrip" class="org.kairos.tripSplitterClone.fx.trip.Fx_ModifyTrip" scope="prototype"/>
 		<bean id="fxDeleteTrip" class="org.kairos.tripSplitterClone.fx.trip.Fx_DeleteTrip" scope="prototype"/>
 
 		<!-- Ant Mark -->

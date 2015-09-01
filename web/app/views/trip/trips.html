@@ -1,36 +1,38 @@
 <div class="row">
-    <div class="panel panel-default" ng-repeat="trip in trips">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{trip.destination.name}}, {{trip.destination.country.name}}</h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-8">
-                    <p><b>{{ 'trip.travelers.name' | translate }}:</b>
-                        <span ng-repeat="userTrip in trip.travelers">{{userTrip.user.name}}, </span>
-                    </p>
-                </div>
-                <div class="col-sm-1">
-                    <a href="" data-toggle="modal" data-target="#addTravelerModal">{{ 'trip.travelers.add' | translate }}
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                </div>
-                <div class="col-sm-1">
-                    <a href="" ng-click="deleteTrip();">{{ 'trip.travelers.add' | translate }}
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+    <div class="col-sm-12">
+        <div class="panel panel-default" ng-repeat="currentTrip in trips">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{currentTrip.destination.name}}, {{currentTrip.destination.country.name}}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p><b>{{ 'trip.travelers.name' | translate }}:</b>
+                            <span ng-repeat="userTrip in currentTrip.travelers">{{userTrip.user.name}}, </span>
+                        </p>
+                    </div>
+                    <div class="col-sm-1">
+                        <a href="" ng-click="showAddTravelerModal(currentTrip)">{{ 'trip.travelers.add' | translate }}
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                    </div>
+                    <div class="col-sm-1">
+                        <a href="" ng-click="deleteTrip(currentTrip);">{{ 'trip.delete' | translate }}
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-2 col-sm-offset-10">
-            <button class="btn btn-primary" id="btn_create" ng-click="go('/trip/new')" ng-disabled="editing">
-                {{ 'trip.new' | translate }}
-            </button>
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-10">
+                <button class="btn btn-primary" id="btn_create" ng-click="go('/trip/new')" ng-disabled="editing">
+                    {{ 'trip.new' | translate }}
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div ng-paginator="" name-space="tripNameSpace"></div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div ng-paginator="" name-space="tripNameSpace"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -44,15 +46,13 @@
                 <h4 class="modal-title" id="addTravelerModalLabel">{{ 'trip.travelers.addTravelerModal.title' }}</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" name="addTraveler">
+                <form class="form-horizontal" role="form" name="addTravelerForm">
 
                     <div class="form-group">
-                        <label for="countrySelect" class="col-xs-4 control-label">{{ 'country.label.name' | translate }}</label>
+                        <label for="travelerSelect" class="col-xs-4 control-label">{{ 'country.label.name' | translate }}</label>
                         <div class="col-xs-6">
-                            <select id="countrySelect" ng-model="selectedCountry" class="form-control">
-                                <option ng-repeat="country in countries" ng-click="otherCountry = false" value="{{ country }}">{{ country.name }}</option>
-                                <option value="" ng-click="otherCountry = true">Otro país</option>
-                            </select>
+                            <select id="travelerSelect" ng-model="selectedTraveler" class="form-control" ng-options="traveler as traveler.name for traveler in users | orderBy:'name'"></select>
+                            <!--| notCurrentlyTraveler: trip.travelers-->
                         </div>
                     </div>
 
@@ -61,6 +61,25 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">{{ 'default.cancel' | translate }}</button>
                 <button type="button" class="btn btn-primary" ng-click="addTraveler()">{{ 'default.create.save' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteTripModal" tabindex="-1" role="dialog" aria-labelledby="deleteTripModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteTripModalLabel">{{ 'trip.deleteTripModal.title' }}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{ 'trip.deleteTripModal.confirmation' | translate}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ 'default.cancel' | translate }}</button>
+                <button type="button" class="btn btn-primary" ng-click="remove()">{{ 'default.confirm' | translate }}</button>
             </div>
         </div>
     </div>

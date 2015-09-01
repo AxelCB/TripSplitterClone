@@ -8,7 +8,7 @@ import org.kairos.tripSplitterClone.model.destination.City;
 import org.kairos.tripSplitterClone.model.trip.UserTrip;
 import org.kairos.tripSplitterClone.model.user.User;
 
-@Generated(value="EclipseLink-2.6.0.v20150309-rNA", date="2015-08-31T01:06:13")
+@Generated(value="EclipseLink-2.6.0.v20150309-rNA", date="2015-09-01T09:03:54")
 @StaticMetamodel(Trip.class)
 public class Trip_ { 
 

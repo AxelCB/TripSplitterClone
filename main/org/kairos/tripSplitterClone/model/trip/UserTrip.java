@@ -31,7 +31,7 @@ public class UserTrip implements I_Model,Serializable{
 	/**
 	 * Logic deletion flag.
 	 */
-	private Boolean deleted;
+	private Boolean deleted = Boolean.FALSE;
 
 	/**
 	 * User

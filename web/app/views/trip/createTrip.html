@@ -6,7 +6,7 @@
             <div class="form-group">
                 <label for="destination" class="col-xs-2 control-label">{{ 'destination.label.name' | translate }}</label>
                 <div class="col-xs-7">
-                    <select id="destination" ng-model="trip.destination" ng-options="destination.name+','+destination.country.name for destination in cities" class="form-control"></select>
+                    <select id="destination" ng-model="trip.destination" ng-options="destination.name+','+destination.country.name for destination in cities | orderBy:'name'" class="form-control"></select>
                 </div>
 
                 <div class="col-xs-1">
@@ -52,10 +52,7 @@
                     <div class="form-group">
                         <label for="countrySelect" class="col-xs-4 control-label">{{ 'country.label.name' | translate }}</label>
                         <div class="col-xs-6">
-                            <select id="countrySelect" ng-model="selectedCountry" class="form-control">
-                                <option ng-repeat="country in countries" ng-click="otherCountry = false" value="{{ country }}">{{ country.name }}</option>
-                                <option value="" ng-click="otherCountry = true">Otro país</option>
-                            </select>
+                            <select id="countrySelect" ng-model="selectedCountry" class="form-control" ng-options="c as c.name for c in countries | orderBy:'name'" ng-click="otherCountry = (selectedCountry.id==null)"></select>
                         </div>
                     </div>
 
@@ -76,7 +73,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ 'default.cancel' | translate }}</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="city={};country={};">{{ 'default.cancel' | translate }}</button>
                 <button type="button" class="btn btn-primary" ng-click="createDestination()">{{ 'default.create.save' | translate }}</button>
             </div>
         </div>

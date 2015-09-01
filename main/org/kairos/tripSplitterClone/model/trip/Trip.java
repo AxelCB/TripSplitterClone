@@ -39,9 +39,9 @@ public class Trip implements Serializable,I_Model {
 	/**
 	 * Logic deletion flag.
 	 */
-	private Boolean deleted;
+	private Boolean deleted = Boolean.FALSE;
 
-	@OneToMany(mappedBy="trip")
+	@OneToMany(mappedBy="trip",cascade = CascadeType.ALL)
 	@Property(policy = PojomaticPolicy.NONE)
 	private List<UserTrip> travelers;
 

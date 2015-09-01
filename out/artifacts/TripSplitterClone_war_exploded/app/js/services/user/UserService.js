@@ -12,9 +12,9 @@ tripSplitterCloneModules.factory('UserService', function(TripSplitterCloneServic
 		//resetAnyUserPassword: function (params, successFn, errorFn) {
 		//	return UniverseService.authPost('/user/resetAnyUserPassword.json', params, successFn, errorFn);
 		//},
-		//search: function (params, successFn, errorFn) {
-		//	return UniverseService.authPost('/user/search.json', params, successFn, errorFn);
-		//},
+		listUsers: function (params, successFn, errorFn) {
+			return TripSplitterCloneService.authPost('/user/listAll.json', params, successFn, errorFn);
+		},
 		register: function (params, successFn, errorFn) {
 			return TripSplitterCloneService.authPost('/user/register.json', params, successFn, errorFn);
 		},

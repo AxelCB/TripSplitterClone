@@ -17,7 +17,7 @@ universeControllers.controller('TripCreateCtrl',['$scope', '$rootScope', 'TripSe
         $scope.country = {};
         $scope.selectedCountry = {};
         $scope.cities = [];
-        $scope.countries = [];
+        $scope.countries = [{'name':'Otro País','id':null}];
 
         var paginationHelper;
 
@@ -71,7 +71,10 @@ universeControllers.controller('TripCreateCtrl',['$scope', '$rootScope', 'TripSe
         $scope.cancel = function() {
             if ($scope.editing) {
 
-                $scope.trip = null;
+                $scope.trip = {};
+                if(cities.length>0){
+                    $scope.trip.destination=$scope.cities[0];
+                }
                 $scope.editing = false;
             }
 
@@ -83,7 +86,7 @@ universeControllers.controller('TripCreateCtrl',['$scope', '$rootScope', 'TripSe
         $scope.initialize = function() {
 
             $scope.editing = false;
-            $scope.trip = null;
+            $scope.trip = {};
 
             $rootScope.areErrorMessages = false;
         };
@@ -93,11 +96,13 @@ universeControllers.controller('TripCreateCtrl',['$scope', '$rootScope', 'TripSe
             if($scope.otherCountry){
                 $scope.city.country= $scope.country;
             }else{
-                $scope.city.country = JSON.parse($scope.selectedCountry);
+                $scope.city.country = $scope.selectedCountry;
             };
             DestinationService.createCity($scope.city,function(response){
                 if(response.ok){
                     $('#createDestinationModal').modal('hide');
+                    $scope.city={};
+                    $scope.country={};
                     $scope.listCities();
                     $scope.listCountries();
                 }
@@ -107,6 +112,7 @@ universeControllers.controller('TripCreateCtrl',['$scope', '$rootScope', 'TripSe
             DestinationService.listCities({},function(response) {
                 if (response.ok) {
                     $scope.cities = JSON.parse(response.data);
+                    $scope.trip.destination=$scope.cities[0];
                 }
             }, $rootScope.manageError);
         };
@@ -114,9 +120,16 @@ universeControllers.controller('TripCreateCtrl',['$scope', '$rootScope', 'TripSe
         $scope.listCountries=function(){
             DestinationService.listCountries({},function(response) {
                 if (response.ok) {
-                    $scope.countries = JSON.parse(response.data);
-                    if($scope.countries.length<=0){
+                    var countries = JSON.parse(response.data);
+                    countries.push($scope.countries[$scope.countries.length-1]);
+                    $scope.countries = countries;
+
+                    if($scope.countries.length<=1){
                         $scope.otherCountry=true;
+                        $scope.selectedCountry=$scope.countries[$scope.countries.length-1];
+                    }else{
+                        $scope.otherCountry=false;
+                        $scope.selectedCountry=$scope.countries[0];
                     };
                 }
             }, $rootScope.manageError);

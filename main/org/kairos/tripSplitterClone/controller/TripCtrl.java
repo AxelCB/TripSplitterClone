@@ -6,8 +6,10 @@ import org.kairos.tripSplitterClone.dao.trip.I_TripDao;
 import org.kairos.tripSplitterClone.fx.I_FxFactory;
 import org.kairos.tripSplitterClone.fx.trip.Fx_CreateTrip;
 import org.kairos.tripSplitterClone.fx.trip.Fx_DeleteTrip;
+import org.kairos.tripSplitterClone.fx.trip.Fx_ModifyTrip;
 import org.kairos.tripSplitterClone.json.JsonResponse;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
+import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 import org.kairos.tripSplitterClone.web.WebContextHolder;
 import org.slf4j.Logger;
@@ -102,10 +104,32 @@ public class TripCtrl {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/addParticipant.json")
-	public String addParticipant(@RequestBody String data){
-		//TODO: implement this
-		return null;
+	@RequestMapping(value = "/addTraveler.json")
+	public String addTraveler(@RequestBody String data){
+		this.logger.debug("calling TripCtrl.addTraveler()");
+		EntityManager em = this.getEntityManagerHolder().getEntityManager();
+		JsonResponse jsonResponse = null;
+
+		try {
+			TripVo tripVo = this.getGson().fromJson(data, TripVo.class);
+			for(UserTripVo userTripVo : tripVo.getTravelers()){
+				userTripVo.setTrip(tripVo);
+			}
+
+			Fx_ModifyTrip fx = this.getFxFactory().getNewFxInstance(Fx_ModifyTrip.class);
+			fx.setVo(tripVo);
+			fx.setEm(em);
+			this.logger.debug("executing Fx_CreateTrip");
+			jsonResponse = fx.execute();
+		} catch (Exception e) {
+			this.logger.debug("unexpected error", e);
+
+			jsonResponse = this.getWebContextHolder().unexpectedErrorResponse();
+		} finally {
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
+
+		return this.getGson().toJson(jsonResponse);
 	}
 
 	/**
@@ -123,7 +147,7 @@ public class TripCtrl {
 		try {
 			UserVo userVo = (UserVo)this.getWebContextHolder().getSession().getAttribute(this.getWebContextHolder().getToken());
 
-			List<TripVo> tripsVoList = this.getTripDao().usersTrip(em,userVo);
+			List<TripVo> tripsVoList = this.getTripDao().usersTrip(em, userVo);
 
 			jsonResponse = JsonResponse.ok(this.getGson().toJson(tripsVoList));
 		} catch (Exception e) {

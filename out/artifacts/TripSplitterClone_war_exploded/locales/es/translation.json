@@ -1275,7 +1275,13 @@
 			}
 		}
 	},
-	
+
+  	"trip":{
+	  	"deleteTripModal":{
+			"title":"Eliminar Viaje",
+		  	"confirmation":"¿Está seguro/a que desea eliminar este viaje? Todos sus participantes y gastos se eliminarán y no serán recuperables"
+		}
+	},
 	"login": {
 		"placeholder": {
 			"username": "Usuario",

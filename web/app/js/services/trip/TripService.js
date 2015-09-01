@@ -22,6 +22,9 @@ universeModules.factory('TripService', function(TripSplitterCloneService){
         },
         search: function (params, successFn, errorFn) {
             return TripSplitterCloneService.authPost('/trip/search.json', params, successFn, errorFn);
+        },
+        addTraveler: function (params, successFn, errorFn) {
+            return TripSplitterCloneService.authPost('/trip/addTraveler.json', params, successFn, errorFn);
         }
     };
 });

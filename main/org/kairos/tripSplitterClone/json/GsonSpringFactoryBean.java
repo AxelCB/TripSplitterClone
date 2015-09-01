@@ -60,8 +60,8 @@ public class GsonSpringFactoryBean implements FactoryBean<Gson> {
 //					new BigDecimalTypeAdapter(this.bigDecimalUtils));
 
 			// exclude password from being exposed to the client
-			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(
-					UserVo.class, false, "password"));
+//			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(
+//					UserVo.class, false, "password"));
 
 			// user vo trips circular reference avoidance
 			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(

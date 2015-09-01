@@ -32,7 +32,7 @@ public class User implements Serializable,I_Model {
 	/**
 	 * Logic deletion flag.
 	 */
-	private Boolean deleted;
+	private Boolean deleted = Boolean.FALSE;
 
 	/**
 	 * Email and also username

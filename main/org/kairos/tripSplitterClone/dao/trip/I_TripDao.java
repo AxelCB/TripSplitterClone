@@ -21,4 +21,9 @@ public interface I_TripDao extends I_Dao<TripVo> {
 	 */
 	public List<TripVo> usersTrip(EntityManager em,UserVo userVo) throws Exception;
 
+	/**
+	 * Returns wether the user is already a traveler of the trip,or not
+	 */
+	public Boolean isTraveler(EntityManager em,TripVo tripVo,UserVo userVo);
+
 }

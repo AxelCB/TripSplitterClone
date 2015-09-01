@@ -1,5 +1,6 @@
 package org.kairos.tripSplitterClone.vo;
 
+import org.kairos.tripSplitterClone.web.I_MessageSolver;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.PojomaticPolicy;
 import org.pojomatic.annotations.Property;
@@ -24,13 +25,14 @@ public abstract class AbstractVo implements Serializable  {
 	/**
 	 * Validates this VO.
 	 * 
-	 * @param wch the web context holder.
+//	 * @param wch the web context holder.
+	 * @param messageSolver the message solver
 	 * 
 	 * @return string iif is not valid
 	 */
-//	public String validate(I_MessageSolver messageSolver) {
-//		return null;
-//	}
+	public String validate(I_MessageSolver messageSolver) {
+		return null;
+	}
 	
 	/**
 	 * @return the id

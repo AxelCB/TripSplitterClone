@@ -6,11 +6,15 @@
  */
 var universeControllers = angular.module('tripSplitterCloneControllers');
 
-universeControllers.controller('TripCtrl',['$scope', '$rootScope', 'TripService', '$filter','DestinationService',
-    function($scope, $rootScope, TripService, $filter,DestinationService) {
+universeControllers.controller('TripCtrl',['$scope', '$rootScope', 'TripService', '$filter','DestinationService','UserService',
+    function($scope, $rootScope, TripService, $filter,DestinationService,UserService) {
         $scope.trip = {};
         $scope.trips = [];
         $scope.editing = false;
+        $scope.selectedTraveler = {};
+
+        $scope.users = [];
+        $scope.currentTrip = {};
 
         var paginationHelper;
 
@@ -25,6 +29,15 @@ universeControllers.controller('TripCtrl',['$scope', '$rootScope', 'TripService'
                     } else {
                         $scope.trips = responseObject;
                     }
+                }
+            }, $rootScope.manageError);
+        };
+
+        $scope.listUsers = function() {
+            UserService.listUsers({}, function(response) {
+                if (response.ok){
+                    $scope.users = JSON.parse(response.data);
+                    $scope.selectedTraveler = $scope.users[0];
                 }
             }, $rootScope.manageError);
         };
@@ -62,36 +75,65 @@ universeControllers.controller('TripCtrl',['$scope', '$rootScope', 'TripService'
         $scope.cancel = function() {
             if ($scope.editing) {
 
-                $scope.trip = null;
+                $scope.trip = {};
                 $scope.editing = false;
             }
 
             $scope.initialize();
         };
 
-        $scope.remove = function(trip) {
-            TripService.remove(trip, function(response) {
+        $scope.deleteTrip = function(trip){
+            $('#deleteTripModal').modal('show');
+            $scope.trip=trip;
+        };
+
+        $scope.remove = function() {
+            TripService.remove($scope.trip, function(response) {
                 if (response.ok) {
-                    $scope.trips.splice($scope.trips.indexOf(trip),
+                    $scope.trips.splice($scope.trips.indexOf($scope.trip),
                         1);
+                    $('#deleteTripModal').modal('hide');
                 }
             }, this.errorManager);
         };
+
+        $scope.addTraveler = function(){
+            var trip = {};
+            if($scope.selectedTraveler){
+                if(!$scope.trip.travelers){
+                    $scope.trip.travelers=[];
+                }
+                trip = angular.copy($scope.trip);
+                trip.travelers.push({'user':$scope.selectedTraveler});
+            };
+            TripService.addTraveler(trip,function(response){
+                if(response.ok){
+                    $scope.trip.travelers=trip.travelers;
+                    $('#addTravelerModal').modal('hide');
+                }
+            },$rootScope.manageError);
+
+        };
+
+        $scope.showAddTravelerModal = function(currentTrip){
+            $scope.trip = currentTrip;
+            $('#addTravelerModal').modal('show');
+        }
 
         paginationHelper = PaginationHelper($scope, 'tripNameSpace', true);
 
         $scope.initialize = function() {
 
             $scope.editing = false;
-            $scope.trip = null;
+            $scope.trip = {};
 
             if ($rootScope.canAccess('/configuration/trip:listTrip')) {
                 $scope.list();
+                $scope.listUsers();
             }
 
             $rootScope.areErrorMessages = false;
         };
         $scope.initialize();
-
     }
 ]);

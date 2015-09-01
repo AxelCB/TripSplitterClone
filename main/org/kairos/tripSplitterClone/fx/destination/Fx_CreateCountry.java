@@ -85,7 +85,7 @@ public class Fx_CreateCountry extends AbstractFxImpl implements I_Fx {
 		if (!this.getDao().checkNameUniqueness(this.getEm(),
 				this.getVo().getName(), null)) {
 			String jsonResponseMessage = this.getRealMessageSolver()
-					.getMessage("fx.Country.validation.nonUniqueName",
+					.getMessage("fx.country.validation.nonUniqueName",
 							new String[] { this.getVo().getName() });
 
 			return FxValidationResponse.error(jsonResponseMessage);

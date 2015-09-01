@@ -83,7 +83,7 @@ public class TripDaoJPAImpl extends AbstractDao<Trip, TripVo> implements I_TripD
 
 		Predicate filters = builder.conjunction();
 
-		// filters by name
+		// filters by user
 		filters = builder.and(filters, builder.equal(userJoin.get(User_.id),userVo.getId()));
 		// filters by the deleted flag
 		filters = builder.and(filters, builder.equal(tripRoot.get(Trip_.deleted)
@@ -99,6 +99,43 @@ public class TripDaoJPAImpl extends AbstractDao<Trip, TripVo> implements I_TripD
 		} catch (NoResultException e) {
 			// there was no city with required name
 			return null;
+		}
+	}
+
+	@Override
+	public Boolean isTraveler(EntityManager em, TripVo tripVo, UserVo userVo) {
+		this.logger.debug("checking if user: {} is traveler of trip: {}", userVo.getEmail(),tripVo);
+
+		// builds the query
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Trip> query = builder.createQuery(this.getClazz());
+		Root<Trip> tripRoot = query.from(this.getClazz());
+		Join<Trip,UserTrip> userTripJoin = tripRoot.join(Trip_.travelers);
+		Join<UserTrip,User> userJoin = userTripJoin.join(UserTrip_.user);
+
+		Predicate filters = builder.conjunction();
+
+		// filters by trip
+		filters = builder.and(filters, builder.equal(tripRoot.get(Trip_.id),tripVo.getId()));
+		// filters by user
+		filters = builder.and(filters, builder.equal(userJoin.get(User_.id),userVo.getId()));
+		// filters by the trip deleted flag
+		filters = builder.and(filters, builder.equal(tripRoot.get(Trip_.deleted).as(Boolean.class), Boolean.FALSE));
+		// filters by the user trip deleted flag
+		filters = builder.and(filters, builder.equal(userTripJoin.get(UserTrip_.deleted).as(Boolean.class), Boolean.FALSE));
+		// filters by the user deleted flag
+		filters = builder.and(filters, builder.equal(userJoin.get(User_.deleted).as(Boolean.class), Boolean.FALSE));
+
+		query.where(filters);
+
+		try {
+			// fetch the document type
+			Trip trip = em.createQuery(query).getSingleResult();
+
+			return trip!=null;
+		} catch (NoResultException e) {
+			// there was no city with required name
+			return Boolean.FALSE;
 		}
 	}
 }

@@ -2,9 +2,12 @@ package org.kairos.tripSplitterClone.controller;
 
 import com.google.gson.Gson;
 import org.kairos.tripSplitterClone.dao.EntityManagerHolder;
+import org.kairos.tripSplitterClone.dao.trip.I_TripDao;
+import org.kairos.tripSplitterClone.dao.user.I_UserDao;
 import org.kairos.tripSplitterClone.fx.I_FxFactory;
 import org.kairos.tripSplitterClone.fx.user.Fx_Login;
 import org.kairos.tripSplitterClone.json.JsonResponse;
+import org.kairos.tripSplitterClone.vo.destination.CityVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 import org.kairos.tripSplitterClone.web.WebContextHolder;
 import org.slf4j.Logger;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 /**
  * Created on 8/22/15 by
@@ -53,6 +57,12 @@ public class UserCtrl {
 	 */
 	@Autowired
 	private WebContextHolder webContextHolder;
+
+	/**
+	 * User Dao.
+	 */
+	@Autowired
+	private I_UserDao userDao;
 
 	/**
 	 * Registers a user.
@@ -97,6 +107,31 @@ public class UserCtrl {
 		return this.getGson().toJson(jsonResponse);
 	}
 
+	/**
+	 * Lists all users.
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/listAll.json")
+	public String listCities(@RequestBody String data){
+		this.logger.debug("calling UserCtrl.listAll()");
+		EntityManager em = this.getEntityManagerHolder().getEntityManager();
+		JsonResponse jsonResponse = null;
+		try {
+			List<UserVo> userVoList = this.getUserDao().listAll(em);
+
+			jsonResponse = JsonResponse.ok(this.getGson().toJson(userVoList));
+		} catch (Exception e) {
+			this.logger.debug("unexpected error", e);
+
+			jsonResponse = this.getWebContextHolder().unexpectedErrorResponse();
+		} finally {
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
+		return this.getGson().toJson(jsonResponse);
+	}
+
 	public Gson getGson() {
 		return gson;
 	}
@@ -127,5 +162,13 @@ public class UserCtrl {
 
 	public void setWebContextHolder(WebContextHolder webContextHolder) {
 		this.webContextHolder = webContextHolder;
+	}
+
+	public I_UserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(I_UserDao userDao) {
+		this.userDao = userDao;
 	}
 }

@@ -85,7 +85,7 @@ public class Fx_CreateCity extends AbstractFxImpl implements I_Fx {
 		if (!this.getDao().checkNameUniqueness(this.getEm(),
 				this.getVo().getName(), null)) {
 			String jsonResponseMessage = this.getRealMessageSolver()
-					.getMessage("fx.City.validation.nonUniqueName",
+					.getMessage("fx.city.validation.nonUniqueName",
 							new String[] { this.getVo().getName(),this.getVo().getCountry().getName() });
 
 			return FxValidationResponse.error(jsonResponseMessage);

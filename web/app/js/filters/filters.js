@@ -113,4 +113,24 @@ angular.module('filters', [])
                 input.push(i); //.toString().padLeft(2, "0")
             return input;
         };
+})
+.filter('notCurrentlyTraveler',function() {
+		return function(input,tripTravelers){
+			var notCurrentlyTravelers=[];
+			angular.forEach(input,function(index,user){
+				var isTraveler = false;
+
+				angular.forEach(tripTravelers,function(key,element){
+					if(input.id == element.user.id){
+						isTraveler = true;
+					};
+				});
+
+				if(!isTraveler){
+					notCurrentlyTravelers.push(user);
+				};
+			});
+			return notCurrentlyTravelers;
+
+		};
 });
