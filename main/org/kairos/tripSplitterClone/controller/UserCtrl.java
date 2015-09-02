@@ -6,6 +6,8 @@ import org.kairos.tripSplitterClone.dao.trip.I_TripDao;
 import org.kairos.tripSplitterClone.dao.user.I_UserDao;
 import org.kairos.tripSplitterClone.fx.I_FxFactory;
 import org.kairos.tripSplitterClone.fx.user.Fx_Login;
+import org.kairos.tripSplitterClone.fx.user.Fx_Logout;
+import org.kairos.tripSplitterClone.fx.user.Fx_Register;
 import org.kairos.tripSplitterClone.json.JsonResponse;
 import org.kairos.tripSplitterClone.vo.destination.CityVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
@@ -72,8 +74,27 @@ public class UserCtrl {
 	@ResponseBody
 	@RequestMapping(value = "/register.json")
 	public String register(@RequestBody String data){
-		//TODO: implement this
-		return null;
+		this.logger.debug("calling UserCtrl.register()");
+		EntityManager em = this.getEntityManagerHolder().getEntityManager();
+		JsonResponse jsonResponse = null;
+
+		try {
+			UserVo userVo = this.getGson().fromJson(data,UserVo.class);
+
+			Fx_Register fx = this.getFxFactory().getNewFxInstance(Fx_Register.class);
+			fx.setVo(userVo);
+			fx.setEm(em);
+			this.logger.debug("executing Fx_Register");
+			jsonResponse = fx.execute();
+		} catch (Exception e) {
+			this.logger.debug("unexpected error", e);
+
+			jsonResponse = this.getWebContextHolder().unexpectedErrorResponse();
+		} finally {
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
+
+		return this.getGson().toJson(jsonResponse);
 	}
 
 	/**
@@ -95,6 +116,37 @@ public class UserCtrl {
 			fx.setVo(userVo);
 			fx.setEm(em);
 			this.logger.debug("executing Fx_Login");
+			jsonResponse = fx.execute();
+		} catch (Exception e) {
+			this.logger.debug("unexpected error", e);
+
+			jsonResponse = this.getWebContextHolder().unexpectedErrorResponse();
+		} finally {
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
+
+		return this.getGson().toJson(jsonResponse);
+	}
+
+	/**
+	 * Logout a user.
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/logout.json")
+	public String logout(@RequestBody String data){
+		this.logger.debug("calling UserCtrl.logout()");
+		EntityManager em = this.getEntityManagerHolder().getEntityManager();
+		JsonResponse jsonResponse = null;
+
+		try {
+			UserVo userVo = this.getGson().fromJson(data,UserVo.class);
+
+			Fx_Logout fx = this.getFxFactory().getNewFxInstance(Fx_Logout.class);
+			fx.setVo(userVo);
+			fx.setEm(em);
+			this.logger.debug("executing Fx_Logout");
 			jsonResponse = fx.execute();
 		} catch (Exception e) {
 			this.logger.debug("unexpected error", e);

@@ -1,17 +1,15 @@
 <div class="row">
     <div class="col-xs-12">
-
         <form class="form-horizontal" role="form" name="myForm" >
-
             <div class="form-group">
-                <label for="destination" class="col-xs-2 control-label">{{ 'destination.label.name' | translate }}</label>
+                <label for="destination" class="col-xs-2 control-label">Destino</label>
                 <div class="col-xs-7">
                     <select id="destination" ng-model="trip.destination" ng-options="destination.name+','+destination.country.name for destination in cities | orderBy:'name'" class="form-control"></select>
                 </div>
 
                 <div class="col-xs-1">
                     <button class="btn btn-primary pull-right" id="btn_create_destination" data-toggle="modal" data-target="#createDestinationModal">
-                        {{ 'destination.new' | translate }}
+                        Crear Destino Nuevo
                     </button>
                 </div>
             </div>
@@ -22,19 +20,17 @@
 
 <div class="row">
     <div class="col-xs-6 col-sm-offset-6">
-
         <button class="btn btn-danger" id="btn_cancel" ng-click="go('/trip');">
-            {{ 'default.cancel' | translate }}
+            Cancelar
         </button>
 
         <button class="btn btn-default" id="btn_clean" ng-click="clean();">
-            {{ 'default.clean' | translate }}
+            Limpiar
         </button>
 
         <button class="btn btn-success" id="btn_create" ng-click="create();">
-            {{ 'default.create.save' | translate }}
+            Guardar
         </button>
-
     </div>
 </div>
 
@@ -44,37 +40,37 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="createDestinationModalLabel">{{destination.create.title}}</h4>
+                <h4 class="modal-title" id="createDestinationModalLabel">Nuevo Destino</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" name="newDestination">
 
                     <div class="form-group">
-                        <label for="countrySelect" class="col-xs-4 control-label">{{ 'country.label.name' | translate }}</label>
+                        <label for="countrySelect" class="col-xs-4 control-label">País:</label>
                         <div class="col-xs-6">
                             <select id="countrySelect" ng-model="selectedCountry" class="form-control" ng-options="c as c.name for c in countries | orderBy:'name'" ng-click="otherCountry = (selectedCountry.id==null)"></select>
                         </div>
                     </div>
 
                     <div class="form-group" ng-show="otherCountry">
-                        <label for="country" class="col-xs-4 control-label">{{ 'country.label.name' | translate }}</label>
+                        <label for="country" class="col-xs-4 control-label">Nombre del País:</label>
                         <div class="col-xs-6">
-                            <input type="text" id="country" placeholder="{{ 'country.placeholder.name' | translate }}" class="form-control" ng-model="country.name"/>
+                            <input type="text" id="country" placeholder="Ingrese el nombre del País" class="form-control" ng-model="country.name"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="city" class="col-xs-4 control-label">{{ 'city.label.name' | translate }}</label>
+                        <label for="city" class="col-xs-4 control-label">Ciudad:</label>
                         <div class="col-xs-6">
-                            <input type="text" id="city" placeholder="{{ 'city.placeholder.name' | translate }}" class="form-control" ng-model="city.name"/>
+                            <input type="text" id="city" placeholder="Ingrese el nombre de la ciudad" class="form-control" ng-model="city.name"/>
                         </div>
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="city={};country={};">{{ 'default.cancel' | translate }}</button>
-                <button type="button" class="btn btn-primary" ng-click="createDestination()">{{ 'default.create.save' | translate }}</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="city={};country={};">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="createDestination()">Guardar</button>
             </div>
         </div>
     </div>

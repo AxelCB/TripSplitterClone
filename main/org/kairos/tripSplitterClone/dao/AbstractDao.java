@@ -610,7 +610,7 @@ public abstract class AbstractDao<T extends I_Model, E extends AbstractVo>
 	 * Deletes an entity.
 	 * 
 	 * @param entityVo
-	 *            the entity to persist
+	 *            the entity to delete
 	 * @param em
 	 *            the entity manager
 	 */

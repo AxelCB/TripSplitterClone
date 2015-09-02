@@ -7,16 +7,16 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-8">
-                        <p><b>{{ 'trip.travelers.name' | translate }}:</b>
+                        <p><b>Participantes:</b>
                             <span ng-repeat="userTrip in currentTrip.travelers">{{userTrip.user.name}}, </span>
                         </p>
                     </div>
-                    <div class="col-sm-1">
-                        <a href="" ng-click="showAddTravelerModal(currentTrip)">{{ 'trip.travelers.add' | translate }}
+                    <div class="col-sm-2 text-center">
+                        <a href="" ng-click="showAddTravelerModal(currentTrip)">Agregar Participante
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
                     </div>
-                    <div class="col-sm-1">
-                        <a href="" ng-click="deleteTrip(currentTrip);">{{ 'trip.delete' | translate }}
+                    <div class="col-sm-1 text-center">
+                        <a href="" ng-click="deleteTrip(currentTrip);">Eliminar
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-sm-2 col-sm-offset-10">
                 <button class="btn btn-primary" id="btn_create" ng-click="go('/trip/new')" ng-disabled="editing">
-                    {{ 'trip.new' | translate }}
+                    Nuevo Viaje
                 </button>
             </div>
         </div>
@@ -43,13 +43,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addTravelerModalLabel">{{ 'trip.travelers.addTravelerModal.title' }}</h4>
+                <h4 class="modal-title" id="addTravelerModalLabel">Agregar Participante</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" name="addTravelerForm">
 
                     <div class="form-group">
-                        <label for="travelerSelect" class="col-xs-4 control-label">{{ 'country.label.name' | translate }}</label>
+                        <label for="travelerSelect" class="col-xs-4 control-label">Participante:</label>
                         <div class="col-xs-6">
                             <select id="travelerSelect" ng-model="selectedTraveler" class="form-control" ng-options="traveler as traveler.name for traveler in users | orderBy:'name'"></select>
                             <!--| notCurrentlyTraveler: trip.travelers-->
@@ -59,8 +59,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ 'default.cancel' | translate }}</button>
-                <button type="button" class="btn btn-primary" ng-click="addTraveler()">{{ 'default.create.save' | translate }}</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="addTraveler()">Guardar</button>
             </div>
         </div>
     </div>
@@ -72,14 +72,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="deleteTripModalLabel">{{ 'trip.deleteTripModal.title' }}</h4>
+                <h4 class="modal-title" id="deleteTripModalLabel">Eliminar Viaje</h4>
             </div>
             <div class="modal-body">
-                <p>{{ 'trip.deleteTripModal.confirmation' | translate}}</p>
+                <p>¿Esta seguro que desea eliminar este viaje? Se borrarán todos los gastos y deudas asociados al mismo.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ 'default.cancel' | translate }}</button>
-                <button type="button" class="btn btn-primary" ng-click="remove()">{{ 'default.confirm' | translate }}</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="remove()">Confirmar</button>
             </div>
         </div>
     </div>

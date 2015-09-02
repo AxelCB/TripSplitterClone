@@ -20,6 +20,7 @@ Repository and Service layers
 		<bean id="fxFactory" class="org.kairos.tripSplitterClone.fx.FxFactoryImpl" scope="prototype"/>
 
     	<!-- User -->
+		<bean id="registerFx" class="org.kairos.tripSplitterClone.fx.user.Fx_Register" scope="prototype"/>
 		<bean id="loginFx" class="org.kairos.tripSplitterClone.fx.user.Fx_Login" scope="prototype"/>
 		<bean id="logoutFx" class="org.kairos.tripSplitterClone.fx.user.Fx_Logout" scope="prototype"/>
 

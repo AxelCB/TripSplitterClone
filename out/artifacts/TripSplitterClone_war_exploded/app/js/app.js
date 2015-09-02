@@ -41,12 +41,12 @@ angular.module('tripSplitterCloneApp', ['ngRoute','tripSplitterCloneControllers'
 					}
 				}
 				
-				if (path == "/login" || path == "/register") {
+				if (path == "/login") {
 					if ($rootScope.loggedUser) {
 						next.redirectTo = "/";
 					}
 				} else {
-					if (!$rootScope.loggedUser) {
+					if (!$rootScope.loggedUser && path != "/register") {
 						next.redirectTo = "/login";
 					}
 				}

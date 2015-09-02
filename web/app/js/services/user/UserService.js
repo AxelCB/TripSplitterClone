@@ -16,10 +16,13 @@ tripSplitterCloneModules.factory('UserService', function(TripSplitterCloneServic
 			return TripSplitterCloneService.authPost('/user/listAll.json', params, successFn, errorFn);
 		},
 		register: function (params, successFn, errorFn) {
-			return TripSplitterCloneService.authPost('/user/register.json', params, successFn, errorFn);
+			return TripSplitterCloneService.post('/user/register.json', params, successFn, errorFn);
 		},
 		login: function (params, successFn, errorFn) {
 			return TripSplitterCloneService.post('/user/login.json', params, successFn, errorFn);
+		},
+		logout: function (params, successFn, errorFn) {
+			return TripSplitterCloneService.authPost('/user/logout.json', params, successFn, errorFn);
 		}
 	};
 });

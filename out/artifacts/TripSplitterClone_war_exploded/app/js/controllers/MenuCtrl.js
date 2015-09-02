@@ -3,8 +3,8 @@
  */
 var tripSplitterCloneControllers = angular.module('tripSplitterCloneControllers');
 
-tripSplitterCloneControllers.controller('MenuCtrl',['$scope', '$rootScope', '$location', '$route',
-	function($scope, $rootScope, $location, $route) {
+tripSplitterCloneControllers.controller('MenuCtrl',['$scope', '$rootScope', '$location', '$route','UserService','$cookieStore',
+	function($scope, $rootScope, $location, $route, UserService, $cookieStore) {
 
 		$scope.goTo = function(newUrl) {
 			if (newUrl == $location.path()) {
@@ -13,9 +13,19 @@ tripSplitterCloneControllers.controller('MenuCtrl',['$scope', '$rootScope', '$lo
 				$location.path(newUrl);
 			}
 		};
+
+		$scope._logout = function () {
+			//$rootScope.permissions = [];
+			$rootScope.loggedUser = null;
+			$cookieStore.remove("loggedUser");
+			$cookieStore.remove("userCredentials");
+			//we redirect to the /login
+			$rootScope.unDim();
+			$location.path("/login");
+		};
 		
 		$scope.logout = function() {
-			//LoginService.logout();
+			UserService.logout("",$scope._logout,$scope._logout);
 		};
 	}
 ]);
