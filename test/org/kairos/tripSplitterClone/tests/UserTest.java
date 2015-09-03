@@ -10,7 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.web.ServletTestExecutionListener;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -22,8 +28,14 @@ import java.util.List;
  *
  * @author AxelCollardBovy.
  */
-//@ContextConfiguration(locations = {"classpath:spring/mainContext.xml"})
-public class UserTest{// extends AbstractTestNGSpringContextTests{
+@WebAppConfiguration
+@ContextConfiguration(locations = {"classpath:spring/mainContext.xml","classpath:spring/servletContext.xml"})
+@TestExecutionListeners({
+		ServletTestExecutionListener.class,
+		DependencyInjectionTestExecutionListener.class,
+		DirtiesContextTestExecutionListener.class
+})
+public class UserTest extends AbstractTestNGSpringContextTests{
 
 	/**
 	 * Logger
@@ -42,11 +54,12 @@ public class UserTest{// extends AbstractTestNGSpringContextTests{
 	@Autowired
 	private I_UserDao userDao;
 
-	@BeforeTest
+	@BeforeClass(dependsOnMethods={"springTestContextPrepareTestInstance"})
 	private void initialize() {
 		EntityManager em = null,testEm = null;
 		try{
 			em = this.getEntityManagerHolder().getEntityManager();
+			testEm = this.getEntityManagerHolder().getTestEntityManager();
 
 			List<UserVo> userVoList = this.getUserDao().listAll(testEm);
 
@@ -57,6 +70,7 @@ public class UserTest{// extends AbstractTestNGSpringContextTests{
 
 		}catch(Exception ex){
 			this.logger.debug("User test could not be initialized",ex);
+			throw ex;
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 		}
@@ -94,6 +108,7 @@ public class UserTest{// extends AbstractTestNGSpringContextTests{
 			}
 		}catch(Exception ex){
 			this.logger.debug("User test failed running register test",ex);
+			throw ex;
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 			this.getEntityManagerHolder().closeEntityManager(testEm);
@@ -133,6 +148,7 @@ public class UserTest{// extends AbstractTestNGSpringContextTests{
 
 		}catch(Exception ex){
 			this.logger.debug("User test failed running login test",ex);
+			throw ex;
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 		}

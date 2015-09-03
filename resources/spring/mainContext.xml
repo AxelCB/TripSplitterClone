@@ -40,6 +40,7 @@
 		<bean id="entityManagerHolder" class="org.kairos.tripSplitterClone.dao.EntityManagerHolder" scope="singleton">
 			<constructor-arg value="${jpa.persistenceFile.location}"></constructor-arg>
 			<constructor-arg value="${jpa.persistenceUnitName}"></constructor-arg>
+			<constructor-arg value="${jpa.testPersistenceUnitName}"></constructor-arg>
 		</bean>
 
 		<!-- Dozer Mapper Config -->
@@ -61,6 +62,7 @@
 		<bean class = "org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
 
 		<!-- Cache / Session -->
-		<bean id="sessionUserCacheImpl" class="org.kairos.tripSplitterClone.services.caching.session.UserCacheSessionImpl" scope="request"/>
+		<!--<bean id="sessionUserCacheImpl" class="org.kairos.tripSplitterClone.services.caching.session.UserCacheSessionImpl" scope="request"/>-->
+		<bean id="sessionUserCacheImpl" class="org.kairos.tripSplitterClone.services.caching.session.UserCacheSessionImpl" scope="session"/>
 	</beans>
 </beans>

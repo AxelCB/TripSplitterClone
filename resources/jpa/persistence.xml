@@ -44,4 +44,45 @@
 			<property name="eclipselink.allow-zero-id" value="true"/>		
 		</properties>
 	</persistence-unit>
+
+
+	<persistence-unit name="tripSplitterCloneTestPU" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<non-jta-data-source>java:comp/env/tripSplitterCloneTestDS</non-jta-data-source>
+		<mapping-file>jpa/testSchema.xml</mapping-file>
+
+		<class>org.kairos.tripSplitterClone.model.account.Account</class>
+		<class>org.kairos.tripSplitterClone.model.account.Movement</class>
+		<class>org.kairos.tripSplitterClone.model.destination.City</class>
+		<class>org.kairos.tripSplitterClone.model.destination.Country</class>
+		<class>org.kairos.tripSplitterClone.model.trip.Trip</class>
+		<class>org.kairos.tripSplitterClone.model.trip.UserTrip</class>
+		<class>org.kairos.tripSplitterClone.model.user.User</class>
+
+		<properties>
+			<!--<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.PostgreSQLPlatform"/> -->
+
+			<!-- Allows the use of Log4J for logging -->
+			<!--<property name="eclipselink.logging.logger" value="org.eclipse.persistence.logging.Slf4jSessionLogger"/>-->
+
+			<property name="eclipselink.logging.level.sql" value="FINEST"/>
+			<property name="eclipselink.logging.parameters" value="true"/>
+
+			<property name="eclipselink.logging.session" value="true"/>
+			<property name="eclipselink.logging.thread" value="false"/>
+
+			<property name="eclipselink.cache.shared.default" value="false"/>
+
+			<!-- DO NOT attempt to create or update tables
+			<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="both"/>
+            -->
+			<!--<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>-->
+			<!--<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>-->
+
+			<property name="eclipselink.target-database" value="PostgreSQL"/>
+			<property name="eclipselink.jpa.uppercase-column-names" value="true"/>
+			<property name="eclipselink.allow-zero-id" value="true"/>
+		</properties>
+	</persistence-unit>
 </persistence>

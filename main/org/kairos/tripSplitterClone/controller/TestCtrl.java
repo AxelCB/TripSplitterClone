@@ -45,6 +45,7 @@ public class TestCtrl {
 
 		tripSplitterCloneTests.setTestClasses(new Class[]{UserTest.class, DestinationTest.class, TripTest.class});
 		tripSplitterCloneTests.addListener(tla);
+		tripSplitterCloneTests.setVerbose(10);
 		tripSplitterCloneTests.run();
 
 		return this.getGson().toJson(JsonResponse.ok("","Everything was done correctly"));

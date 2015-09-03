@@ -18,13 +18,16 @@ Repository and Service layers
     <beans>	    	    		
     	<!-- Controllers -->
     	<!-- User -->
-			<bean id="userCtrl" class="org.kairos.tripSplitterClone.controller.UserCtrl" scope="request"/>
+			<bean id="userCtrl" class="org.kairos.tripSplitterClone.controller.UserCtrl" scope="prototype"/>
+			<!--<bean id="userCtrl" class="org.kairos.tripSplitterClone.controller.UserCtrl" scope="request"/>-->
 
 		<!-- Trip -->
-			<bean id="tripCtrl" class="org.kairos.tripSplitterClone.controller.TripCtrl" scope="request"/>
+			<bean id="tripCtrl" class="org.kairos.tripSplitterClone.controller.TripCtrl" scope="prototype"/>
+			<!--<bean id="tripCtrl" class="org.kairos.tripSplitterClone.controller.TripCtrl" scope="request"/>-->
 
 		<!-- Destination -->
-			<bean id="destinationCtrl" class="org.kairos.tripSplitterClone.controller.DestinationCtrl" scope="request"/>
+			<bean id="destinationCtrl" class="org.kairos.tripSplitterClone.controller.DestinationCtrl" scope="prototype"/>
+			<!--<bean id="destinationCtrl" class="org.kairos.tripSplitterClone.controller.DestinationCtrl" scope="request"/>-->
 
 		<!-- Test -->
 			<bean id="testCtrl" class="org.kairos.tripSplitterClone.controller.TestCtrl" scope="request"/>

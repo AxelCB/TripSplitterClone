@@ -4,14 +4,22 @@ import com.google.gson.Gson;
 import org.kairos.tripSplitterClone.controller.TripCtrl;
 import org.kairos.tripSplitterClone.dao.EntityManagerHolder;
 import org.kairos.tripSplitterClone.dao.trip.I_TripDao;
+import org.kairos.tripSplitterClone.dao.user.I_UserDao;
 import org.kairos.tripSplitterClone.json.JsonResponse;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
+import org.kairos.tripSplitterClone.web.WebContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.web.ServletTestExecutionListener;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -24,8 +32,14 @@ import java.util.List;
  *
  * @author AxelCollardBovy.
  */
-//@ContextConfiguration(locations = {"classpath:spring/mainContext.xml"})
-public class TripTest {//extends AbstractTestNGSpringContextTests {
+@WebAppConfiguration
+@ContextConfiguration(locations = {"classpath:spring/mainContext.xml","classpath:spring/servletContext.xml"})
+@TestExecutionListeners({
+		ServletTestExecutionListener.class,
+		DependencyInjectionTestExecutionListener.class,
+		DirtiesContextTestExecutionListener.class
+})
+public class TripTest extends AbstractTestNGSpringContextTests {
 
 	/**
 	 * Logger
@@ -44,15 +58,16 @@ public class TripTest {//extends AbstractTestNGSpringContextTests {
 	@Autowired
 	private I_TripDao tripDao;
 
-	private HttpSession session;
+	@Autowired
+	private I_UserDao userDao;
 
-	@BeforeTest
-	private void initialize() {
+	@BeforeClass(dependsOnMethods={"springTestContextPrepareTestInstance"})
+	private void initialize()throws Exception{
 		EntityManager em = null;
 		try{
 			em = this.getEntityManagerHolder().getEntityManager();
 
-			UserVo sessionUser = (UserVo)this.getSession().getAttribute("loggedUser");
+			UserVo sessionUser = this.getUserDao().getByUsername(em,"test@test.com");
 
 			List<TripVo> tripVoList = this.getTripDao().usersTrip(em,sessionUser);
 
@@ -63,19 +78,20 @@ public class TripTest {//extends AbstractTestNGSpringContextTests {
 
 		}catch(Exception ex){
 			this.logger.debug("Trip test could not initalize",ex);
+			throw ex;
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 		}
 	}
 
 	@Test(groups = {"trip"})
-	public void createTripTest(){
+	public void createTripTest()throws Exception{
 		EntityManager em=null,testEm = null;
 		try{
 			testEm = this.getEntityManagerHolder().getTestEntityManager();
 			em = this.getEntityManagerHolder().getEntityManager();
 
-			UserVo sessionUser = (UserVo)this.getSession().getAttribute("loggedUser");
+			UserVo sessionUser = this.getUserDao().getByUsername(em,"test@test.com");
 
 			List<TripVo> tripVoList = this.getTripDao().usersTrip(testEm,sessionUser);
 
@@ -106,6 +122,7 @@ public class TripTest {//extends AbstractTestNGSpringContextTests {
 			}
 		}catch(Exception ex){
 			this.logger.debug("Trip test failed running create test",ex);
+			throw ex;
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 			this.getEntityManagerHolder().closeEntityManager(testEm);
@@ -113,14 +130,14 @@ public class TripTest {//extends AbstractTestNGSpringContextTests {
 	}
 
 	@Test(groups = {"trip"})
-	public void deleteTripTest(){
+	public void deleteTripTest()throws Exception{
 		EntityManager em=null;
 		try {
 			em = this.getEntityManagerHolder().getEntityManager();
 			List<TripVo> tripVoList = this.getTripDao().listAll(em);
 
 			TripVo tripVo = new TripVo();
-			tripVo.setId(tripVoList.get(tripVoList.size()).getId());
+			tripVo.setId(tripVoList.get(tripVoList.size()-1).getId());
 
 			JsonResponse response = this.getGson().fromJson(this.getTripCtrl().delete(this.getGson().toJson(tripVo)), JsonResponse.class);
 			TripVo persistedTripVo = this.getTripDao().getById(em,tripVo.getId());
@@ -131,17 +148,18 @@ public class TripTest {//extends AbstractTestNGSpringContextTests {
 			assert (persistedTripVo==null || !response.getOk()):"Shouldn't have been able to delete and returned ok, id:"+tripVo.getId();
 		}catch(Exception ex){
 			this.logger.debug("User test failed running delete test",ex);
+			throw ex;
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 		}
 	}
 
-	public HttpSession getSession() {
-		return session;
+	public I_UserDao getUserDao() {
+		return userDao;
 	}
 
-	public void setSession(HttpSession session) {
-		this.session = session;
+	public void setUserDao(I_UserDao userDao) {
+		this.userDao = userDao;
 	}
 
 	public TripCtrl getTripCtrl() {

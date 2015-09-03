@@ -42,7 +42,7 @@ public class EntityManagerHolder {
 	 * @param persistenceUnit
 	 *            the name of the persistence unit
 	 */
-	public EntityManagerHolder(String persistenceFile, String persistenceUnit) {
+	public EntityManagerHolder(String persistenceFile, String persistenceUnit,String testPersistenceUnit) {
 		this.logger
 				.debug("creating entity factory manager with persistence file: {} and persistence unit: {}",
 						persistenceFile, persistenceUnit);
@@ -57,6 +57,23 @@ public class EntityManagerHolder {
 				persistenceUnit, properties);
 		// creates entity manager just to generate the DDL on the DDBB
 		this.entityManagerFactory.createEntityManager();
+
+		if(testPersistenceUnit!=null){
+			this.logger
+					.debug("creating test entity factory manager with persistence file: {} and test persistence unit: {}",
+							persistenceFile, testPersistenceUnit);
+
+			// this tells the persistence unit file to the factory
+			Map<String, String> testProperties = new HashMap<>();
+			if (persistenceFile != null) {
+				testProperties.put("eclipselink.persistencexml", persistenceFile);
+			}
+
+			this.testEntityManagerFactory = Persistence.createEntityManagerFactory(
+					testPersistenceUnit, properties);
+			// creates entity manager just to generate the DDL on the DDBB
+			this.testEntityManagerFactory.createEntityManager();
+		}
 	}
 
 	/**
