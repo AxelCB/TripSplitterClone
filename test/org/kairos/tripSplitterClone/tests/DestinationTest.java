@@ -67,8 +67,6 @@ public class DestinationTest extends AbstractTestNGSpringContextTests {
 	@Autowired
 	private I_CityDao cityDao;
 
-	private HttpSession session;
-
 	@BeforeClass(dependsOnMethods={"springTestContextPrepareTestInstance"})
 	private void initialize() {
 		EntityManager em=null,testEm = null;
@@ -125,6 +123,13 @@ public class DestinationTest extends AbstractTestNGSpringContextTests {
                     assert (cityVo.getName()==null || cityVo.getName().equals(""))||response.getOk():"City name shouldn't be null or persisted";
 				}
 			}
+			if(cityVoList.size()>0){
+				JsonResponse response = this.getGson().fromJson(this.getDestinationCtrl().createCity(this.getGson().toJson(cityVoList.get(0))), JsonResponse.class);
+				if(response.getOk()){
+					assert !this.getCityDao().checkNameUniqueness(em,cityVoList.get(0).getName(),null):"Shouldn't persist this city; not unique name";
+				}
+			}
+
 		}catch(Exception ex){
 			this.logger.debug("Destination test failed running create city test",ex);
 			throw ex;
@@ -159,6 +164,12 @@ public class DestinationTest extends AbstractTestNGSpringContextTests {
                     assert ( countryVo.getName()==null ||  countryVo.getName().equals(""))||response.getOk():"Country name shouldn't be null or persisted";
                 }
             }
+			if(countryVoList.size()>0){
+				JsonResponse response = this.getGson().fromJson(this.getDestinationCtrl().createCity(this.getGson().toJson(countryVoList.get(0))), JsonResponse.class);
+				if(response.getOk()){
+					assert !this.getCountryDao().checkNameUniqueness(em,countryVoList.get(0).getName(),null):"Shouldn't persist this country; not unique name";
+				}
+			}
         }catch(Exception ex){
 	        this.logger.debug("Destination test failed running create country test",ex);
 	        throw ex;
@@ -168,53 +179,107 @@ public class DestinationTest extends AbstractTestNGSpringContextTests {
         }
     }
 
+//	@Test(groups = {"destination"})
+//	public void listDestinationsTest(){
+//		EntityManager em = null;
+//		try{
+//			em = this.getEntityManagerHolder().getEntityManager();
+//
+//			Type type = new TypeToken<DestinationVo>() {}.getType();
+//
+//			List<DestinationVo> destinations = this.getGson().fromJson(this.getDestinationCtrl().listDestinations(""), type);
+//
+//			List<CityVo> cities = this.getCityDao().listAll(em);
+//			List<CountryVo> countries = this.getCountryDao().listAll(em);
+//
+//			Long amountOfCities = this.getCityDao().countAll(em);
+//			Long amountOfCountries = this.getCountryDao().countAll(em);
+//			Long amountOfListedCities=0l;
+//			Long amountOfListedCountries=0l;
+//
+//			for(DestinationVo destinationVo : destinations){
+//				for (CityVo cityVo : cities){
+//					if(cityVo.getName().equals(destinationVo.getCityName())){
+//						amountOfListedCities++;
+//					}
+//				}
+//				for (CountryVo countryVo : countries){
+//					if(countryVo.getName().equals(destinationVo.getCountryName())){
+//						amountOfListedCities++;
+//					}
+//				}
+//			}
+//			assert amountOfCities.equals(amountOfListedCities):"Amount of listed cities isn't the same as the ones in the DB";
+//			assert amountOfCountries.equals(amountOfListedCountries):"Amount of listed cities isn't the same as the ones in the DB";
+//
+//		}catch(Exception ex){
+//			this.logger.debug("Destination test failed running list destinations test",ex);
+//			throw ex;
+//		}finally{
+//			this.getEntityManagerHolder().closeEntityManager(em);
+//		}
+//	}
+
 	@Test(groups = {"destination"})
-	public void listDestinationsTest(){
+	public void listCitiesTest(){
 		EntityManager em = null;
 		try{
 			em = this.getEntityManagerHolder().getEntityManager();
 
-			Type type = new TypeToken<DestinationVo>() {}.getType();
+			Type type = new TypeToken<CityVo>() {}.getType();
 
-			List<DestinationVo> destinations = this.getGson().fromJson(this.getDestinationCtrl().listDestinations(""), type);
+			List<CityVo> citiesVo = this.getGson().fromJson(this.getDestinationCtrl().listCities(""), type);
 
 			List<CityVo> cities = this.getCityDao().listAll(em);
-			List<CountryVo> countries = this.getCountryDao().listAll(em);
 
 			Long amountOfCities = this.getCityDao().countAll(em);
-			Long amountOfCountries = this.getCountryDao().countAll(em);
 			Long amountOfListedCities=0l;
-			Long amountOfListedCountries=0l;
 
-			for(DestinationVo destinationVo : destinations){
-				for (CityVo cityVo : cities){
-					if(cityVo.getName().equals(destinationVo.getCityName())){
-						amountOfListedCities++;
-					}
-				}
-				for (CountryVo countryVo : countries){
-					if(countryVo.getName().equals(destinationVo.getCountryName())){
+			for(CityVo cityVo : citiesVo){
+				for (CityVo city : cities){
+					if(cityVo.getName().equals(city.getName())&& cityVo.equals(city)){
 						amountOfListedCities++;
 					}
 				}
 			}
 			assert amountOfCities.equals(amountOfListedCities):"Amount of listed cities isn't the same as the ones in the DB";
-			assert amountOfCountries.equals(amountOfListedCountries):"Amount of listed cities isn't the same as the ones in the DB";
-
 		}catch(Exception ex){
-			this.logger.debug("Destination test failed running list destinations test",ex);
+			this.logger.debug("Destination test failed running list cities test",ex);
 			throw ex;
 		}finally{
 			this.getEntityManagerHolder().closeEntityManager(em);
 		}
 	}
+	@Test(groups = {"destination"})
+	public void listCountriesTest(){
+		EntityManager em = null;
+		try{
+			em = this.getEntityManagerHolder().getEntityManager();
 
-	public HttpSession getSession() {
-		return session;
-	}
+			Type type = new TypeToken<CountryVo>() {}.getType();
 
-	public void setSession(HttpSession session) {
-		this.session = session;
+			List<CountryVo> countriesVo = this.getGson().fromJson(this.getDestinationCtrl().listCountries(""), type);
+
+			List<CountryVo> countries = this.getCountryDao().listAll(em);
+
+			Long amountOfCountries = this.getCountryDao().countAll(em);
+			Long amountOfListedCountries=0l;
+
+			for(CountryVo countryVo : countriesVo){
+				for (CountryVo country : countries){
+					if(countryVo.getName().equals(country.getName())&& countryVo.equals(country)){
+						amountOfListedCountries++;
+					}
+				}
+			}
+			assert amountOfCountries.equals(amountOfListedCountries):"Amount of listed countries isn't the same as the ones in the DB";
+
+		}catch(Exception ex){
+			this.logger.debug("Destination test failed running list countries test",ex);
+			throw ex;
+		}finally{
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
 	}
 
 	public Gson getGson() {
