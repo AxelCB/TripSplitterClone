@@ -52,6 +52,10 @@ public class Fx_Register extends AbstractFxImpl implements I_Fx {
 	 */
 	@Override
 	protected FxValidationResponse validate() {
+		String result = this.getVo().validate(this.getWebContextHolder());
+		if (result != null) {
+			return FxValidationResponse.error(result);
+		}
 		if (!this.getUserDao().checkUsernameUniqueness(this.getEm(),
 				this.getVo().getEmail(), null)) {
 			return FxValidationResponse.error(this.getWebContextHolder()

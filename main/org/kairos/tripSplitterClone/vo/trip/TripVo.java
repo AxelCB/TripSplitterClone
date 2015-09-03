@@ -4,6 +4,7 @@ import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.destination.CityVo;
 import org.kairos.tripSplitterClone.vo.destination.CountryVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
+import org.kairos.tripSplitterClone.web.I_MessageSolver;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,14 +17,20 @@ import java.util.List;
  */
 public class TripVo extends AbstractVo implements Serializable {
 
-	private List<UserTripVo> travelers = new ArrayList<>();
-
 	/**
 	 * Creator and owner of the trip
 	 */
 	private UserVo owner;
 
+	/**
+	 * Trip's destination
+	 */
 	private CityVo destination;
+
+	/**
+	 * Trip's travelers
+	 */
+	private List<UserTripVo> travelers = new ArrayList<>();
 
 	/**
 	 * Empty Constructor
@@ -36,6 +43,17 @@ public class TripVo extends AbstractVo implements Serializable {
 		}else{
 			return Boolean.FALSE;
 		}
+	}
+
+	@Override
+	public String validate(I_MessageSolver messageSolver) {
+		if(this.getOwner()==null){
+			return messageSolver.getMessage("trip.field.owner.notNull");
+		}
+		if(this.getDestination()==null){
+			return messageSolver.getMessage("trip.field.destination.notNull");
+		}
+		return super.validate(messageSolver);
 	}
 
 	public List<UserTripVo> getTravelers() {

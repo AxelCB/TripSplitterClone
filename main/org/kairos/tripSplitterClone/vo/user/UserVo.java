@@ -1,7 +1,9 @@
 package org.kairos.tripSplitterClone.vo.user;
 
+import org.apache.commons.lang3.StringUtils;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
+import org.kairos.tripSplitterClone.web.I_MessageSolver;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -53,6 +55,20 @@ public class UserVo extends AbstractVo implements Serializable {
 	 * Empty Constructor
 	 */
 	public UserVo() {}
+
+	@Override
+	public String validate(I_MessageSolver messageSolver) {
+		if(StringUtils.isBlank(this.getEmail())){
+			return messageSolver.getMessage("user.field.email.notNull");
+		}
+		if(StringUtils.isBlank(this.getName())){
+			return messageSolver.getMessage("user.field.name.notNull");
+		}
+		if(StringUtils.isBlank(this.getPassword())){
+			return messageSolver.getMessage("user.field.password.notNull");
+		}
+		return super.validate(messageSolver);
+	}
 
 	public String getUsername() {
 		return email;

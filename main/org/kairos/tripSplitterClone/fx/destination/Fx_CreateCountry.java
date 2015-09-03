@@ -76,8 +76,7 @@ public class Fx_CreateCountry extends AbstractFxImpl implements I_Fx {
 	protected FxValidationResponse validate() {
 		this.logger.debug("executing Fx_CreateCountry._validate()");
 
-		String result =null;
-		//= this.getVo().validate(this.getWebContextHolder());
+		String result = this.getVo().validate(this.getWebContextHolder());
 		if (result != null) {
 			return FxValidationResponse.error(result);
 		}
