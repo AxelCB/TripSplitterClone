@@ -9,7 +9,9 @@ tripSplitterCloneControllers.controller('TestCtrl',['$scope', '$rootScope', '$lo
 
 		$scope.runTests = function(){
 			TestService.runTest(function(response){
-				alert(response);
+				if(response.ok){
+
+				}
 			},$rootScope.manageError);
 		};
 	}

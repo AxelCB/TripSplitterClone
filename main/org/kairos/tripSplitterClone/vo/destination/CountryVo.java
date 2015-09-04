@@ -21,7 +21,7 @@ public class CountryVo extends AbstractVo{
     @Override
     public String validate(I_MessageSolver messageSolver) {
         if(StringUtils.isBlank(this.getName())){
-            return messageSolver.getMessage("country.field.name.notNull");
+            return messageSolver.getMessage("fx.country.field.name.notNull");
         }
         return super.validate(messageSolver);
     }

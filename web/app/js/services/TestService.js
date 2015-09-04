@@ -8,6 +8,9 @@ tripSplitterCloneModules.factory('TestService', function(TripSplitterCloneServic
 	return {
 		runTest: function (successFn, errorFn) {
 			return TripSplitterCloneService.authPost('/test/run.json', "", successFn, errorFn);
+		},
+		runTestWithoutAuth: function (successFn, errorFn) {
+			return TripSplitterCloneService.post('/test/run.json', "", successFn, errorFn);
 		}
 	};
 });

@@ -49,7 +49,7 @@ public class TokenAuthenticationInterceptor extends HandlerInterceptorAdapter {
 																	// page
 			"/core/user/login.json", // in the login phase, we still don't have a
 									// generated token
-			"/login/registrationEnabled.json", // the user registration enabled
+			"/core/test/run.json", // the user registration enabled
 												// flag
 			"/core/user/register.json", // anything under the registration controller
 	};

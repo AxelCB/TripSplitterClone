@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.vo.user;
 
 import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.validator.routines.EmailValidator;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
 import org.kairos.tripSplitterClone.web.I_MessageSolver;
@@ -58,14 +59,18 @@ public class UserVo extends AbstractVo implements Serializable {
 
 	@Override
 	public String validate(I_MessageSolver messageSolver) {
+//		EmailValidator emailValidator = EmailValidator.getInstance();
 		if(StringUtils.isBlank(this.getEmail())){
-			return messageSolver.getMessage("user.field.email.notNull");
+			return messageSolver.getMessage("fx.user.field.email.notNull");
 		}
+//		if(!emailValidator.isValid(this.getEmail())){
+//			return messageSolver.getMessage("fx.user.field.email.wrongFormat");
+//		}
 		if(StringUtils.isBlank(this.getName())){
-			return messageSolver.getMessage("user.field.name.notNull");
+			return messageSolver.getMessage("fx.user.field.name.notNull");
 		}
 		if(StringUtils.isBlank(this.getPassword())){
-			return messageSolver.getMessage("user.field.password.notNull");
+			return messageSolver.getMessage("fx.user.field.password.notNull");
 		}
 		return super.validate(messageSolver);
 	}

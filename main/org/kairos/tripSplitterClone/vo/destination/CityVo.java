@@ -26,10 +26,10 @@ public class CityVo extends AbstractVo{
     @Override
     public String validate(I_MessageSolver messageSolver) {
         if(StringUtils.isBlank(this.getName())){
-            return messageSolver.getMessage("city.field.email.notNull");
+            return messageSolver.getMessage("fx.city.field.name.notNull");
         }
         if(this.getCountry()==null){
-            return messageSolver.getMessage("city.field.country.notNull");
+            return messageSolver.getMessage("fx.city.field.country.notNull");
         }
         return super.validate(messageSolver);
     }

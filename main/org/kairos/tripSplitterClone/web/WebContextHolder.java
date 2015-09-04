@@ -23,7 +23,7 @@ public class WebContextHolder implements I_MessageSolver {
 	/**
 	 * Current Locale.
 	 */
-	private Locale locale;
+	private Locale locale = new Locale("es");
 	
 	/**
 	 * User Info

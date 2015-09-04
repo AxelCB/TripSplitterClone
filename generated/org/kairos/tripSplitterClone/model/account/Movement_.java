@@ -7,7 +7,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import org.kairos.tripSplitterClone.model.account.Account;
 
-@Generated(value="EclipseLink-2.6.0.v20150309-rNA", date="2015-08-29T16:48:37")
+@Generated(value="EclipseLink-2.6.0.v20150309-rNA", date="2015-09-03T23:00:31")
 @StaticMetamodel(Movement.class)
 public class Movement_ { 
 

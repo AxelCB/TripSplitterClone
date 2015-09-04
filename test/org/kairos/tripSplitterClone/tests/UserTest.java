@@ -64,7 +64,10 @@ public class UserTest extends AbstractTestNGSpringContextTests{
 			List<UserVo> userVoList = this.getUserDao().listAll(testEm);
 
 			for(UserVo userVo : userVoList){
-				this.getUserDao().delete(em,userVo);
+				UserVo user = this.getUserDao().getByUsername(em,userVo.getUsername());
+				if(user!=null){
+					this.getUserDao().delete(em,user);
+				}
 			}
 			//TODO que hago acá?
 
@@ -88,6 +91,7 @@ public class UserTest extends AbstractTestNGSpringContextTests{
 			Long amountOfUsers,lastAmountOfUsers = this.getUserDao().countAll(em);
 
 			for(UserVo userVo : userVoList){
+				userVo.setId(null);
 				JsonResponse response = this.getGson().fromJson(this.getUserCtrl().register(this.getGson().toJson(userVo)), JsonResponse.class);
 				if(response.getOk()){
 					amountOfUsers = this.getUserDao().countAll(em);

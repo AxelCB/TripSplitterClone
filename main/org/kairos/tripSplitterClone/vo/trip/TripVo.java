@@ -47,11 +47,11 @@ public class TripVo extends AbstractVo implements Serializable {
 
 	@Override
 	public String validate(I_MessageSolver messageSolver) {
-		if(this.getOwner()==null){
-			return messageSolver.getMessage("trip.field.owner.notNull");
-		}
+//		if(this.getOwner()==null){
+//			return messageSolver.getMessage("fx.trip.field.owner.notNull");
+//		}
 		if(this.getDestination()==null){
-			return messageSolver.getMessage("trip.field.destination.notNull");
+			return messageSolver.getMessage("fx.trip.field.destination.notNull");
 		}
 		return super.validate(messageSolver);
 	}

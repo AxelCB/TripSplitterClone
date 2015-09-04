@@ -4,8 +4,8 @@
  */
 var tripSplitterCloneControllers = angular.module('tripSplitterCloneControllers');
 
-tripSplitterCloneControllers.controller('LoginCtrl',['$scope', '$rootScope', '$location', '$cookieStore','UserService',
-	function($scope, $rootScope, $location, $cookieStore,UserService) {
+tripSplitterCloneControllers.controller('LoginCtrl',['$scope', '$rootScope', '$location', '$cookieStore','UserService','TestService',
+	function($scope, $rootScope, $location, $cookieStore,UserService,TestService) {
 		// watches the $rootScope.readyToConstructTooltip flag, in order to construct the tooltip
 		// when we are sure that the i18n system is initialized
 		var stopWatching = $rootScope.$watch(function() { return $rootScope.readyToConstructTooltip; }, function() {
@@ -62,5 +62,13 @@ tripSplitterCloneControllers.controller('LoginCtrl',['$scope', '$rootScope', '$l
 		//LoginService.registrationEnabled(function(res) {
 		//	$scope.registrationEnabled = JSON.parse(res.data);
 		//}, $rootScope.manageError);
+
+		$scope.runTests = function(){
+			TestService.runTestWithoutAuth(function(response){
+				if(response.ok){
+
+				}
+			},$rootScope.manageError);
+		};
 	}
 ]);

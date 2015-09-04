@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.tests;
 
 import com.google.gson.Gson;
+import org.apache.commons.lang3.StringUtils;
 import org.kairos.tripSplitterClone.controller.TripCtrl;
 import org.kairos.tripSplitterClone.dao.EntityManagerHolder;
 import org.kairos.tripSplitterClone.dao.trip.I_TripDao;
@@ -25,6 +26,7 @@ import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,15 +69,24 @@ public class TripTest extends AbstractTestNGSpringContextTests {
 		try{
 			em = this.getEntityManagerHolder().getEntityManager();
 
-			UserVo sessionUser = this.getUserDao().getByUsername(em,"test@test.com");
+			String [] userNames = new String[]{"axel@axel.com","martin@martin.com","nicolas@nicolas.com"};
+			List<UserVo> users = new ArrayList<>();
 
-			List<TripVo> tripVoList = this.getTripDao().usersTrip(em,sessionUser);
+			for(String username : userNames){
+				UserVo user = this.getUserDao().getByUsername(em,username);
+				if(user!=null){
+					users.add(user);
+				}
+			}
 
-			for(TripVo tripVo : tripVoList){
-				this.getTripDao().delete(em,tripVo);
+			for(UserVo user : users){
+				List<TripVo> tripVoList = this.getTripDao().usersTrip(em,user);
+
+				for(TripVo tripVo : tripVoList){
+					this.getTripDao().delete(em,tripVo);
+				}
 			}
 			//TODO que hago acá?
-
 		}catch(Exception ex){
 			this.logger.debug("Trip test could not initalize",ex);
 			throw ex;
@@ -91,13 +102,14 @@ public class TripTest extends AbstractTestNGSpringContextTests {
 			testEm = this.getEntityManagerHolder().getTestEntityManager();
 			em = this.getEntityManagerHolder().getEntityManager();
 
-			UserVo sessionUser = this.getUserDao().getByUsername(em,"test@test.com");
+			UserVo sessionUser = this.getUserDao().getByUsername(em,"martin@martin.com");
 
 			List<TripVo> tripVoList = this.getTripDao().usersTrip(testEm,sessionUser);
 
 			Long amountOfTrips,lastAmountOfTrips = this.getTripDao().countAll(em);
 
 			for(TripVo tripVo : tripVoList){
+				tripVo.setId(null);
 				JsonResponse response = this.getGson().fromJson(this.getTripCtrl().create(this.getGson().toJson(tripVo)), JsonResponse.class);
 				if(response.getOk()){
 					amountOfTrips = this.getTripDao().countAll(em);

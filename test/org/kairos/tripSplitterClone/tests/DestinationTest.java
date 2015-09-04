@@ -2,6 +2,7 @@ package org.kairos.tripSplitterClone.tests;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.apache.commons.lang3.StringUtils;
 import org.kairos.tripSplitterClone.controller.DestinationCtrl;
 import org.kairos.tripSplitterClone.controller.TripCtrl;
 import org.kairos.tripSplitterClone.dao.EntityManagerHolder;
@@ -78,13 +79,21 @@ public class DestinationTest extends AbstractTestNGSpringContextTests {
 			List<CountryVo> countries = this.getCountryDao().listAll(testEm);
 
 			for(CityVo cityVo : cities){
-				CityVo city = this.getCityDao().findByName(em,cityVo.getName());
-				this.getCityDao().delete(em,city);
+				if(StringUtils.isNotBlank(cityVo.getName())){
+					CityVo city = this.getCityDao().findByName(em,cityVo.getName());
+					if(city!=null){
+						this.getCityDao().delete(em,city);
+					}
+				}
 			}
 
 			for(CountryVo countryVo : countries){
-				CountryVo country = this.getCountryDao().findByName(em,countryVo.getName());
-				this.getCountryDao().delete(em,country);
+				if(StringUtils.isNotBlank(countryVo.getName())) {
+					CountryVo country = this.getCountryDao().findByName(em, countryVo.getName());
+					if (country != null) {
+						this.getCountryDao().delete(em, country);
+					}
+				}
 			}
 
 			//TODO que hago acá?
@@ -110,6 +119,7 @@ public class DestinationTest extends AbstractTestNGSpringContextTests {
 			Long amountOfCities,lastAmountOfCities = this.getCityDao().countAll(em);
 
 			for(CityVo cityVo : cityVoList){
+				cityVo.setId(null);
 				JsonResponse response = this.getGson().fromJson(this.getDestinationCtrl().createCity(this.getGson().toJson(cityVo)), JsonResponse.class);
 				if(response.getOk()){
 					amountOfCities = this.getCityDao().countAll(em);
@@ -151,6 +161,7 @@ public class DestinationTest extends AbstractTestNGSpringContextTests {
             Long amountOfCountries,lastAmountOfCountries = this.getCityDao().countAll(em);
 
             for(CountryVo countryVo :  countryVoList){
+	            countryVo.setId(null);
                 JsonResponse response = this.getGson().fromJson(this.getDestinationCtrl().createCountry(this.getGson().toJson(countryVo)), JsonResponse.class);
                 if(response.getOk()){
                     amountOfCountries = this.getCountryDao().countAll(em);
@@ -226,9 +237,11 @@ public class DestinationTest extends AbstractTestNGSpringContextTests {
 		try{
 			em = this.getEntityManagerHolder().getEntityManager();
 
-			Type type = new TypeToken<CityVo>() {}.getType();
+			Type type = new TypeToken<List<CityVo>>() {}.getType();
 
-			List<CityVo> citiesVo = this.getGson().fromJson(this.getDestinationCtrl().listCities(""), type);
+			JsonResponse response = this.getGson().fromJson(this.getDestinationCtrl().listCities(""),JsonResponse.class);
+
+			List<CityVo> citiesVo = this.getGson().fromJson(response.getData(), type);
 
 			List<CityVo> cities = this.getCityDao().listAll(em);
 
@@ -256,9 +269,11 @@ public class DestinationTest extends AbstractTestNGSpringContextTests {
 		try{
 			em = this.getEntityManagerHolder().getEntityManager();
 
-			Type type = new TypeToken<CountryVo>() {}.getType();
+			Type type = new TypeToken<List<CountryVo>>() {}.getType();
 
-			List<CountryVo> countriesVo = this.getGson().fromJson(this.getDestinationCtrl().listCountries(""), type);
+			JsonResponse response = this.getGson().fromJson(this.getDestinationCtrl().listCountries(""), JsonResponse.class);
+
+			List<CountryVo> countriesVo = this.getGson().fromJson(response.getData(), type);
 
 			List<CountryVo> countries = this.getCountryDao().listAll(em);
 
