@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Logout function.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  */
 public class Fx_Logout extends AbstractFxImpl implements I_Fx {

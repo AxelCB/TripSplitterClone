@@ -5,8 +5,10 @@ import org.kairos.tripSplitterClone.utils.exception.CodedException;
 
 /**
  * Coded Exception that holds a JsonResponse to the user.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  *
  */
 public class ResponseException extends CodedException {

@@ -7,7 +7,9 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import java.util.Locale;
 
 /**
- * @author fgonzalez
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  */
 public class MessageSolver implements I_MessageSolver {

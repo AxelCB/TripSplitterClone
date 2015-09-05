@@ -19,8 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  * BCrypt hash help to improve security on brute force attacks (in the case that
  * the server is penetrated and the passwords hashes retrieved from the
  * database).
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  */
 public class PasswordUtils implements I_PasswordUtils {

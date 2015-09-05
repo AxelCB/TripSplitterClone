@@ -10,8 +10,10 @@ import java.io.IOException;
 
 /**
  * Servlet Filter for allowing Cross-Domain requests.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  *
  */
 public class CorsRequestFilter implements Filter {

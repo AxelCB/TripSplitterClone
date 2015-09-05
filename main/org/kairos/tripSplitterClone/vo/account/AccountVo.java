@@ -42,6 +42,13 @@ public class AccountVo extends AbstractVo implements Serializable {
 	public AccountVo() {
 	}
 
+	/**
+	 * Constructor with creation date
+	 */
+	public AccountVo(Date date) {
+		this.setCreation(date);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()

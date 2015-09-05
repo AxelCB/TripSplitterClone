@@ -4,8 +4,10 @@ import org.kairos.tripSplitterClone.vo.user.UserVo;
 
 /**
  * Manages the cache for the users.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  *
  */
 public interface I_UserCacheManager {

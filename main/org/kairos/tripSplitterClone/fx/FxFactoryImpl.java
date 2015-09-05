@@ -7,8 +7,10 @@ import org.springframework.context.ApplicationContext;
 
 /**
  * FX Factory implementation of the I_FxFactory interface.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  *
  */
 public class FxFactoryImpl implements I_FxFactory {

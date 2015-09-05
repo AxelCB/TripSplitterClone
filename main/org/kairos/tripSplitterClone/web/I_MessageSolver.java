@@ -3,7 +3,9 @@ package org.kairos.tripSplitterClone.web;
 import org.kairos.tripSplitterClone.json.JsonResponse;
 
 /**
- * @author fgonzalez
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  */
 public interface I_MessageSolver {

@@ -2,9 +2,7 @@ package org.kairos.tripSplitterClone.controller;
 
 import com.google.gson.Gson;
 import org.kairos.tripSplitterClone.json.JsonResponse;
-import org.kairos.tripSplitterClone.tests.DestinationTest;
-import org.kairos.tripSplitterClone.tests.TripTest;
-import org.kairos.tripSplitterClone.tests.UserTest;
+import org.kairos.tripSplitterClone.tests.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 
@@ -48,7 +47,42 @@ public class TestCtrl {
 //		tripSplitterCloneTests.setVerbose(2);
 		tripSplitterCloneTests.run();
 
-		return this.getGson().toJson(JsonResponse.ok("","Everything was done correctly"));
+		TestSuiteResultVo testSuiteResultVo = new TestSuiteResultVo();
+
+		for(ITestResult ngTestResult : tla.getFailedTests()){
+			TestResultVo testResultVo = new TestResultVo();
+			testResultVo.setClazz(ngTestResult.getTestClass().getRealClass().getSimpleName());
+			testResultVo.setMethod(ngTestResult.getMethod().getMethodName());
+
+			testSuiteResultVo.getFailedTests().add(testResultVo);
+		}
+		for(ITestResult ngTestResult : tla.getSkippedTests()){
+			TestResultVo testResultVo = new TestResultVo();
+			testResultVo.setClazz(ngTestResult.getTestClass().getRealClass().getSimpleName());
+			testResultVo.setMethod(ngTestResult.getMethod().getMethodName());
+
+			testSuiteResultVo.getSkippedTests().add(testResultVo);
+		}
+		for(ITestResult ngTestResult : tla.getConfigurationFailures()){
+			TestResultVo testResultVo = new TestResultVo();
+			testResultVo.setClazz(ngTestResult.getTestClass().getRealClass().getSimpleName());
+			testResultVo.setMethod(ngTestResult.getMethod().getMethodName());
+
+			testSuiteResultVo.getConfigurationFailures().add(testResultVo);
+		}
+		for(ITestResult ngTestResult : tla.getPassedTests()){
+			TestResultVo testResultVo = new TestResultVo();
+			testResultVo.setClazz(ngTestResult.getTestClass().getRealClass().getSimpleName());
+			testResultVo.setMethod(ngTestResult.getMethod().getMethodName());
+
+			testSuiteResultVo.getPassedTests().add(testResultVo);
+		}
+		if(tla.getFailedTests().size()>0 || tla.getConfigurationFailures().size()>0 || tla.getSkippedTests().size()>0){
+			return this.getGson().toJson(JsonResponse.error(this.getGson().toJson(testSuiteResultVo),"At least one of the tests either failed or was skipped"));
+		}else{
+			return this.getGson().toJson(JsonResponse.ok(this.getGson().toJson(testSuiteResultVo),"All tests passed successfully"));
+		}
+
 	}
 
 	private void exRun(){

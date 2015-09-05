@@ -12,8 +12,10 @@ import java.util.List;
 
 /**
  * General Interfaces for all Daos.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  * @param <E>
  *            the VO class that this DAO returns

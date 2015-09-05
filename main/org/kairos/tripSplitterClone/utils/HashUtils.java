@@ -8,8 +8,10 @@ import org.kairos.tripSplitterClone.vo.user.UserVo;
 
 /**
  * Utils Class for Managing Password Hashes
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  */
 public class HashUtils {

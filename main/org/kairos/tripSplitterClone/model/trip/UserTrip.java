@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.model.trip;
 
 import org.kairos.tripSplitterClone.model.I_Model;
+import org.kairos.tripSplitterClone.model.account.Account;
 import org.kairos.tripSplitterClone.model.user.User;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
@@ -9,6 +10,7 @@ import org.pojomatic.annotations.Property;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Created on 8/21/15 by
@@ -48,9 +50,18 @@ public class UserTrip implements I_Model,Serializable{
 	private Trip trip;
 
 	/**
+	 * User's Account on a Trip
+	 */
+	@OneToOne
+//	@Property(policy = PojomaticPolicy.NONE)
+	private Account account;
+
+	/**
 	 * Empty Constructor
 	 */
-	public UserTrip() {}
+	public UserTrip() {
+		this.setAccount(new Account(Calendar.getInstance().getTime()));
+	}
 
 	@Override
 	public Long getId() {
@@ -86,5 +97,13 @@ public class UserTrip implements I_Model,Serializable{
 
 	public void setTrip(Trip trip) {
 		this.trip = trip;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 }

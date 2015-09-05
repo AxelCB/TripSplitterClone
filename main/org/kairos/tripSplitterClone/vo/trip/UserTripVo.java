@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.vo.trip;
 
 import org.kairos.tripSplitterClone.vo.AbstractVo;
+import org.kairos.tripSplitterClone.vo.account.AccountVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 
 import java.io.Serializable;
@@ -21,6 +22,11 @@ public class UserTripVo extends AbstractVo implements Serializable{
 	 * Trip
 	 */
 	private TripVo trip;
+
+	/**
+	 * Account Vo
+	 */
+	private AccountVo account;
 
 	/**
 	 * Empty Constructor
@@ -46,5 +52,13 @@ public class UserTripVo extends AbstractVo implements Serializable{
 
 	public void setTrip(TripVo trip) {
 		this.trip = trip;
+	}
+
+	public AccountVo getAccount() {
+		return account;
+	}
+
+	public void setAccount(AccountVo account) {
+		this.account = account;
 	}
 }

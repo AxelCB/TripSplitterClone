@@ -9,8 +9,10 @@ import java.util.Locale;
 
 /**
  * Holds web context specific objects 
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  *
  */
 public class WebContextHolder implements I_MessageSolver {

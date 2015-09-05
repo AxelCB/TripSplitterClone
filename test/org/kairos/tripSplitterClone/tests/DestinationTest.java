@@ -4,17 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
 import org.kairos.tripSplitterClone.controller.DestinationCtrl;
-import org.kairos.tripSplitterClone.controller.TripCtrl;
 import org.kairos.tripSplitterClone.dao.EntityManagerHolder;
 import org.kairos.tripSplitterClone.dao.destination.I_CityDao;
 import org.kairos.tripSplitterClone.dao.destination.I_CountryDao;
-import org.kairos.tripSplitterClone.dao.trip.I_TripDao;
 import org.kairos.tripSplitterClone.json.JsonResponse;
 import org.kairos.tripSplitterClone.vo.destination.CityVo;
 import org.kairos.tripSplitterClone.vo.destination.CountryVo;
-import org.kairos.tripSplitterClone.vo.destination.DestinationVo;
-import org.kairos.tripSplitterClone.vo.trip.TripVo;
-import org.kairos.tripSplitterClone.vo.user.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +21,9 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.ServletTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -130,7 +123,7 @@ public class DestinationTest extends AbstractTestNGSpringContextTests {
                     }
 					lastAmountOfCities = amountOfCities;
 				}else{
-                    assert (cityVo.getName()==null || cityVo.getName().equals(""))||response.getOk():"City name shouldn't be null or persisted";
+                    assert (cityVo.getName()==null || cityVo.getName().equals("") || !this.getCityDao().checkNameUniqueness(em,cityVo.getName(),null)):"City name shouldn't be null or persisted";
 				}
 			}
 			if(cityVoList.size()>0){

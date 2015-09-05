@@ -8,6 +8,7 @@ import org.kairos.tripSplitterClone.fx.trip.Fx_CreateTrip;
 import org.kairos.tripSplitterClone.fx.trip.Fx_DeleteTrip;
 import org.kairos.tripSplitterClone.fx.trip.Fx_ModifyTrip;
 import org.kairos.tripSplitterClone.json.JsonResponse;
+import org.kairos.tripSplitterClone.vo.account.AccountVo;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.EntityManager;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -114,6 +116,7 @@ public class TripCtrl {
 			TripVo tripVo = this.getGson().fromJson(data, TripVo.class);
 			for(UserTripVo userTripVo : tripVo.getTravelers()){
 				userTripVo.setTrip(tripVo);
+				userTripVo.setAccount(new AccountVo(Calendar.getInstance().getTime()));
 			}
 
 			Fx_ModifyTrip fx = this.getFxFactory().getNewFxInstance(Fx_ModifyTrip.class);

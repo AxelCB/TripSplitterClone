@@ -16,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Login Function.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  *
  */
 public class Fx_Register extends AbstractFxImpl implements I_Fx {

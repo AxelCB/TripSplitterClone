@@ -2,8 +2,10 @@ package org.kairos.tripSplitterClone.fx;
 
 /**
  * I_Fx factory class. Creates new I_Fx's ready to be executed.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  *
  */
 public interface I_FxFactory {

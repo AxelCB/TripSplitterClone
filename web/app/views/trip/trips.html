@@ -11,11 +11,11 @@
                             <span ng-repeat="userTrip in currentTrip.travelers">{{userTrip.user.name}}, </span>
                         </p>
                     </div>
-                    <div class="col-sm-2 text-center">
+                    <div class="col-sm-2 text-center" ng-show="currentTrip.owner.id == loggedUser.id">
                         <a href="" ng-click="showAddTravelerModal(currentTrip)">Agregar Participante
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
                     </div>
-                    <div class="col-sm-1 text-center">
+                    <div class="col-sm-1 text-center" ng-show="currentTrip.owner.id == loggedUser.id">
                         <a href="" ng-click="deleteTrip(currentTrip);">Eliminar
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </div>

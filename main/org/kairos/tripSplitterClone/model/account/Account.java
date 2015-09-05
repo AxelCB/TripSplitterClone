@@ -78,6 +78,13 @@ public class Account implements Serializable, I_Model {
 	 */
 	public Account() {}
 
+	/**
+	 * Constructor with creation Date
+	 */
+	public Account(Date date) {
+		this.setCreation(date);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.tripSplitterClone.core.model.I_Model#getId()

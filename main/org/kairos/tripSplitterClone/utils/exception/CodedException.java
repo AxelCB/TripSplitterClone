@@ -3,8 +3,10 @@ package org.kairos.tripSplitterClone.utils.exception;
 /**
  * Represents an exception that has an error code so it can be easily tracked
  * down.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  */
 public class CodedException extends Exception {

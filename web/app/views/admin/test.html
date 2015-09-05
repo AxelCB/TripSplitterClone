@@ -3,3 +3,63 @@
         <button class="btn btn-default" ng-click="runTests()">Testear</button>
     </div>
 </div>
+<br>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="test in testResults.passedTests" class="success">
+                    <td>{{test.clazz}}</td>
+                    <td>{{test.method}}</td>
+                    <td>Passed</td>
+                </tr>
+                <tr style="font-weight:bold;">
+                    <!--ng-show="testResults.passedTests.length>0">-->
+                    <td>Total Passed Tests:</td>
+                    <td></td>
+                    <td>{{testResults.passedTests.length}}</td>
+                </tr>
+                <tr ng-repeat="test in testResults.skippedTests" class="info">
+                    <td>{{test.clazz}}</td>
+                    <td>{{test.method}}</td>
+                    <td>Skipped</td>
+                </tr>
+                <tr style="font-weight:bold;">
+                    <!--ng-show="testResults.skippedTests.length>0">-->
+                    <td>Total Skipped Tests:</td>
+                    <td></td>
+                    <td>{{testResults.skippedTests.length}}</td>
+                </tr>
+                <tr ng-repeat="test in testResults.configurationFailures" class="warning">
+                    <td>{{test.clazz}}</td>
+                    <td>{{test.method}}</td>
+                    <td>Configuration Failure</td>
+                </tr>
+                <tr style="font-weight:bold;">
+                    <!--ng-show="testResults.configurationFailures.length>0">-->
+                    <td>Total Configuration Failures:</td>
+                    <td></td>
+                    <td>{{testResults.configurationFailures.length}}</td>
+                </tr>
+                <tr ng-repeat="test in testResults.failedTests" class="danger">
+                    <td>{{test.clazz}}</td>
+                    <td>{{test.method}}</td>
+                    <td>Failed</td>
+                </tr>
+                <tr style="font-weight:bold;">
+                    <!--ng-show="testResults.failedTests.length>0">-->
+                    <td>Total Failed Tests:</td>
+                    <td></td>
+                    <td>{{testResults.failedTests.length}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

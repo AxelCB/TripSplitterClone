@@ -15,8 +15,10 @@ import com.google.gson.Gson;
 
 /**
  * Abstract FX implementation of the I_Fx interface
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  */
 public abstract class AbstractFxImpl implements I_Fx {

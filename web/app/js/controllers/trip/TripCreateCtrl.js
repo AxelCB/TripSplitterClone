@@ -99,10 +99,12 @@ universeControllers.controller('TripCreateCtrl',['$scope', '$rootScope', 'TripSe
                 $scope.city.country = $scope.selectedCountry;
             };
             DestinationService.createCity($scope.city,function(response){
+                $('#createDestinationModal').modal('hide');
                 if(response.ok){
-                    $('#createDestinationModal').modal('hide');
                     $scope.city={};
                     $scope.country={};
+                    $rootScope.keepMessagesCount=2;
+                    $rootScope.keepMessages = true;
                     $scope.listCities();
                     $scope.listCountries();
                 }

@@ -5,8 +5,10 @@ import java.math.BigDecimal;
 /**
  * Ugly fix to provide a way to decide between to types of representation
  * for the BigDecimal on a JSON Object.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  */
 public class BigDecimalWithoutTypeAdapting extends BigDecimal {

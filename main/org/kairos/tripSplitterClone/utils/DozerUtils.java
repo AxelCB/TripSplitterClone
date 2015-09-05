@@ -10,8 +10,10 @@ import org.kairos.tripSplitterClone.vo.AbstractVo;
 
 /**
  * Dozer Utils and Helper methods.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  */
 public class DozerUtils {

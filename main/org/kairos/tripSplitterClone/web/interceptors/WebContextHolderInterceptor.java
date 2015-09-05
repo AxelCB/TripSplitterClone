@@ -15,8 +15,10 @@ import java.util.Locale;
 
 /**
  * Intercepts the requests and sets the locale to the WebContextHolder
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  */
 public class WebContextHolderInterceptor extends HandlerInterceptorAdapter {

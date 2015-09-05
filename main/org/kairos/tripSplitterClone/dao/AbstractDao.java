@@ -22,8 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Typed Abstract DAO with common functionality.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  * 
  */
 public abstract class AbstractDao<T extends I_Model, E extends AbstractVo>
@@ -758,8 +760,10 @@ public abstract class AbstractDao<T extends I_Model, E extends AbstractVo>
 
 	/**
 	 * MapMethod to export mapping logic of this DAO.
-	 * 
-	 * @author fgonzalez
+	 *
+	 * Created on 8/27/15 by
+	 *
+	 * @author AxelCollardBovy.
 	 * 
 	 */
 	public class MapMethod {

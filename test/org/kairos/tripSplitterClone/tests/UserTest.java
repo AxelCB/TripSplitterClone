@@ -17,7 +17,6 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.ServletTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
@@ -107,7 +106,8 @@ public class UserTest extends AbstractTestNGSpringContextTests{
 					Boolean ok = userVo.getName()!=null && !userVo.getName().equals("");
 					ok = ok && userVo.getEmail()!=null && !userVo.getEmail().equals("");
 					ok = ok && userVo.getPassword()!=null && !userVo.getPassword().equals("");
-					assert ok:"User not persisted and none null nor blank fields";
+					ok = ok && this.getUserDao().checkUsernameUniqueness(em,userVo.getUsername(),null);
+					assert !ok:"User not persisted and none null nor blank fields";
 				}
 			}
 		}catch(Exception ex){

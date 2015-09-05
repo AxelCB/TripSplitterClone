@@ -6,8 +6,10 @@ import java.util.List;
 
 /**
  * Validation response of an Fx.validate() call
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  *
  */
 public class FxValidationResponse {

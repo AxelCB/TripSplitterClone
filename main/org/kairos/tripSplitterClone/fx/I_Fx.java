@@ -7,8 +7,10 @@ import javax.persistence.EntityManager;
 
 /**
  * General Interface for Fx's.
- * 
- * @author fgonzalez
+ *
+ * Created on 8/27/15 by
+ *
+ * @author AxelCollardBovy.
  *
  */
 public interface I_Fx {
