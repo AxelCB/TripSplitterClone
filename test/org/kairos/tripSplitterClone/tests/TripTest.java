@@ -157,12 +157,38 @@ public class TripTest extends AbstractTestNGSpringContextTests {
 			tripVo.setId(tripVoList.get(tripVoList.size()-1).getId());
 
 			JsonResponse response = this.getGson().fromJson(this.getTripCtrl().delete(this.getGson().toJson(tripVo)), JsonResponse.class);
-			TripVo persistedTripVo = this.getTripDao().getById(em,tripVo.getId());
+			TripVo persistedTripVo = this.getTripDao().getById(em, tripVo.getId());
 			assert (persistedTripVo!=null && response.getOk()):"Couldn't delete trip correctly, id:"+tripVo.getId();
 
 			tripVo = new TripVo();
 			response = this.getGson().fromJson(this.getTripCtrl().delete(this.getGson().toJson(tripVo)),JsonResponse.class);
 			assert (persistedTripVo==null || !response.getOk()):"Shouldn't have been able to delete and returned ok, id:"+tripVo.getId();
+		}catch(Exception ex){
+			this.logger.debug("Test test failed running delete test",ex);
+			throw ex;
+		}finally{
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
+	}
+
+	@Test(groups = {"trip"},dependsOnMethods = "createTripTest",dependsOnGroups = {"user","destination"})
+	public void addTravelerTest()throws Exception{
+		EntityManager em=null;
+		try {
+			em = this.getEntityManagerHolder().getEntityManager();
+			List<TripVo> tripVoList = this.getTripDao().listAll(em);
+
+			UserVo userAriel = this.getUserDao().getByUsername(em, "ariel@ariel.com");
+
+			TripVo tripVo = tripVoList.get(tripVoList.size() - 1);
+			UserTripVo userTripVo = new UserTripVo();
+			userTripVo.setUser(userAriel);
+			tripVo.getTravelers().add(userTripVo);
+
+			JsonResponse response = this.getGson().fromJson(this.getTripCtrl().addTraveler(this.getGson().toJson(tripVo)), JsonResponse.class);
+			TripVo persistedTripVo = this.getTripDao().getById(em,tripVo.getId());
+			assert (persistedTripVo.getTravelers().size()==tripVo.getTravelers().size()
+					&&  persistedTripVo.getTravelers().get(persistedTripVo.getTravelers().size()-1).equals(userAriel) && response.getOk()):"Couldn't add traveler to trip, id:"+tripVo.getId();
 		}catch(Exception ex){
 			this.logger.debug("Test test failed running delete test",ex);
 			throw ex;
