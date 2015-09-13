@@ -75,7 +75,6 @@ public class TripTest extends AbstractTestNGSpringContextTests {
 					users.add(user);
 				}
 			}
-
 			for(UserVo user : users){
 				List<TripVo> tripVoList = this.getTripDao().usersTrip(em,user);
 
@@ -109,12 +108,19 @@ public class TripTest extends AbstractTestNGSpringContextTests {
 			for(TripVo tripVo : tripVoList){
 				tripVo.setId(null);
 				tripVo.setOwner(user);
-				for(UserTripVo userTripVo : tripVo.getTravelers()){
-					UserVo userTripVoUser = this.getUserDao().getByUsername(em,userTripVo.getUser().getUsername());
-					if(userTripVoUser!=null){
-						userTripVo.setUser(userTripVoUser);
-					}
-				}
+				tripVo.setTravelers(new ArrayList<>());
+				tripCtrl.getWebContextHolder().setUserVo(user);
+//				for(UserTripVo userTripVo : tripVo.getTravelers()){
+//					UserVo userTripVoUser = this.getUserDao().getByUsername(em,userTripVo.getUser().getUsername());
+//					if(userTripVoUser!=null){
+//						userTripVo= new UserTripVo();
+//						userTripVo.setUser(userTripVoUser);
+//						userTripVo.setTrip(tripVo);
+//						userTripVo.setId(null);
+//					}else{
+//						tripVo.getTravelers().remove(userTripVo);
+//					}
+//				}
 				JsonResponse response = this.getGson().fromJson(this.getTripCtrl().create(this.getGson().toJson(tripVo)), JsonResponse.class);
 				if(response.getOk()){
 					amountOfTrips = this.getTripDao().countAll(em);

@@ -51,7 +51,9 @@ public class Fx_CreateTrip extends AbstractFxImpl implements I_Fx {
 			this.beginTransaction();
 
 			this.getVo().setOwner(this.getOwner());
-			this.getVo().getTravelers().add(new UserTripVo(this.getOwner(),this.getVo()));
+			UserTripVo userTripVo = new UserTripVo(this.getOwner(),this.getVo());
+			this.getVo().getTravelers().add(userTripVo);
+			this.getVo().getOwner().getTrips().add(userTripVo);
 
 			// we persist the entity
 			TripVo tripVo = this.getDao().persist(this.getEm(), this.getVo());

@@ -5,6 +5,7 @@ import org.pojomatic.Pojomatic;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,17 +25,17 @@ public class AccountVo extends AbstractVo implements Serializable {
 	/**
 	 * Current balance of the account.
 	 */
-	private BigDecimal balance;
+	private BigDecimal balance = new BigDecimal(0);
 
 	/**
 	 * List of all out movements.
 	 */
-	private List<MovementVo> outMovements;
+	private List<MovementVo> outMovements = new ArrayList<>();;
 
 	/**
 	 * List of all in movements.
 	 */
-	private List<MovementVo> inMovements;
+	private List<MovementVo> inMovements = new ArrayList<>();;
 
 	/**
 	 * Empty Constructor

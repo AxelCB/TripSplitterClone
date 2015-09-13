@@ -10,6 +10,7 @@ import org.pojomatic.annotations.Property;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -74,7 +75,14 @@ public class Movement implements Serializable, I_Model {
 	/**
 	 * Empty Constructor
 	 */
-	public Movement() {}
+	public Movement() {
+		this.timestamp = Calendar.getInstance().getTime();
+	}
+
+	public Movement(BigDecimal amount, Date timestamp) {
+		this.amount = amount;
+		this.timestamp = timestamp;
+	}
 
 	/**
 	 * Fixes the accounts relations.

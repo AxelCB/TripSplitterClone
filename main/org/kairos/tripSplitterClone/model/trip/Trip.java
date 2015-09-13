@@ -2,6 +2,7 @@ package org.kairos.tripSplitterClone.model.trip;
 
 import org.kairos.tripSplitterClone.model.I_Model;
 import org.kairos.tripSplitterClone.model.destination.City;
+import org.kairos.tripSplitterClone.model.expense.Expense;
 import org.kairos.tripSplitterClone.model.user.User;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
@@ -10,6 +11,7 @@ import org.pojomatic.annotations.Property;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,9 +43,9 @@ public class Trip implements Serializable,I_Model {
 	 */
 	private Boolean deleted = Boolean.FALSE;
 
-	@OneToMany(mappedBy="trip",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="trip")
 	@Property(policy = PojomaticPolicy.NONE)
-	private List<UserTrip> travelers;
+	private List<UserTrip> travelers = new ArrayList<>();
 
 	/**
 	 * Creator and owner of the trip
@@ -58,6 +60,13 @@ public class Trip implements Serializable,I_Model {
 	@ManyToOne
 	@Property(policy = PojomaticPolicy.NONE)
 	private City destination;
+
+	/**
+	 * Expenses
+	 */
+	@OneToMany(mappedBy="trip",cascade = CascadeType.ALL)
+	@Property(policy = PojomaticPolicy.NONE)
+	private List<Expense> expenses = new ArrayList<>();
 
 	/**
 	 * Empty Constructor

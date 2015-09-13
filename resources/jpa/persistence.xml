@@ -14,7 +14,10 @@
 		<class>org.kairos.tripSplitterClone.model.account.Movement</class>
 		<class>org.kairos.tripSplitterClone.model.destination.City</class>
 		<class>org.kairos.tripSplitterClone.model.destination.Country</class>
+		<class>org.kairos.tripSplitterClone.model.expense.Expense</class>
+		<class>org.kairos.tripSplitterClone.model.expense.ExpenseMovement</class>
 		<class>org.kairos.tripSplitterClone.model.trip.Trip</class>
+		<class>org.kairos.tripSplitterClone.model.trip.Debt</class>
 		<class>org.kairos.tripSplitterClone.model.trip.UserTrip</class>
 		<class>org.kairos.tripSplitterClone.model.user.User</class>
 
@@ -56,7 +59,10 @@
 		<class>org.kairos.tripSplitterClone.model.account.Movement</class>
 		<class>org.kairos.tripSplitterClone.model.destination.City</class>
 		<class>org.kairos.tripSplitterClone.model.destination.Country</class>
+		<class>org.kairos.tripSplitterClone.model.expense.Expense</class>
+		<class>org.kairos.tripSplitterClone.model.expense.ExpenseMovement</class>
 		<class>org.kairos.tripSplitterClone.model.trip.Trip</class>
+		<class>org.kairos.tripSplitterClone.model.trip.Debt</class>
 		<class>org.kairos.tripSplitterClone.model.trip.UserTrip</class>
 		<class>org.kairos.tripSplitterClone.model.user.User</class>
 

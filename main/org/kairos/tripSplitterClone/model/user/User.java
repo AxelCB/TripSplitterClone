@@ -9,6 +9,7 @@ import org.pojomatic.annotations.Property;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,7 +65,7 @@ public class User implements Serializable,I_Model {
 	 */
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
 	@Property(policy = PojomaticPolicy.NONE)
-	private List<UserTrip> trips;
+	private List<UserTrip> trips = new ArrayList<>();
 
 	/**
 	 * Empty Constructor

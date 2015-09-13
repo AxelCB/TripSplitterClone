@@ -10,6 +10,7 @@ import org.pojomatic.annotations.Property;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class Account implements Serializable, I_Model {
 	/**
 	 * Logic deletion flag.
 	 */
-	private Boolean deleted;
+	private Boolean deleted = Boolean.FALSE;
 
 	/**
 	 * Timestamp for the creation of the account.
@@ -53,7 +54,7 @@ public class Account implements Serializable, I_Model {
 	 * Current balance of the account.
 	 */
 	@Column(precision=19, scale=2)
-	private BigDecimal balance;
+	private BigDecimal balance = new BigDecimal(0);
 
 //	/**
 //	 * Account floor.
@@ -65,13 +66,13 @@ public class Account implements Serializable, I_Model {
 	 * List of all out movements.
 	 */
 	@OneToMany(mappedBy="from")
-	private List<Movement> outMovements;
+	private List<Movement> outMovements = new ArrayList<>();
 
 	/**
 	 * List of all in movements.
 	 */
 	@OneToMany(mappedBy="to")
-	private List<Movement> inMovements;
+	private List<Movement> inMovements = new ArrayList<>();
 
 	/**
 	 * Empty Constructor
