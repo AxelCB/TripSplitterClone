@@ -21,7 +21,17 @@ public class CityVo extends AbstractVo{
      */
     private CountryVo country;
 
+    /**
+     * Default empty constructor
+     */
     public CityVo(){}
+
+    /**
+     * Constructor with country
+     */
+    public CityVo(CountryVo country){
+        this.country=country;
+    }
 
     @Override
     public String validate(I_MessageSolver messageSolver) {

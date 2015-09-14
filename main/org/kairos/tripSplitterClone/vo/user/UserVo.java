@@ -3,6 +3,7 @@ package org.kairos.tripSplitterClone.vo.user;
 import org.apache.commons.lang3.StringUtils;
 //import org.apache.commons.validator.routines.EmailValidator;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
+import org.kairos.tripSplitterClone.vo.trip.TripVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
 import org.kairos.tripSplitterClone.web.I_MessageSolver;
 
@@ -133,5 +134,30 @@ public class UserVo extends AbstractVo implements Serializable {
 
 	public void setLoginAttempts(Integer loginAttempts) {
 		this.loginAttempts = loginAttempts;
+	}
+
+	public void addTrip(TripVo trip){
+		Boolean found = Boolean.FALSE;
+		for(UserTripVo userTripVo : this.getTrips()){
+			if(userTripVo.getTrip().equals(trip)){
+				found = Boolean.TRUE;
+				break;
+			}
+		}
+		if(!found){
+			this.getTrips().add(new UserTripVo(this,trip));
+		}
+	}
+
+	public TripVo removeTrip(TripVo trip){
+		Boolean found = Boolean.FALSE;
+		for(UserTripVo userTripVo : this.getTrips()){
+			if(userTripVo.getTrip().equals(trip)){
+				found = Boolean.TRUE;
+				this.getTrips().remove(userTripVo);
+				return userTripVo.getTrip();
+			}
+		}
+		return null;
 	}
 }

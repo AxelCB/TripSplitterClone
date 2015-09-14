@@ -1,11 +1,14 @@
 package org.kairos.tripSplitterClone.vo.account;
 
 import org.kairos.tripSplitterClone.vo.AbstractVo;
+import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
+import org.kairos.tripSplitterClone.vo.user.UserVo;
 import org.pojomatic.Pojomatic;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -103,6 +106,11 @@ public class AccountVo extends AbstractVo implements Serializable {
 	 */
 	public void setBalance(BigDecimal balance) {
 		this.balance = balance;
+	}
+
+	public void spend(BigDecimal amount){
+		MovementVo movement = new MovementVo(this,null,Calendar.getInstance().getTime(),amount);
+		
 	}
 
 }

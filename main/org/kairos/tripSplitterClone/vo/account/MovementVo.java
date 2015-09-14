@@ -40,6 +40,21 @@ public class MovementVo extends AbstractVo implements Serializable{
 	public MovementVo() {}
 
 	/**
+	 * Constructor with fields
+	 *
+	 * @param to
+	 * @param from
+	 * @param timestamp
+	 * @param amount
+	 */
+	public MovementVo(AccountVo to, AccountVo from, Date timestamp, BigDecimal amount) {
+		this.to = to;
+		this.from = from;
+		this.timestamp = timestamp;
+		this.amount = amount;
+	}
+
+	/**
 	 * @return the amount
 	 */
 	public BigDecimal getAmount() {

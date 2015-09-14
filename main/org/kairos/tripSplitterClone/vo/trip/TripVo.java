@@ -37,6 +37,13 @@ public class TripVo extends AbstractVo implements Serializable {
 	 */
 	public TripVo() {}
 
+	/**
+	 * Constructor with Owner
+	 */
+	public TripVo(UserVo owner) {
+		this.owner = owner;
+	}
+
 	public Boolean isOwner(UserVo user){
 		if(user.equals(owner)){
 			return Boolean.TRUE;
@@ -86,5 +93,30 @@ public class TripVo extends AbstractVo implements Serializable {
 
 	public void setCity(CityVo city) {
 		this.destination = city;
+	}
+
+	public void addTraveler(UserVo traveler){
+		Boolean found = Boolean.FALSE;
+		for(UserTripVo userTripVo : this.getTravelers()){
+			if(userTripVo.getUser().equals(traveler)){
+				found = Boolean.TRUE;
+				break;
+			}
+		}
+		if(!found){
+			this.getTravelers().add(new UserTripVo(traveler,this));
+		}
+	}
+
+	public UserVo removeTraveler(UserVo traveler){
+		Boolean found = Boolean.FALSE;
+		for(UserTripVo userTripVo : this.getTravelers()){
+			if(userTripVo.getUser().equals(traveler)){
+				found = Boolean.TRUE;
+				this.getTravelers().remove(userTripVo);
+				return userTripVo.getUser();
+			}
+		}
+		return null;
 	}
 }

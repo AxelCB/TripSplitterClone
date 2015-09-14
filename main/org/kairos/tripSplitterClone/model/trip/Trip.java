@@ -4,6 +4,7 @@ import org.kairos.tripSplitterClone.model.I_Model;
 import org.kairos.tripSplitterClone.model.destination.City;
 import org.kairos.tripSplitterClone.model.expense.Expense;
 import org.kairos.tripSplitterClone.model.user.User;
+import org.kairos.tripSplitterClone.vo.user.UserVo;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
 import org.pojomatic.annotations.PojomaticPolicy;
