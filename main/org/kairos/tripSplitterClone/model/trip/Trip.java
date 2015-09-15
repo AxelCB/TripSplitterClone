@@ -82,7 +82,18 @@ public class Trip implements Serializable,I_Model {
 		}
 	}
 
-	@Override
+    /**
+     * Constructor with owner and destination fields
+     *
+     * @param owner
+     * @param destination
+     */
+    public Trip(User owner, City destination) {
+        this.owner = owner;
+        this.destination = destination;
+    }
+
+    @Override
 	public Long getId() {
 		return id;
 	}

@@ -2,6 +2,8 @@ package org.kairos.tripSplitterClone.model.user;
 
 import org.kairos.tripSplitterClone.model.I_Model;
 import org.kairos.tripSplitterClone.model.trip.UserTrip;
+import org.kairos.tripSplitterClone.utils.HashUtils;
+import org.kairos.tripSplitterClone.utils.Parameters;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
 import org.pojomatic.annotations.PojomaticPolicy;
@@ -72,7 +74,22 @@ public class User implements Serializable,I_Model {
 	 */
 	public User() {}
 
-	public String getEmail() {
+    /**
+     * Constructor with email, password and name
+     *
+     * @param email
+     * @param password
+     * @param name
+     */
+    public User(String email, String password, String name) {
+        this.email = email;
+        this.password = HashUtils.hashPassword(password, Parameters.HASH_COST);
+        this.name = name;
+        this.loginAttempts = 0;
+        this.hashCost = Parameters.HASH_COST;
+    }
+
+    public String getEmail() {
 		return email;
 	}
 

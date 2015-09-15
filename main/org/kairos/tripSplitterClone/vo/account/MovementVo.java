@@ -1,5 +1,6 @@
 package org.kairos.tripSplitterClone.vo.account;
 
+import org.kairos.tripSplitterClone.model.account.E_MovementStatus;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.pojomatic.Pojomatic;
 
@@ -34,10 +35,30 @@ public class MovementVo extends AbstractVo implements Serializable{
 	 */
 	private AccountVo to;
 
+    /**
+     * Movement Status
+     */
+    private E_MovementStatus status = E_MovementStatus.PENDING;
+
 	/**
 	 * Empty Constructor
 	 */
 	public MovementVo() {}
+
+    /**
+     * Constructor with fields without status
+     *
+     * @param to
+     * @param from
+     * @param timestamp
+     * @param amount
+     */
+    public MovementVo(AccountVo to, AccountVo from, Date timestamp, BigDecimal amount) {
+        this.to = to;
+        this.from = from;
+        this.timestamp = timestamp;
+        this.amount = amount;
+    }
 
 	/**
 	 * Constructor with fields
@@ -46,13 +67,19 @@ public class MovementVo extends AbstractVo implements Serializable{
 	 * @param from
 	 * @param timestamp
 	 * @param amount
+     * @param status
 	 */
-	public MovementVo(AccountVo to, AccountVo from, Date timestamp, BigDecimal amount) {
+	public MovementVo(AccountVo to, AccountVo from, Date timestamp, BigDecimal amount,E_MovementStatus status) {
 		this.to = to;
 		this.from = from;
 		this.timestamp = timestamp;
 		this.amount = amount;
+        this.status = status;
 	}
+
+    public void pay(){
+        this.setStatus(E_MovementStatus.PAID);
+    }
 
 	/**
 	 * @return the amount
@@ -144,4 +171,11 @@ public class MovementVo extends AbstractVo implements Serializable{
 		return Pojomatic.hashCode(this);
 	}
 
+    public E_MovementStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(E_MovementStatus status) {
+        this.status = status;
+    }
 }

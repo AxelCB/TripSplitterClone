@@ -17,7 +17,6 @@
 		<class>org.kairos.tripSplitterClone.model.expense.Expense</class>
 		<class>org.kairos.tripSplitterClone.model.expense.ExpenseMovement</class>
 		<class>org.kairos.tripSplitterClone.model.trip.Trip</class>
-		<class>org.kairos.tripSplitterClone.model.trip.Debt</class>
 		<class>org.kairos.tripSplitterClone.model.trip.UserTrip</class>
 		<class>org.kairos.tripSplitterClone.model.user.User</class>
 
@@ -41,7 +40,7 @@
             <property name="eclipselink.ddl-generation.output-mode" value="both"/>
             -->
 			<!--<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>-->
-			<!--<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>-->
+			<!-- <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/> -->
 	 		 	
 			<property name="eclipselink.target-database" value="PostgreSQL"/>
 			<property name="eclipselink.jpa.uppercase-column-names" value="true"/>	
@@ -62,7 +61,6 @@
 		<class>org.kairos.tripSplitterClone.model.expense.Expense</class>
 		<class>org.kairos.tripSplitterClone.model.expense.ExpenseMovement</class>
 		<class>org.kairos.tripSplitterClone.model.trip.Trip</class>
-		<class>org.kairos.tripSplitterClone.model.trip.Debt</class>
 		<class>org.kairos.tripSplitterClone.model.trip.UserTrip</class>
 		<class>org.kairos.tripSplitterClone.model.user.User</class>
 
@@ -87,7 +85,7 @@
             <property name="eclipselink.ddl-generation.output-mode" value="both"/>
             -->
 			<!--<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>-->
-			<!--<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>-->
+			<!-- <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/> -->
 
 			<property name="eclipselink.target-database" value="PostgreSQL"/>
 			<property name="eclipselink.jpa.uppercase-column-names" value="true"/>
