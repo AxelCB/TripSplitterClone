@@ -72,6 +72,12 @@ public class Movement implements Serializable, I_Model {
 	@Property(policy = PojomaticPolicy.NONE)
 	private Account to;
 
+    /**
+     * Movement status
+     */
+    @Enumerated(EnumType.STRING)
+    private E_MovementStatus status;
+
 	/**
 	 * Empty Constructor
 	 */
@@ -231,4 +237,11 @@ public class Movement implements Serializable, I_Model {
 		return Pojomatic.hashCode(this);
 	}
 
+    public E_MovementStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(E_MovementStatus status) {
+        this.status = status;
+    }
 }

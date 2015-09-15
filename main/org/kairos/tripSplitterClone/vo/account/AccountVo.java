@@ -1,5 +1,6 @@
 package org.kairos.tripSplitterClone.vo.account;
 
+import org.kairos.tripSplitterClone.model.account.E_MovementStatus;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
@@ -108,9 +109,26 @@ public class AccountVo extends AbstractVo implements Serializable {
 		this.balance = balance;
 	}
 
-	public void spend(BigDecimal amount){
-		MovementVo movement = new MovementVo(this,null,Calendar.getInstance().getTime(),amount);
-		
+    public void addInMovement(MovementVo movementVo){
+        this.inMovements.add(movementVo);
+    }
+
+    public void addOutMovement(MovementVo movementVo){
+        this.outMovements.add(movementVo);
+    }
+
+    public void spend(BigDecimal amount){
+        MovementVo movement = new MovementVo(null,this,Calendar.getInstance().getTime(),amount,E_MovementStatus.PAID);
+        this.outMovements.add(movement);
 	}
 
+    public void earn(BigDecimal amount){
+        MovementVo movement = new MovementVo(this,null,Calendar.getInstance().getTime(),amount,E_MovementStatus.PAID);
+        this.inMovements.add(movement);
+    }
+    public void transfer(BigDecimal amount,AccountVo recipient){
+        MovementVo movement = new MovementVo(recipient,this,Calendar.getInstance().getTime(),amount);
+        this.outMovements.add(movement);
+        recipient.addInMovement(movement);
+    }
 }

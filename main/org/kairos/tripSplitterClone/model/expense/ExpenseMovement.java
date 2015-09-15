@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.model.expense;
 
 import org.kairos.tripSplitterClone.model.I_Model;
+import org.kairos.tripSplitterClone.model.account.Movement;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
 import org.pojomatic.annotations.PojomaticPolicy;
@@ -29,6 +30,16 @@ public class ExpenseMovement implements Serializable,I_Model {
 	 */
 	private Boolean deleted = Boolean.FALSE;
 
+    /**
+     * Movement
+     */
+    private Movement movement;
+
+    /**
+     * Expense
+     */
+    private Expense expense;
+
 	@Override
 	public Long getId() {
 		return id;
@@ -48,4 +59,20 @@ public class ExpenseMovement implements Serializable,I_Model {
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
+
+    public Movement getMovement() {
+        return movement;
+    }
+
+    public void setMovement(Movement movement) {
+        this.movement = movement;
+    }
+
+    public Expense getExpense() {
+        return expense;
+    }
+
+    public void setExpense(Expense expense) {
+        this.expense = expense;
+    }
 }

@@ -2,6 +2,8 @@ package org.kairos.tripSplitterClone.vo.user;
 
 import org.apache.commons.lang3.StringUtils;
 //import org.apache.commons.validator.routines.EmailValidator;
+import org.kairos.tripSplitterClone.utils.HashUtils;
+import org.kairos.tripSplitterClone.utils.Parameters;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
@@ -57,6 +59,21 @@ public class UserVo extends AbstractVo implements Serializable {
 	 * Empty Constructor
 	 */
 	public UserVo() {}
+
+    /**
+     * Constructor with email, password and name
+     *
+     * @param email
+     * @param password
+     * @param name
+     */
+    public UserVo(String email, String password, String name) {
+        this.email = email;
+        this.password = HashUtils.hashPassword(password, Parameters.HASH_COST);
+        this.name = name;
+        this.loginAttempts = 0;
+        this.hashCost = Parameters.HASH_COST;
+    }
 
 	@Override
 	public String validate(I_MessageSolver messageSolver) {
