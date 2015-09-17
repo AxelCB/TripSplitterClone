@@ -1,15 +1,7 @@
 package org.kairos.tripSplitterClone.vo.expense;
 
-import org.kairos.tripSplitterClone.model.I_Model;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.account.MovementVo;
-import org.pojomatic.annotations.AutoProperty;
-import org.pojomatic.annotations.DefaultPojomaticPolicy;
-import org.pojomatic.annotations.PojomaticPolicy;
-import org.pojomatic.annotations.Property;
-
-import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Created on 9/10/15 by
@@ -27,6 +19,22 @@ public class ExpenseMovementVo extends AbstractVo {
      * Movement
      */
     private MovementVo movement;
+
+    /**
+     * Default empty constructor
+     */
+    public ExpenseMovementVo() {}
+
+    /**
+     * Constructor using fields
+     *
+     * @param expense
+     * @param movement
+     */
+    public ExpenseMovementVo(ExpenseVo expense, MovementVo movement) {
+        this.expense = expense;
+        this.movement = movement;
+    }
 
     public ExpenseVo getExpense() {
         return expense;
