@@ -1,8 +1,10 @@
 package org.kairos.tripSplitterClone.dao.trip;
 
 import org.kairos.tripSplitterClone.dao.AbstractDao;
+import org.kairos.tripSplitterClone.model.account.Movement;
 import org.kairos.tripSplitterClone.model.destination.City;
 import org.kairos.tripSplitterClone.model.destination.City_;
+import org.kairos.tripSplitterClone.model.expense.Expense;
 import org.kairos.tripSplitterClone.model.trip.Trip;
 import org.kairos.tripSplitterClone.model.trip.Trip_;
 import org.kairos.tripSplitterClone.model.trip.UserTrip;
@@ -10,7 +12,9 @@ import org.kairos.tripSplitterClone.model.trip.UserTrip_;
 import org.kairos.tripSplitterClone.model.user.User;
 import org.kairos.tripSplitterClone.model.user.User_;
 import org.kairos.tripSplitterClone.utils.DozerUtils;
+import org.kairos.tripSplitterClone.vo.expense.ExpenseVo;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
+import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -137,6 +141,53 @@ public class TripDaoJPAImpl extends AbstractDao<Trip, TripVo> implements I_TripD
 			// there was no city with required name
 			return Boolean.FALSE;
 		}
+	}
+
+	@Override
+	public TripVo persist(EntityManager em, TripVo entityVo) {
+		this.logger.debug("persisting entity");
+
+		Trip trip = null;
+
+		if (entityVo.getId() == null) {
+			trip = this.map(entityVo);
+
+		} else {
+			trip = this.getEntityById(em, entityVo.getId());
+//			for(ExpenseVo expenseVo : entityVo.getExpenses()){
+//				Expense expense = null;
+//				for(Expense auxExpense : trip.getExpenses()){
+//					if(auxExpense.getId().equals(expense.getId())){
+//						expense = auxExpense;
+//					}
+//				}
+//				if(expense == null){
+//					trip.addExpense(this.getMapper().map(expenseVo,Expense.class));
+//				}
+//			}
+//			for(UserTripVo userTripVo : entityVo.getTravelers()){
+//				UserTrip userTrip = null;
+//				for(UserTrip auxUserTrip : trip.getTravelers()){
+//					if(auxUserTrip.getId().equals(userTripVo.getId())){
+//						userTrip = auxUserTrip;
+//						userTrip.getAccount().setBalance(userTripVo.getAccount().getBalance());
+//						userTrip.getAccount().setInMovements(DozerUtils.map(this.getMapper(), userTripVo.getAccount().getOutMovements(), Movement.class));
+//						userTrip.getAccount().setOutMovements(DozerUtils.map(this.getMapper(), userTripVo.getAccount().getOutMovements(), Movement.class));
+//					}
+//
+//				}
+//				if(userTrip==null){
+//					trip.addTraveler(this.getMapper().map(userTripVo,UserTrip.class));
+//				}
+//			}
+			this.map(entityVo, trip);
+
+		}
+
+		trip.setDeleted(Boolean.FALSE);
+		trip = em.merge(trip);
+
+		return this.map(trip);
 	}
 }
 

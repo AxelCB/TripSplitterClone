@@ -21,6 +21,11 @@ public abstract class AbstractVo implements Serializable  {
 	 */
 	@Property(policy=PojomaticPolicy.ALL)
 	private Long id;
+
+	/**
+	 * Logical deletion flag
+	 */
+	private Boolean deleted = Boolean.FALSE;
 	
 	/**
 	 * Validates this VO.
@@ -74,5 +79,12 @@ public abstract class AbstractVo implements Serializable  {
 	public int hashCode() {
 		return Pojomatic.hashCode(this);
 	}
-	
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
 }

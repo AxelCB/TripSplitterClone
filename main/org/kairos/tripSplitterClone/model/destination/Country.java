@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.model.destination;
 
 import org.kairos.tripSplitterClone.model.I_Model;
+import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
 import org.pojomatic.annotations.PojomaticPolicy;
@@ -65,5 +66,14 @@ public class Country implements I_Model,Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return Pojomatic.equals(this, obj);
     }
 }

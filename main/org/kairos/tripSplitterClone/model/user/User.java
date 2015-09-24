@@ -4,6 +4,7 @@ import org.kairos.tripSplitterClone.model.I_Model;
 import org.kairos.tripSplitterClone.model.trip.UserTrip;
 import org.kairos.tripSplitterClone.utils.HashUtils;
 import org.kairos.tripSplitterClone.utils.Parameters;
+import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
 import org.pojomatic.annotations.PojomaticPolicy;
@@ -155,5 +156,14 @@ public class User implements Serializable,I_Model {
 
 	public void setLoginAttempts(Integer loginAttempts) {
 		this.loginAttempts = loginAttempts;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return Pojomatic.equals(this, obj);
 	}
 }

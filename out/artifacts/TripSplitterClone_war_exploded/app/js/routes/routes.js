@@ -11,8 +11,10 @@ angular.module('routes', []).config(['$routeProvider', function($routeProvider) 
 	    {path: '/register', template: prefix + 'app/views/register.html', controller: 'RegisterCtrl'},
 		{path: '/', template: prefix + 'app/views/home.html', controller: 'HomeCtrl'},
 		{path: '/test', template: prefix + 'app/views/admin/test.html', controller: 'TestCtrl'},
-		{path: '/trip/new', template: prefix + 'app/views/trip/createTrip.html', controller: 'TripCreateCtrl'},
+		{path: '/trip/new', template: prefix + 'app/views/trip/createExpense.html', controller: 'TripCreateCtrl'},
 		{path: '/trip', template: prefix + 'app/views/trip/trips.html', controller: 'TripCtrl'},
+		{path: '/trip/:tripId/expenses', template: prefix + 'app/views/expense/expenses.html', controller: 'ExpenseCtrl'},
+		{path: '/trip/:tripId/expenses/new', template: prefix + 'app/views/expense/createExpense.html', controller: 'ExpenseCreateCtrl'},
 
 
 		{path: '/404', template: prefix + 'app/views/404.html', controller: 'NoPageCtrl'}

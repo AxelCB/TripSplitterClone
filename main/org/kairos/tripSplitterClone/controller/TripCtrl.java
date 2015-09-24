@@ -1,14 +1,20 @@
 package org.kairos.tripSplitterClone.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import org.kairos.tripSplitterClone.dao.EntityManagerHolder;
 import org.kairos.tripSplitterClone.dao.trip.I_TripDao;
+import org.kairos.tripSplitterClone.dao.user.I_UserDao;
 import org.kairos.tripSplitterClone.fx.I_FxFactory;
 import org.kairos.tripSplitterClone.fx.trip.Fx_CreateTrip;
 import org.kairos.tripSplitterClone.fx.trip.Fx_DeleteTrip;
 import org.kairos.tripSplitterClone.fx.trip.Fx_ModifyTrip;
 import org.kairos.tripSplitterClone.json.JsonResponse;
+import org.kairos.tripSplitterClone.utils.exception.IncompleteProportionException;
 import org.kairos.tripSplitterClone.vo.account.AccountVo;
+import org.kairos.tripSplitterClone.vo.expense.E_ExpenseSplittingForm;
+import org.kairos.tripSplitterClone.vo.expense.TravelerProportionVo;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
@@ -22,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.EntityManager;
+import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -69,6 +78,12 @@ public class TripCtrl {
 	private I_TripDao tripDao;
 
 	/**
+	 * Trip Dao.
+	 */
+	@Autowired
+	private I_UserDao userDao;
+
+	/**
 	 * Creates a trip.
 	 *
 	 * @return
@@ -113,11 +128,20 @@ public class TripCtrl {
 		JsonResponse jsonResponse = null;
 
 		try {
-			TripVo tripVo = this.getGson().fromJson(data, TripVo.class);
-			for(UserTripVo userTripVo : tripVo.getTravelers()){
-				userTripVo.setTrip(tripVo);
-				userTripVo.setAccount(new AccountVo(Calendar.getInstance().getTime()));
-			}
+			JsonObject jsonObject = this.getGson().fromJson(data, JsonObject.class);
+
+			UserVo newTraveler = this.getGson().fromJson(jsonObject.get("newTraveler"),UserVo.class);
+
+			newTraveler = this.getUserDao().getByUsername(em,newTraveler.getUsername());
+
+			TripVo tripVo = this.getGson().fromJson(jsonObject.get("trip"), TripVo.class);
+			tripVo = this.getTripDao().getById(em,tripVo.getId());
+
+			tripVo.addTraveler(newTraveler);
+//			for(UserTripVo userTripVo : tripVo.getTravelers()){
+//				userTripVo.setTrip(tripVo);
+//				userTripVo.setAccount(new AccountVo(Calendar.getInstance().getTime()));
+//			}
 
 			Fx_ModifyTrip fx = this.getFxFactory().getNewFxInstance(Fx_ModifyTrip.class);
 			fx.setVo(tripVo);
@@ -150,9 +174,41 @@ public class TripCtrl {
 		try {
 			UserVo userVo = (UserVo)this.getWebContextHolder().getSession().getAttribute(this.getWebContextHolder().getToken());
 
-			List<TripVo> tripsVoList = this.getTripDao().usersTrip(em, userVo);
+			userVo = this.getUserDao().getByUsername(em,userVo.getUsername());
+
+//			List<TripVo> tripsVoList = this.getTripDao().usersTrip(em, userVo);
+			List<TripVo> tripsVoList = userVo.listTrips();
 
 			jsonResponse = JsonResponse.ok(this.getGson().toJson(tripsVoList));
+		} catch (Exception e) {
+			this.logger.debug("unexpected error", e);
+
+			jsonResponse = this.getWebContextHolder().unexpectedErrorResponse();
+		} finally {
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
+
+		return this.getGson().toJson(jsonResponse);
+	}
+
+	/**
+	 * Search trip by id
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/search.json")
+	public String search(@RequestBody String data){
+		this.logger.debug("calling TripCtrl.search()");
+		EntityManager em = this.getEntityManagerHolder().getEntityManager();
+		JsonResponse jsonResponse = null;
+
+		try {
+			TripVo tripVo = this.getGson().fromJson(data, TripVo.class);
+
+			tripVo = this.getTripDao().getById(em,tripVo.getId());
+
+			jsonResponse = JsonResponse.ok(this.getGson().toJson(tripVo));
 		} catch (Exception e) {
 			this.logger.debug("unexpected error", e);
 
@@ -196,6 +252,91 @@ public class TripCtrl {
 		return this.getGson().toJson(jsonResponse);
 	}
 
+	/**
+	 * Adds an expense to a trip.
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/addExpense.json")
+	public String addExpense(@RequestBody String data){
+		this.logger.debug("calling TripCtrl.addExpense()");
+		EntityManager em = this.getEntityManagerHolder().getEntityManager();
+		JsonResponse jsonResponse = null;
+
+		try {
+			JsonObject jsonObject = this.getGson().fromJson(data, JsonObject.class);
+
+			//Gets and refreshes user who paid the expense from the request
+			UserVo payingUser = this.getGson().fromJson(jsonObject.get("payingUser"),UserVo.class);
+			payingUser = this.getUserDao().getByUsername(em, payingUser.getUsername());
+
+			//Gets and refreshes the trip from the request
+			TripVo tripVo = this.getGson().fromJson(jsonObject.get("trip"), TripVo.class);
+			tripVo = this.getTripDao().getById(em, tripVo.getId());
+
+			//Gets the amount of the expense and the splitting form from the request
+			BigDecimal amount = this.getGson().fromJson(jsonObject.get("amount"), BigDecimal.class);
+			E_ExpenseSplittingForm expenseSplittingForm = E_ExpenseSplittingForm.valueOf(jsonObject.get("splittingForm").getAsString());
+
+			//Gets the list of travelers and proportions from the request (proportion's values only used for non-equal splitting)
+			Type type = new TypeToken<List<TravelerProportionVo>>() {}.getType();
+			List<TravelerProportionVo> travelerProportionVos = this.getGson().fromJson(jsonObject.get("travelerProportions"), type);
+			//Refresh users
+			for(TravelerProportionVo travelerProportionVo : travelerProportionVos){
+				travelerProportionVo.setTraveler(this.getUserDao().getById(em,travelerProportionVo.getTraveler().getId()));
+			}
+
+			//Adds the new expense with all the previous values
+			tripVo.addExpense(amount,payingUser,expenseSplittingForm,travelerProportionVos);
+
+			//Persists all changes
+			Fx_ModifyTrip fx = this.getFxFactory().getNewFxInstance(Fx_ModifyTrip.class);
+			fx.setVo(tripVo);
+			fx.setEm(em);
+			this.logger.debug("executing Fx_CreateTrip");
+			jsonResponse = fx.execute();
+			if(jsonResponse.getOk()){
+				jsonResponse.setMessages(new ArrayList<>());
+				jsonResponse.getMessages().add(this.getWebContextHolder().getMessage("trip.addExpense.ok"));
+			}
+		} catch (IncompleteProportionException ipe) {
+			this.logger.debug(ipe.getMessage());
+
+			jsonResponse = JsonResponse.error("",this.getWebContextHolder().getMessage("trip.addExpense.incompletTotalProportion"));
+		} catch (Exception e) {
+			this.logger.debug("unexpected error", e);
+
+			jsonResponse = this.getWebContextHolder().unexpectedErrorResponse();
+		} finally {
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
+
+		return this.getGson().toJson(jsonResponse);
+	}
+
+	/**
+	 * Lists user's trips
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/listSplittingForms.json")
+	public String listSplittingForms(){
+		this.logger.debug("calling TripCtrl.listSplittingForms()");
+		JsonResponse jsonResponse = null;
+
+		try {
+			jsonResponse = JsonResponse.ok(this.getGson().toJson(E_ExpenseSplittingForm.values()));
+		} catch (Exception e) {
+			this.logger.debug("unexpected error", e);
+
+			jsonResponse = this.getWebContextHolder().unexpectedErrorResponse();
+		}
+
+		return this.getGson().toJson(jsonResponse);
+	}
+
 	public Gson getGson() {
 		return gson;
 	}
@@ -234,5 +375,13 @@ public class TripCtrl {
 
 	public void setTripDao(I_TripDao tripDao) {
 		this.tripDao = tripDao;
+	}
+
+	public I_UserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(I_UserDao userDao) {
+		this.userDao = userDao;
 	}
 }

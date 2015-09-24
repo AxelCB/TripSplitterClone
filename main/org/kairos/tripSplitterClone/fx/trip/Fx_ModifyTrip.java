@@ -44,6 +44,8 @@ public class Fx_ModifyTrip extends AbstractFxImpl implements I_Fx {
 		try {
 			this.beginTransaction();
 
+//			this.getDao().setCustomMap("updateTrip");
+
 			// we persist the entity
 			TripVo tripVo = this.getDao().persist(this.getEm(), this.getVo());
 
@@ -81,14 +83,15 @@ public class Fx_ModifyTrip extends AbstractFxImpl implements I_Fx {
 			return FxValidationResponse.error(result);
 		}
 
-		if (this.getDao().isTraveler(this.getEm(),
-				this.getVo(), this.getVo().getTravelers().get(this.getVo().getTravelers().size()-1).getUser())) {
-			String jsonResponseMessage = this.getRealMessageSolver()
-					.getMessage("fx.trip.validation.alreadyTraveler",
-							new String[]{ this.getVo().getTravelers().get(this.getVo().getTravelers().size()-1).getUser().getName() });
-
-			return FxValidationResponse.error(jsonResponseMessage);
-		} else if (this.getVo().getId() == null) {
+//		if (this.getDao().isTraveler(this.getEm(),
+//				this.getVo(), this.getVo().getTravelers().get(this.getVo().getTravelers().size()-1).getUser())) {
+//			String jsonResponseMessage = this.getRealMessageSolver()
+//					.getMessage("fx.trip.validation.alreadyTraveler",
+//							new String[]{ this.getVo().getTravelers().get(this.getVo().getTravelers().size()-1).getUser().getName() });
+//
+//			return FxValidationResponse.error(jsonResponseMessage);
+//		} else
+		if (this.getVo().getId() == null) {
 
 			String errorCodeMessage = this.getRealMessageSolver().getMessage(
 					"default.error.code",

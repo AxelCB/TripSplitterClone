@@ -35,18 +35,6 @@ public class Fx_Register extends AbstractFxImpl implements I_Fx {
 	@Autowired
 	private I_UserDao userDao;
 
-	/**
-	 * User Cache Manager.
-	 */
-	@Autowired
-	private I_UserCacheManager userCacheManager;
-	
-	/**
-	 * Password utils
-	 */
-	@Autowired
-	private I_PasswordUtils passwordUtils;
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -79,9 +67,11 @@ public class Fx_Register extends AbstractFxImpl implements I_Fx {
 		try {
 			this.getEm().getTransaction().begin();
 
-			this.getVo().setLoginAttempts(0);
-			this.getVo().setHashCost(Parameters.HASH_COST);
-			this.getVo().setPassword(HashUtils.hashPassword(this.getVo().getPassword(),Parameters.HASH_COST));
+			this.setVo(new UserVo(this.getVo().getEmail(),this.getVo().getPassword(),this.getVo().getName()));
+
+//			this.getVo().setLoginAttempts(0);
+//			this.getVo().setHashCost(Parameters.HASH_COST);
+//			this.getVo().setPassword(HashUtils.hashPassword(this.getVo().getPassword(),Parameters.HASH_COST));
 
 			this.setVo(this.getUserDao().persist(this.getEm(), this.getVo()));
 
@@ -129,28 +119,5 @@ public class Fx_Register extends AbstractFxImpl implements I_Fx {
 	 */
 	public void setUserDao(I_UserDao userDao) {
 		this.userDao = userDao;
-	}
-
-	/**
-	 * @return the userCacheManager
-	 */
-	public I_UserCacheManager getUserCacheManager() {
-		return this.userCacheManager;
-	}
-
-	/**
-	 * @param userCacheManager
-	 *            the userCacheManager to set
-	 */
-	public void setUserCacheManager(I_UserCacheManager userCacheManager) {
-		this.userCacheManager = userCacheManager;
-	}
-
-	public I_PasswordUtils getPasswordUtils() {
-		return passwordUtils;
-	}
-
-	public void setPasswordUtils(I_PasswordUtils passwordUtils) {
-		this.passwordUtils = passwordUtils;
 	}
 }

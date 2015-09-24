@@ -4,7 +4,7 @@ import org.kairos.tripSplitterClone.model.I_Model;
 import org.kairos.tripSplitterClone.model.destination.City;
 import org.kairos.tripSplitterClone.model.expense.Expense;
 import org.kairos.tripSplitterClone.model.user.User;
-import org.kairos.tripSplitterClone.vo.user.UserVo;
+import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
 import org.pojomatic.annotations.PojomaticPolicy;
@@ -44,7 +44,7 @@ public class Trip implements Serializable,I_Model {
 	 */
 	private Boolean deleted = Boolean.FALSE;
 
-	@OneToMany(mappedBy="trip")
+	@OneToMany(mappedBy="trip",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@Property(policy = PojomaticPolicy.NONE)
 	private List<UserTrip> travelers = new ArrayList<>();
 
@@ -135,5 +135,48 @@ public class Trip implements Serializable,I_Model {
 
 	public void setDestination(City destination) {
 		this.destination = destination;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return Pojomatic.equals(this, obj);
+	}
+
+	public List<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(List<Expense> expenses) {
+		this.expenses = expenses;
+	}
+
+	public void addTraveler(UserTrip userTrip){
+		Boolean found = Boolean.FALSE;
+		for(UserTrip auxUserTrip : this.getTravelers()){
+			if(userTrip.equals(auxUserTrip)){
+				found = Boolean.TRUE;
+				break;
+			}
+		}
+		if(!found){
+			this.getTravelers().add(userTrip);
+		}
+	}
+
+	public void addExpense(Expense expense){
+		Boolean found = Boolean.FALSE;
+		for(Expense auxExpense : this.getExpenses()){
+			if(expense.equals(auxExpense)){
+				found = Boolean.TRUE;
+				break;
+			}
+		}
+		if(!found){
+			this.getExpenses().add(expense);
+		}
 	}
 }

@@ -61,7 +61,7 @@ public class Movement implements Serializable, I_Model {
 	/**
 	 * The account from where the amount came
 	 */
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@Property(policy = PojomaticPolicy.NONE)
 	private Account from;
 

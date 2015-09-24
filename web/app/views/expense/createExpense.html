@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col-xs-12 col-xs-offset-2">
+        <form class="form-horizontal" role="form" name="myForm" >
+            <div class="form-group">
+                <label for="splittingForm" class="col-xs-2 control-label">Forma de División de Gastos</label>
+                <div class="col-xs-2">
+                    <select id="splittingForm" ng-model="selectedSplittingForm" ng-options="makePretty(splittingForm) for splittingForm in splittingForms" class="form-control"></select>
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn btn-primary pull-right" id="btn_add_travelerProportion" data-toggle="modal" data-target="#addTravelerProportionsModal">
+                        Agregar Proporción de Gasto a Viajero
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="amount" class="col-xs-2 control-label">Monto Total</label>
+                <div class="col-xs-4">
+                    <input type="text" id="amount" placeholder="Ingrese el monto" class="form-control" ng-model="amount"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="payingUser" class="col-xs-2 control-label">Quien pagó</label>
+                <div class="col-xs-4">
+                    <select id="payingUser" ng-model="payingUser" ng-options="user.name for user in travelers" class="form-control"></select>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-6 col-sm-offset-7">
+        <button class="btn btn-danger" id="btn_cancel" ng-click="initialize();">
+            Cancelar
+        </button>
+
+        <button class="btn btn-default" id="btn_clean" ng-click="go('/trip')">
+            Volver
+        </button>
+
+        <button class="btn btn-success" id="btn_create" ng-click="create();">
+            Guardar
+        </button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addTravelerProportionsModal" tabindex="-1" role="dialog" aria-labelledby="addTravelerProportionsModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addTravelerProportionsModalLabel">Nueva Proporción de Gasto para Viajero</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" name="newTravelerProportion">
+                    <div class="form-group">
+                        <label for="traveler" class="col-xs-4 control-label">Viajero:</label>
+                        <div class="col-xs-6">
+                            <select id="traveler" ng-model="travelerProportion.traveler" ng-options="traveler.name for traveler in travelers | filter: restingUsers" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="selectedSplittingForm=='PROPORTIONAL_SPLITTING'">
+                        <label for="proportion" class="col-xs-4 control-label">Proporción</label>
+                        <div class="col-xs-6">
+                            <input type="text" id="proportion" placeholder="Ingrese la proporción" class="form-control" ng-model="travelerProportion.proportion"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="travelerPoportion={};">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="addTravelerProportion()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

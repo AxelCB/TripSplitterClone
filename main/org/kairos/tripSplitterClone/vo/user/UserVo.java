@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.kairos.tripSplitterClone.utils.HashUtils;
 import org.kairos.tripSplitterClone.utils.Parameters;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
+import org.kairos.tripSplitterClone.vo.account.AccountVo;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
 import org.kairos.tripSplitterClone.web.I_MessageSolver;
@@ -177,4 +178,24 @@ public class UserVo extends AbstractVo implements Serializable {
 		}
 		return null;
 	}
+
+	public List<TripVo> listTrips(){
+		List<TripVo> trips = new ArrayList<>();
+		for(UserTripVo userTripVo : this.getTrips()){
+			if(!userTripVo.getDeleted() && !userTripVo.getTrip().getDeleted()){
+				trips.add(userTripVo.getTrip());
+			}
+		}
+		return trips;
+	}
+
+	public AccountVo getAccountInTrip(TripVo tripVo){
+		for(UserTripVo userTripVo : this.getTrips()){
+			if(!userTripVo.getDeleted() && !userTripVo.getTrip().getDeleted() && userTripVo.getTrip().equals(tripVo)){
+				return userTripVo.getAccount();
+			}
+		}
+		return null;
+	}
+
 }

@@ -3,6 +3,10 @@ package org.kairos.tripSplitterClone.model.trip;
 import org.kairos.tripSplitterClone.model.I_Model;
 import org.kairos.tripSplitterClone.model.account.Account;
 import org.kairos.tripSplitterClone.model.user.User;
+import org.kairos.tripSplitterClone.vo.account.AccountVo;
+import org.kairos.tripSplitterClone.vo.trip.TripVo;
+import org.kairos.tripSplitterClone.vo.user.UserVo;
+import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
 import org.pojomatic.annotations.PojomaticPolicy;
@@ -52,7 +56,7 @@ public class UserTrip implements I_Model,Serializable{
 	/**
 	 * User's Account on a Trip
 	 */
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 //	@Property(policy = PojomaticPolicy.NONE)
 	private Account account;
 
@@ -105,5 +109,14 @@ public class UserTrip implements I_Model,Serializable{
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return Pojomatic.equals(this, obj);
 	}
 }

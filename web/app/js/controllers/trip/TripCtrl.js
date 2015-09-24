@@ -98,20 +98,26 @@ universeControllers.controller('TripCtrl',['$scope', '$rootScope', 'TripService'
         };
 
         $scope.addTraveler = function(){
-            var trip = {};
-            if($scope.selectedTraveler){
-                if(!$scope.trip.travelers){
-                    $scope.trip.travelers=[];
-                }
-                trip = angular.copy($scope.trip);
-                trip.travelers.push({'user':$scope.selectedTraveler});
-            };
-            TripService.addTraveler(trip,function(response){
-                if(response.ok){
-                    $scope.trip.travelers=trip.travelers;
-                    $('#addTravelerModal').modal('hide');
-                }
-            },$rootScope.manageError);
+            if($scope.selectedTraveler) {
+                //var trip = {};
+                //    if(!$scope.trip.travelers){
+                //        $scope.trip.travelers=[];
+                //    }
+                //    trip = angular.copy($scope.trip);
+                //    trip.travelers.push({'user':$scope.selectedTraveler});
+                //};
+                TripService.addTraveler(
+                    {
+                        'trip': $scope.trip,
+                        'newTraveler': $scope.selectedTraveler
+                    },
+                    function (response) {
+                        if (response.ok) {
+                            $scope.trip.travelers = trip.travelers;
+                            $('#addTravelerModal').modal('hide');
+                        }
+                    }, $rootScope.manageError);
+            }
 
         };
 

@@ -65,13 +65,13 @@ public class Account implements Serializable, I_Model {
 	/**
 	 * List of all out movements.
 	 */
-	@OneToMany(mappedBy="from")
+	@OneToMany(mappedBy="from",cascade = CascadeType.ALL)
 	private List<Movement> outMovements = new ArrayList<>();
 
 	/**
 	 * List of all in movements.
 	 */
-	@OneToMany(mappedBy="to")
+	@OneToMany(mappedBy="to",cascade = CascadeType.ALL)
 	private List<Movement> inMovements = new ArrayList<>();
 
 	/**
@@ -164,6 +164,9 @@ public class Account implements Serializable, I_Model {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
+//	public boolean equals(Object obj) {
+//		return id.equals(((Account)obj).getId());
+//	}
 	public boolean equals(Object obj) {
 		return Pojomatic.equals(this, obj);
 	}

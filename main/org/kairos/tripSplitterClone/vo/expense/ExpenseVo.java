@@ -1,18 +1,14 @@
 package org.kairos.tripSplitterClone.vo.expense;
 
-import org.kairos.tripSplitterClone.model.I_Model;
-import org.kairos.tripSplitterClone.model.account.Movement;
-import org.kairos.tripSplitterClone.model.trip.Trip;
+import org.kairos.tripSplitterClone.utils.exception.IncompleteProportionException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.account.MovementVo;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
-import org.pojomatic.annotations.AutoProperty;
-import org.pojomatic.annotations.DefaultPojomaticPolicy;
-import org.pojomatic.annotations.PojomaticPolicy;
-import org.pojomatic.annotations.Property;
+import org.kairos.tripSplitterClone.vo.user.UserVo;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created on 9/10/15 by
@@ -22,23 +18,53 @@ import java.math.BigDecimal;
 public class ExpenseVo extends AbstractVo{
 
 	/**
-	 * Expense amount (not divided yet)
-	 */
-	private BigDecimal amount;
-
-	/**
 	 * Movement that represents the real payment
 	 */
 	private MovementVo paymentMovement;
 
+	/**
+	 * Short Description
+	 */
+	private String description;
+
+	/**
+	 * Trip
+	 */
 	private TripVo trip;
 
-	public BigDecimal getAmount() {
-		return amount;
+	private List<ExpenseMovementVo> expenseMovements = new ArrayList<>();
+
+	private ExpenseSplittingAbstractStrategy expenseSplittingStrategy;
+
+	public ExpenseVo() {}
+
+	public ExpenseVo(TripVo trip, BigDecimal amount,UserVo payingUser) {
+		this.trip = trip;
+		this.paymentMovement = payingUser.getAccountInTrip(trip).spend(amount);
 	}
 
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
+	public void splitExpense(E_ExpenseSplittingForm expenseSplittingForm,List<TravelerProportionVo> travelerProportionVos) throws IncompleteProportionException{
+		try {
+			this.setExpenseSplittingStrategy((expenseSplittingForm.getExpenseSplittingStrategyClass()).newInstance());
+			this.getExpenseSplittingStrategy().setTravelerProportionVos(travelerProportionVos);
+			this.setExpenseMovements(this.getExpenseSplittingStrategy().splitExpense(this));
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public ExpenseSplittingAbstractStrategy getExpenseSplittingStrategy() {
+		return expenseSplittingStrategy;
+	}
+
+	public void setExpenseSplittingStrategy(ExpenseSplittingAbstractStrategy expenseSplittingStrategy) {
+		this.expenseSplittingStrategy = expenseSplittingStrategy;
+	}
+
+	public BigDecimal getAmount() {
+		return paymentMovement.getAmount();
 	}
 
 	public MovementVo getPaymentMovement() {
@@ -55,5 +81,21 @@ public class ExpenseVo extends AbstractVo{
 
 	public void setTrip(TripVo trip) {
 		this.trip = trip;
+	}
+
+	public List<ExpenseMovementVo> getExpenseMovements() {
+		return expenseMovements;
+	}
+
+	public void setExpenseMovements(List<ExpenseMovementVo> expenseMovements) {
+		this.expenseMovements = expenseMovements;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

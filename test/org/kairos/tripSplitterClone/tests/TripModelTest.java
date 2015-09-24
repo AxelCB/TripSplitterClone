@@ -43,12 +43,12 @@ import java.util.List;
 		DependencyInjectionTestExecutionListener.class,
 		DirtiesContextTestExecutionListener.class
 })
-public class TripTest extends AbstractTestNGSpringContextTests {
+public class TripModelTest extends AbstractTestNGSpringContextTests {
 
 	/**
 	 * Logger
 	 */
-	private Logger logger = LoggerFactory.getLogger(TripTest.class);
+	private Logger logger = LoggerFactory.getLogger(TripModelTest.class);
 
 	@Autowired
 	private TripCtrl tripCtrl;

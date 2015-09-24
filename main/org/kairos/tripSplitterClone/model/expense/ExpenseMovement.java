@@ -2,6 +2,7 @@ package org.kairos.tripSplitterClone.model.expense;
 
 import org.kairos.tripSplitterClone.model.I_Model;
 import org.kairos.tripSplitterClone.model.account.Movement;
+import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
 import org.pojomatic.annotations.PojomaticPolicy;
@@ -33,11 +34,15 @@ public class ExpenseMovement implements Serializable,I_Model {
     /**
      * Movement
      */
+    @ManyToOne(cascade = CascadeType.ALL)
+    @Property(policy = PojomaticPolicy.NONE)
     private Movement movement;
 
     /**
      * Expense
      */
+    @ManyToOne
+    @Property(policy = PojomaticPolicy.NONE)
     private Expense expense;
 
 	@Override
@@ -75,4 +80,13 @@ public class ExpenseMovement implements Serializable,I_Model {
     public void setExpense(Expense expense) {
         this.expense = expense;
     }
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return Pojomatic.equals(this, obj);
+	}
 }

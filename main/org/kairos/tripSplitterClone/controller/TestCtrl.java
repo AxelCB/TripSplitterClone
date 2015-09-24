@@ -43,6 +43,7 @@ public class TestCtrl {
 		TestNG tripSplitterCloneTests = new TestNG();
 
 		tripSplitterCloneTests.setTestClasses(new Class[]{UserTest.class, DestinationTest.class, TripTest.class});
+//		tripSplitterCloneTests.setTestClasses(new Class[]{UserTest.class, DestinationTest.class, TripTest.class});
 		tripSplitterCloneTests.addListener(tla);
 //		tripSplitterCloneTests.setVerbose(2);
 		tripSplitterCloneTests.run();

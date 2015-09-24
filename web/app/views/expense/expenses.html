@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12">
-        <div class="panel panel-default" ng-repeat="currentTrip in trips">
+        <div class="panel panel-default" ng-repeat="expense in trip.expenses">
             <div class="panel-heading">
                 <h3 class="panel-title">{{currentTrip.destination.name}}, {{currentTrip.destination.country.name}}</h3>
             </div>
@@ -13,13 +13,11 @@
                     </div>
                     <div class="col-sm-1 text-center">
                         <a ng-href="#/trip/{{currentTrip.id}}/expenses" >Ver Gastos
-                            <span class="glyphicon glyphicon-usd" aria-hidden="true"></span></a>
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </div>
                     <div class="col-sm-1 text-center">
                         <a ng-href="#/trip/{{currentTrip.id}}/expenses/new" >Agregar Gasto
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                            <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
-                        </a>
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </div>
                     <div class="col-sm-2 text-center" ng-show="currentTrip.owner.id == loggedUser.id">
                         <a href="" ng-click="showAddTravelerModal(currentTrip)">Agregar Participante
@@ -34,16 +32,16 @@
         </div>
         <div class="row">
             <div class="col-sm-2 col-sm-offset-10">
-                <button class="btn btn-primary" id="btn_create" ng-click="go('/trip/new')" ng-disabled="editing">
-                    Nuevo Viaje
+                <button class="btn btn-default" id="btn_volver" ng-click="go('/trip')" ng-disabled="editing">
+                    Volver
                 </button>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div ng-paginator="" name-space="tripNameSpace"></div>
-            </div>
-        </div>
+        <!--<div class="row">-->
+            <!--<div class="col-xs-12">-->
+                <!--<div ng-paginator="" name-space="tripNameSpace"></div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>
 

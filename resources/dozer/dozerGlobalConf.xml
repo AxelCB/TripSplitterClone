@@ -16,6 +16,36 @@
 		</custom-converters>
 	</configuration>
 
+	<mapping map-id="updateTrip">
+		<class-a>org.kairos.tripSplitterClone.vo.trip.TripVo</class-a>
+		<class-b>org.kairos.tripSplitterClone.model.trip.Trip</class-b>
+
+		<field type="one-way" map-id="updateUserTrip">
+			<a>travelers</a>
+			<b>travelers</b>
+		</field>
+	</mapping>
+
+	<mapping type="one-way" map-id="updateUserTrip">
+		<class-a>org.kairos.tripSplitterClone.vo.trip.UserTripVo</class-a>
+		<class-b>org.kairos.tripSplitterClone.model.trip.UserTrip</class-b>
+
+		<field map-id="updateAccount">
+			<a>account</a>
+			<b>account</b>
+		</field>
+	</mapping>
+
+	<mapping type="one-way" map-id="updateAccount">
+		<class-a>org.kairos.tripSplitterClone.vo.account.AccountVo</class-a>
+		<class-b>org.kairos.tripSplitterClone.model.account.Account</class-b>
+
+		<field-exclude>
+			<a>id</a>
+			<b>id</b>
+		</field-exclude>
+	</mapping>
+
 	<!--<mapping>-->
 		<!--<class-a>org.kairos.tripSplitterClone.model.account.Movement</class-a>-->
 		<!--<class-b>org.kairos.tripSplitterClone.vo.account.MovementVo</class-b>-->

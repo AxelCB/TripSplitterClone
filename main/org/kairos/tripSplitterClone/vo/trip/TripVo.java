@@ -1,12 +1,17 @@
 package org.kairos.tripSplitterClone.vo.trip;
 
+import org.kairos.tripSplitterClone.utils.exception.IncompleteProportionException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.destination.CityVo;
 import org.kairos.tripSplitterClone.vo.destination.CountryVo;
+import org.kairos.tripSplitterClone.vo.expense.E_ExpenseSplittingForm;
+import org.kairos.tripSplitterClone.vo.expense.ExpenseVo;
+import org.kairos.tripSplitterClone.vo.expense.TravelerProportionVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 import org.kairos.tripSplitterClone.web.I_MessageSolver;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +36,11 @@ public class TripVo extends AbstractVo implements Serializable {
 	 * Trip's travelers
 	 */
 	private List<UserTripVo> travelers = new ArrayList<>();
+
+	/**
+	 * Expenses
+	 */
+	private List<ExpenseVo> expenses = new ArrayList<>();
 
 	/**
 	 * Empty Constructor
@@ -95,6 +105,14 @@ public class TripVo extends AbstractVo implements Serializable {
 		this.destination = city;
 	}
 
+	public List<ExpenseVo> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(List<ExpenseVo> expenses) {
+		this.expenses = expenses;
+	}
+
 	public void addTraveler(UserVo traveler){
 		Boolean found = Boolean.FALSE;
 		for(UserTripVo userTripVo : this.getTravelers()){
@@ -104,19 +122,29 @@ public class TripVo extends AbstractVo implements Serializable {
 			}
 		}
 		if(!found){
-			this.getTravelers().add(new UserTripVo(traveler,this));
+			UserTripVo userTripVo = new UserTripVo(traveler,this);
+			this.getTravelers().add(userTripVo);
+			traveler.getTrips().add(userTripVo);
 		}
 	}
 
 	public UserVo removeTraveler(UserVo traveler){
-		Boolean found = Boolean.FALSE;
+//		Boolean found = Boolean.FALSE;
 		for(UserTripVo userTripVo : this.getTravelers()){
 			if(userTripVo.getUser().equals(traveler)){
-				found = Boolean.TRUE;
+//				found = Boolean.TRUE;
 				this.getTravelers().remove(userTripVo);
+				traveler.getTrips().remove(userTripVo);
 				return userTripVo.getUser();
 			}
 		}
 		return null;
+	}
+
+	public ExpenseVo addExpense(BigDecimal amount,UserVo payingUser,E_ExpenseSplittingForm expenseSplittingForm,List<TravelerProportionVo> travelerProportionVos) throws IncompleteProportionException{
+		ExpenseVo expenseVo = new ExpenseVo(this,amount,payingUser);
+		expenseVo.splitExpense(expenseSplittingForm,travelerProportionVos);
+		this.getExpenses().add(expenseVo);
+		return expenseVo;
 	}
 }

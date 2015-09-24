@@ -117,18 +117,41 @@ public class AccountVo extends AbstractVo implements Serializable {
         this.outMovements.add(movementVo);
     }
 
-    public void spend(BigDecimal amount){
+    public MovementVo spend(BigDecimal amount){
         MovementVo movement = new MovementVo(null,this,Calendar.getInstance().getTime(),amount,E_MovementStatus.PAID);
         this.outMovements.add(movement);
+	    this.setBalance(this.getBalance().subtract(movement.getAmount()));
+	    return movement;
 	}
 
-    public void earn(BigDecimal amount){
+    public MovementVo earn(BigDecimal amount){
         MovementVo movement = new MovementVo(this,null,Calendar.getInstance().getTime(),amount,E_MovementStatus.PAID);
         this.inMovements.add(movement);
+	    this.setBalance(this.getBalance().add(movement.getAmount()));
+	    return movement;
     }
-    public void transfer(BigDecimal amount,AccountVo recipient){
+    public MovementVo transfer(BigDecimal amount,AccountVo recipient){
         MovementVo movement = new MovementVo(recipient,this,Calendar.getInstance().getTime(),amount);
-        this.outMovements.add(movement);
+	    if(!recipient.equals(this)){
+		    this.outMovements.add(movement);
+	    }
         recipient.addInMovement(movement);
+	    return movement;
     }
+
+	public List<MovementVo> getOutMovements() {
+		return outMovements;
+	}
+
+	public void setOutMovements(List<MovementVo> outMovements) {
+		this.outMovements = outMovements;
+	}
+
+	public List<MovementVo> getInMovements() {
+		return inMovements;
+	}
+
+	public void setInMovements(List<MovementVo> inMovements) {
+		this.inMovements = inMovements;
+	}
 }
