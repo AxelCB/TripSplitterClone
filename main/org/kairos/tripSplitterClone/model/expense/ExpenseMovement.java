@@ -45,6 +45,14 @@ public class ExpenseMovement implements Serializable,I_Model {
     @Property(policy = PojomaticPolicy.NONE)
     private Expense expense;
 
+	public ExpenseMovement() {
+	}
+
+	public ExpenseMovement(Movement movement, Expense expense) {
+		this.movement = movement;
+		this.expense = expense;
+	}
+
 	@Override
 	public Long getId() {
 		return id;

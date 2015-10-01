@@ -2,9 +2,8 @@ package org.kairos.tripSplitterClone.dao.trip;
 
 import org.kairos.tripSplitterClone.dao.AbstractDao;
 import org.kairos.tripSplitterClone.model.account.Movement;
-import org.kairos.tripSplitterClone.model.destination.City;
-import org.kairos.tripSplitterClone.model.destination.City_;
 import org.kairos.tripSplitterClone.model.expense.Expense;
+import org.kairos.tripSplitterClone.model.expense.ExpenseMovement;
 import org.kairos.tripSplitterClone.model.trip.Trip;
 import org.kairos.tripSplitterClone.model.trip.Trip_;
 import org.kairos.tripSplitterClone.model.trip.UserTrip;
@@ -12,6 +11,7 @@ import org.kairos.tripSplitterClone.model.trip.UserTrip_;
 import org.kairos.tripSplitterClone.model.user.User;
 import org.kairos.tripSplitterClone.model.user.User_;
 import org.kairos.tripSplitterClone.utils.DozerUtils;
+import org.kairos.tripSplitterClone.vo.expense.ExpenseMovementVo;
 import org.kairos.tripSplitterClone.vo.expense.ExpenseVo;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
@@ -154,34 +154,42 @@ public class TripDaoJPAImpl extends AbstractDao<Trip, TripVo> implements I_TripD
 
 		} else {
 			trip = this.getEntityById(em, entityVo.getId());
-//			for(ExpenseVo expenseVo : entityVo.getExpenses()){
-//				Expense expense = null;
-//				for(Expense auxExpense : trip.getExpenses()){
-//					if(auxExpense.getId().equals(expense.getId())){
-//						expense = auxExpense;
-//					}
-//				}
-//				if(expense == null){
-//					trip.addExpense(this.getMapper().map(expenseVo,Expense.class));
-//				}
-//			}
-//			for(UserTripVo userTripVo : entityVo.getTravelers()){
-//				UserTrip userTrip = null;
-//				for(UserTrip auxUserTrip : trip.getTravelers()){
-//					if(auxUserTrip.getId().equals(userTripVo.getId())){
-//						userTrip = auxUserTrip;
-//						userTrip.getAccount().setBalance(userTripVo.getAccount().getBalance());
-//						userTrip.getAccount().setInMovements(DozerUtils.map(this.getMapper(), userTripVo.getAccount().getOutMovements(), Movement.class));
-//						userTrip.getAccount().setOutMovements(DozerUtils.map(this.getMapper(), userTripVo.getAccount().getOutMovements(), Movement.class));
-//					}
-//
-//				}
-//				if(userTrip==null){
-//					trip.addTraveler(this.getMapper().map(userTripVo,UserTrip.class));
-//				}
-//			}
-			this.map(entityVo, trip);
+			for(ExpenseVo expenseVo : entityVo.getExpenses()){
+				Expense expense = null;
+				for(Expense auxExpense : trip.getExpenses()){
+					if(auxExpense.getId().equals(expense.getId())){
+						expense = auxExpense;
+					}
+				}
+				if(expense == null){
+					expense = new Expense();
+					expense.setDeleted(Boolean.FALSE);
+					expense.setDescription(expenseVo.getDescription());
+					expense.setPaymentMovement(this.getMapper().map(expenseVo.getPaymentMovement(), Movement.class));
+					expense.setTrip(trip);
+					for(ExpenseMovementVo expenseMovementVo : expenseVo.getExpenseMovements()){
+						expense.getExpenseMovements().add(new ExpenseMovement(this.getMapper().map(expenseMovementVo.getMovement(), Movement.class), expense));
 
+					}
+					trip.addExpense(expense);
+				}
+			}
+			for(UserTripVo userTripVo : entityVo.getTravelers()){
+				UserTrip userTrip = null;
+				for(UserTrip auxUserTrip : trip.getTravelers()){
+					if(auxUserTrip.getId().equals(userTripVo.getId())){
+						userTrip = auxUserTrip;
+						userTrip.getAccount().setBalance(userTripVo.getAccount().getBalance());
+						userTrip.getAccount().setInMovements(DozerUtils.map(this.getMapper(), userTripVo.getAccount().getOutMovements(), Movement.class));
+						userTrip.getAccount().setOutMovements(DozerUtils.map(this.getMapper(), userTripVo.getAccount().getOutMovements(), Movement.class));
+					}
+
+				}
+				if(userTrip==null){
+					trip.addTraveler(this.getMapper().map(userTripVo,UserTrip.class));
+				}
+			}
+//			this.map(entityVo, trip);
 		}
 
 		trip.setDeleted(Boolean.FALSE);
