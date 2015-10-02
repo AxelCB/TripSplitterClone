@@ -76,6 +76,8 @@ public class UserVo extends AbstractVo implements Serializable {
         this.hashCost = Parameters.HASH_COST;
     }
 
+
+
 	@Override
 	public String validate(I_MessageSolver messageSolver) {
 //		EmailValidator emailValidator = EmailValidator.getInstance();
@@ -92,6 +94,20 @@ public class UserVo extends AbstractVo implements Serializable {
 			return messageSolver.getMessage("fx.user.field.password.notNull");
 		}
 		return super.validate(messageSolver);
+	}
+
+	@Override
+	public String validate() {
+		if(StringUtils.isBlank(this.getEmail())){
+			return "User's email cannot be blank";
+		}
+		if(StringUtils.isBlank(this.getName())){
+			return "User's name cannot be blank";
+		}
+		if(StringUtils.isBlank(this.getPassword())){
+			return "User's password cannot be blank";
+		}
+		return null;
 	}
 
 	public String getUsername() {

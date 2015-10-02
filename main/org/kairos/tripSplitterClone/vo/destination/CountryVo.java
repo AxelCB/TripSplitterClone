@@ -18,12 +18,25 @@ public class CountryVo extends AbstractVo{
 
     public CountryVo(){}
 
+    public CountryVo(String name) {
+        this.name = name;
+    }
+
     @Override
     public String validate(I_MessageSolver messageSolver) {
         if(StringUtils.isBlank(this.getName())){
             return messageSolver.getMessage("fx.country.field.name.notNull");
         }
         return super.validate(messageSolver);
+    }
+
+    @Override
+    public String validate() {
+        if(StringUtils.isNotBlank(this.getName())){
+            return "Country name cannot be blank";
+        }else{
+            return null;
+        }
     }
 
     public String getName() {

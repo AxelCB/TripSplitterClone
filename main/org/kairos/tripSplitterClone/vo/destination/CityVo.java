@@ -33,6 +33,25 @@ public class CityVo extends AbstractVo{
         this.country=country;
     }
 
+    public CityVo(String name, CountryVo country) {
+        this.name = name;
+        this.country = country;
+    }
+
+    @Override
+    public String validate() {
+        if(StringUtils.isBlank(this.getName())){
+            return "City name cannot be blank";
+        }
+        if(this.getCountry()==null){
+            return "City needs a country";
+        }
+        if(this.getCountry().validate()!=null){
+            return this.getCountry().validate();
+        }
+        return null;
+    }
+
     @Override
     public String validate(I_MessageSolver messageSolver) {
         if(StringUtils.isBlank(this.getName())){

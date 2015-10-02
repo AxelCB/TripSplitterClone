@@ -38,7 +38,9 @@ public abstract class AbstractVo implements Serializable  {
 	public String validate(I_MessageSolver messageSolver) {
 		return null;
 	}
-	
+
+	public abstract String validate();
+
 	/**
 	 * @return the id
 	 */
