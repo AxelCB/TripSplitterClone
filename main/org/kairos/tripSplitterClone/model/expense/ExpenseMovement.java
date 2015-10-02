@@ -10,6 +10,7 @@ import org.pojomatic.annotations.Property;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Created on 9/10/15 by
@@ -89,12 +90,20 @@ public class ExpenseMovement implements Serializable,I_Model {
         this.expense = expense;
     }
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
-	public boolean equals(Object obj) {
-		return Pojomatic.equals(this, obj);
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ExpenseMovement that = (ExpenseMovement) o;
+		if(this.getId()==null || that.getId()==null) return false;
+		return Objects.equals(getId(), that.getId()) &&
+				Objects.equals(getDeleted(), that.getDeleted()) &&
+				Objects.equals(getMovement(), that.getMovement()) &&
+				Objects.equals(getExpense(), that.getExpense());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId(), getDeleted(), getMovement(), getExpense());
 	}
 }
