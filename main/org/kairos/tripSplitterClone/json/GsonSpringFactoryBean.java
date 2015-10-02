@@ -2,6 +2,7 @@ package org.kairos.tripSplitterClone.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.kairos.tripSplitterClone.vo.expense.ExpenseMovementVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 import org.slf4j.Logger;
@@ -66,6 +67,9 @@ public class GsonSpringFactoryBean implements FactoryBean<Gson> {
 			// user vo trips circular reference avoidance
 			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(
 					UserVo.class, false, "trips"));
+
+			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(
+					ExpenseMovementVo.class, false, "expense"));
 
 			// user vo trips circular reference avoidance
 			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(
