@@ -39,18 +39,16 @@ public class UserTripVo extends AbstractVo implements Serializable{
 
 	public UserTripVo(UserVo user, TripVo trip) throws ValidationException {
 		String validationResponse = user.validate();
-		if(validationResponse==null){
-			validationResponse=trip.validate();
-			if(validationResponse==null){
-				this.user = user;
-				this.trip = trip;
-				account = new AccountVo(Calendar.getInstance().getTime());
-			}else{
-				throw new ValidationException(validationResponse);
-			}
-		}else{
+		if(validationResponse != null){
 			throw new ValidationException(validationResponse);
 		}
+		validationResponse=trip.validate();
+		if(validationResponse != null){
+			throw new ValidationException(validationResponse);
+		}
+		this.user = user;
+		this.trip = trip;
+		account = new AccountVo(Calendar.getInstance().getTime());
 	}
 
 	public UserVo getUser() {

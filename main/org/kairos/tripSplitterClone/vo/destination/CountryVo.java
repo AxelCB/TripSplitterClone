@@ -32,7 +32,7 @@ public class CountryVo extends AbstractVo{
 
     @Override
     public String validate() {
-        if(StringUtils.isNotBlank(this.getName())){
+        if(StringUtils.isBlank(this.getName())){
             return "Country name cannot be blank";
         }else{
             return null;

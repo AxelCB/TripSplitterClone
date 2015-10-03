@@ -8,6 +8,7 @@ import org.kairos.tripSplitterClone.dao.EntityManagerHolder;
 import org.kairos.tripSplitterClone.dao.destination.I_CityDao;
 import org.kairos.tripSplitterClone.dao.destination.I_CountryDao;
 import org.kairos.tripSplitterClone.json.JsonResponse;
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.destination.CityVo;
 import org.kairos.tripSplitterClone.vo.destination.CountryVo;
 import org.slf4j.Logger;
@@ -58,7 +59,11 @@ public class DestinationModelTest extends AbstractTestNGSpringContextTests {
 
 	@Test(groups = {"destination"},dependsOnMethods = {"createCountryTest"})
 	public void createCityTest(){
-		cityVo=new CityVo("Atenas",countryVo);
+		try {
+			cityVo=new CityVo("Atenas",countryVo);
+		} catch (ValidationException e) {
+			assert(e==null):e.getMessage();
+		}
 		String validateResponse = cityVo.validate();
 		assert(validateResponse!=null):validateResponse;
 	}

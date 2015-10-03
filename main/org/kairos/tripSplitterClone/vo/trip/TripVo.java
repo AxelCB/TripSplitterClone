@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.vo.trip;
 
 import org.kairos.tripSplitterClone.utils.exception.IncompleteProportionException;
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.destination.CityVo;
 import org.kairos.tripSplitterClone.vo.destination.CountryVo;
@@ -75,6 +76,12 @@ public class TripVo extends AbstractVo implements Serializable {
 
 	@Override
 	public String validate() {
+		if(this.getOwner()==null || this.getOwner().validate()!=null){
+			return "Invalid trip owner";
+		}
+		if(this.getDestination()==null || this.getDestination().validate()!=null){
+			return "Invalid trip destination";
+		}
 		return null;
 	}
 
@@ -118,7 +125,7 @@ public class TripVo extends AbstractVo implements Serializable {
 		this.expenses = expenses;
 	}
 
-	public void addTraveler(UserVo traveler){
+	public void addTraveler(UserVo traveler) throws ValidationException {
 		Boolean found = Boolean.FALSE;
 		for(UserTripVo userTripVo : this.getTravelers()){
 			if(userTripVo.getUser().equals(traveler)){
@@ -147,7 +154,7 @@ public class TripVo extends AbstractVo implements Serializable {
 	}
 
 	public ExpenseVo addExpense(BigDecimal amount,String description,UserVo payingUser,E_ExpenseSplittingForm expenseSplittingForm,
-									List<TravelerProportionVo> travelerProportionVos) throws IncompleteProportionException{
+									List<TravelerProportionVo> travelerProportionVos) throws IncompleteProportionException, ValidationException {
 		ExpenseVo expenseVo = new ExpenseVo(this,amount,payingUser,description);
 		expenseVo.splitExpense(expenseSplittingForm,travelerProportionVos);
 		this.getExpenses().add(expenseVo);

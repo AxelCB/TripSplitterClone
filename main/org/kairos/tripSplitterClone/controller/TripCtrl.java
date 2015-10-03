@@ -138,10 +138,6 @@ public class TripCtrl {
 			tripVo = this.getTripDao().getById(em,tripVo.getId());
 
 			tripVo.addTraveler(newTraveler);
-//			for(UserTripVo userTripVo : tripVo.getTravelers()){
-//				userTripVo.setTrip(tripVo);
-//				userTripVo.setAccount(new AccountVo(Calendar.getInstance().getTime()));
-//			}
 
 			Fx_ModifyTrip fx = this.getFxFactory().getNewFxInstance(Fx_ModifyTrip.class);
 			fx.setVo(tripVo);
@@ -176,7 +172,6 @@ public class TripCtrl {
 
 			userVo = this.getUserDao().getByUsername(em,userVo.getUsername());
 
-//			List<TripVo> tripsVoList = this.getTripDao().usersTrip(em, userVo);
 			List<TripVo> tripsVoList = userVo.listTrips();
 
 			jsonResponse = JsonResponse.ok(this.getGson().toJson(tripsVoList));

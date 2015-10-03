@@ -1,5 +1,6 @@
 package org.kairos.tripSplitterClone.vo.expense;
 
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.account.AccountVo;
 
 import java.math.BigDecimal;
@@ -14,7 +15,7 @@ import java.util.List;
 public class ExpenseEqualSplittingStrategy extends ExpenseSplittingAbstractStrategy {
 
 	@Override
-	public List<ExpenseMovementVo> splitExpense(ExpenseVo expense) {
+	public List<ExpenseMovementVo> splitExpense(ExpenseVo expense) throws ValidationException {
 		List<ExpenseMovementVo> expenseMovementVos = new ArrayList<>();
 		AccountVo paymentAccount = expense.getPaymentMovement().getFrom();
 		for(TravelerProportionVo travelerProportionVo : this.getTravelerProportionVos()){
@@ -22,7 +23,7 @@ public class ExpenseEqualSplittingStrategy extends ExpenseSplittingAbstractStrat
 			ExpenseMovementVo expenseMovementVo;
 			if(travelerAccount.equals(paymentAccount)){
 				expenseMovementVo = new ExpenseMovementVo(expense,
-						travelerAccount.earn(expense.getAmount().divide(new BigDecimal(travelerProportionVos.size()))));
+						paymentAccount.earn(expense.getAmount().divide(new BigDecimal(travelerProportionVos.size()))));
 			}else{
 				expenseMovementVo = new ExpenseMovementVo(expense,
 						travelerAccount.transfer(expense.getAmount().divide(new BigDecimal(travelerProportionVos.size())),paymentAccount));

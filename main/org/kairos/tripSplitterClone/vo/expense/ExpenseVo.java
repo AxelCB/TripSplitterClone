@@ -2,6 +2,7 @@ package org.kairos.tripSplitterClone.vo.expense;
 
 import org.apache.commons.lang3.StringUtils;
 import org.kairos.tripSplitterClone.utils.exception.IncompleteProportionException;
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.account.MovementVo;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
@@ -39,13 +40,21 @@ public class ExpenseVo extends AbstractVo{
 
 	public ExpenseVo() {}
 
-	public ExpenseVo(TripVo trip, BigDecimal amount,UserVo payingUser,String description) {
+	public ExpenseVo(TripVo trip, BigDecimal amount,UserVo payingUser,String description) throws ValidationException {
+		String validationResponse = trip.validate();
+		if (validationResponse!=null){
+			throw new ValidationException(validationResponse);
+		}
+		validationResponse = payingUser.validate();
+		if(validationResponse != null){
+			throw new ValidationException(validationResponse);
+		}
 		this.trip = trip;
 		this.description = description;
 		this.paymentMovement = payingUser.getAccountInTrip(trip).spend(amount);
 	}
 
-	public void splitExpense(E_ExpenseSplittingForm expenseSplittingForm,List<TravelerProportionVo> travelerProportionVos) throws IncompleteProportionException{
+	public void splitExpense(E_ExpenseSplittingForm expenseSplittingForm,List<TravelerProportionVo> travelerProportionVos) throws IncompleteProportionException, ValidationException {
 		try {
 			this.setExpenseSplittingStrategy((expenseSplittingForm.getExpenseSplittingStrategyClass()).newInstance());
 			this.getExpenseSplittingStrategy().setTravelerProportionVos(travelerProportionVos);
@@ -108,9 +117,6 @@ public class ExpenseVo extends AbstractVo{
 		}
 		if(StringUtils.isBlank(this.getDescription())){
 			return "Description cannot be blank";
-		}
-		if(this.getExpenseMovements().size()<=0){
-			return "Needs to have at least one expense movement";
 		}
 		if(this.getPaymentMovement()==null || this.getPaymentMovement().validate()!=null){
 			return "Needs to have a valid payment movement";

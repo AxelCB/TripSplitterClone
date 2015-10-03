@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.vo.expense;
 
 import org.kairos.tripSplitterClone.utils.exception.IncompleteProportionException;
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public abstract class ExpenseSplittingAbstractStrategy {
 		this.travelerProportionVos = travelerProportionVos;
 	}
 
-	public abstract List<ExpenseMovementVo> splitExpense (ExpenseVo expense)throws IncompleteProportionException;
+	public abstract List<ExpenseMovementVo> splitExpense (ExpenseVo expense) throws IncompleteProportionException, ValidationException;
 
 	public List<TravelerProportionVo> getTravelerProportionVos() {
 		return travelerProportionVos;

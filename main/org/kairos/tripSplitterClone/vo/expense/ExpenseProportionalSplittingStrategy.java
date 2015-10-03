@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.vo.expense;
 
 import org.kairos.tripSplitterClone.utils.exception.IncompleteProportionException;
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.account.AccountVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class ExpenseProportionalSplittingStrategy extends ExpenseSplittingAbstractStrategy {
 
 	@Override
-	public List<ExpenseMovementVo> splitExpense(ExpenseVo expense)throws IncompleteProportionException {
+	public List<ExpenseMovementVo> splitExpense(ExpenseVo expense) throws IncompleteProportionException, ValidationException {
 		BigDecimal totalProportion = new BigDecimal(0);
 		for(TravelerProportionVo travelerProportionVo : this.getTravelerProportionVos()){
 			totalProportion = totalProportion.add(travelerProportionVo.getProportion());
@@ -29,7 +30,7 @@ public class ExpenseProportionalSplittingStrategy extends ExpenseSplittingAbstra
 				ExpenseMovementVo expenseMovementVo;
 				if(travelerAccount.equals(paymentAccount)){
 					expenseMovementVo = new ExpenseMovementVo(expense,
-							travelerAccount.earn(expense.getAmount()
+							paymentAccount.earn(expense.getAmount()
 									.multiply(travelerProportionVo.getProportion())
 									.divide(new BigDecimal(100))));
 				}else{

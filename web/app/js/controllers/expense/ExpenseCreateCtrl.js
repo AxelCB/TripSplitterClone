@@ -108,6 +108,8 @@ universeControllers.controller('ExpenseCreateCtrl',['$scope', '$rootScope', 'Tri
             };
         };
 
+        $scope.$watch();
+
         $scope.start= function(){
             $scope.search();
             $scope.listSplittingForms();

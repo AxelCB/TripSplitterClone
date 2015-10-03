@@ -1,5 +1,6 @@
 package org.kairos.tripSplitterClone.vo.expense;
 
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.account.MovementVo;
 
@@ -31,7 +32,15 @@ public class ExpenseMovementVo extends AbstractVo {
      * @param expense
      * @param movement
      */
-    public ExpenseMovementVo(ExpenseVo expense, MovementVo movement) {
+    public ExpenseMovementVo(ExpenseVo expense, MovementVo movement) throws ValidationException {
+        String validationResponse = expense.validate();
+        if(validationResponse != null){
+            throw new ValidationException(validationResponse);
+        }
+        validationResponse=movement.validate();
+        if(validationResponse != null){
+            throw new ValidationException(validationResponse);
+        }
         this.expense = expense;
         this.movement = movement;
     }

@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.vo.destination;
 
 import org.apache.commons.lang3.StringUtils;
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.web.I_MessageSolver;
 
@@ -33,7 +34,11 @@ public class CityVo extends AbstractVo{
         this.country=country;
     }
 
-    public CityVo(String name, CountryVo country) {
+    public CityVo(String name, CountryVo country) throws ValidationException {
+        String validationResponse = country.validate();
+        if(validationResponse != null){
+            throw new ValidationException(validationResponse);
+        }
         this.name = name;
         this.country = country;
     }

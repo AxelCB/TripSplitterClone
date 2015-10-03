@@ -1,5 +1,6 @@
 package org.kairos.tripSplitterClone.vo.expense;
 
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
 
 import java.math.BigDecimal;
@@ -32,7 +33,11 @@ public class TravelerProportionVo {
 	 * @param traveler
 	 * @param proportion
 	 */
-	public TravelerProportionVo(UserVo traveler, BigDecimal proportion) {
+	public TravelerProportionVo(UserVo traveler, BigDecimal proportion) throws ValidationException {
+		String validationResponse = traveler.validate();
+		if(validationResponse!=null){
+			throw new ValidationException(validationResponse);
+		}
 		this.traveler = traveler;
 		this.proportion = proportion;
 	}

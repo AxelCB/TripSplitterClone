@@ -56,19 +56,17 @@ public class MovementVo extends AbstractVo implements Serializable{
      */
     public MovementVo(AccountVo to, AccountVo from, Date timestamp, BigDecimal amount) throws ValidationException {
 		String validationResponse = (to!=null)?to.validate():null;
-		if(validationResponse==null) {
-			validationResponse = (from != null) ? from.validate() : null;
-			if (validationResponse == null) {
-				this.to = to;
-				this.from = from;
-				this.timestamp = timestamp;
-				this.amount = amount;
-			}else{
-				throw new ValidationException(validationResponse);
-			}
-		}else{
+	    if(validationResponse != null){
+		    throw new ValidationException(validationResponse);
+	    }
+		validationResponse = (from != null) ? from.validate() : null;
+		if(validationResponse != null){
 			throw new ValidationException(validationResponse);
 		}
+		this.to = to;
+		this.from = from;
+		this.timestamp = timestamp;
+		this.amount = amount;
     }
 
 	/**
@@ -82,21 +80,18 @@ public class MovementVo extends AbstractVo implements Serializable{
 	 */
 	public MovementVo(AccountVo to, AccountVo from, Date timestamp, BigDecimal amount,E_MovementStatus status) throws ValidationException {
 		String validationResponse = (to!=null)?to.validate():null;
-		if(validationResponse==null){
-			validationResponse = (from!=null)?from.validate():null;
-			if(validationResponse==null){
-				this.to = to;
-				this.from = from;
-				this.timestamp = timestamp;
-				this.amount = amount;
-				this.status = status;
-			}else{
-				throw new ValidationException(validationResponse);
-			}
-		}else{
+		if(validationResponse != null){
 			throw new ValidationException(validationResponse);
 		}
-
+		validationResponse = (from!=null)?from.validate():null;
+		if(validationResponse != null){
+			throw new ValidationException(validationResponse);
+		}
+		this.to = to;
+		this.from = from;
+		this.timestamp = timestamp;
+		this.amount = amount;
+		this.status = status;
 	}
 
     public void pay(){
