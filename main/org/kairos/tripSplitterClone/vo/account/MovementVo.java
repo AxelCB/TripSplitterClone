@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.vo.account;
 
 import org.kairos.tripSplitterClone.model.account.E_MovementStatus;
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.pojomatic.Pojomatic;
 
@@ -53,11 +54,21 @@ public class MovementVo extends AbstractVo implements Serializable{
      * @param timestamp
      * @param amount
      */
-    public MovementVo(AccountVo to, AccountVo from, Date timestamp, BigDecimal amount) {
-        this.to = to;
-        this.from = from;
-        this.timestamp = timestamp;
-        this.amount = amount;
+    public MovementVo(AccountVo to, AccountVo from, Date timestamp, BigDecimal amount) throws ValidationException {
+		String validationResponse = (to!=null)?to.validate():null;
+		if(validationResponse==null) {
+			validationResponse = (from != null) ? from.validate() : null;
+			if (validationResponse == null) {
+				this.to = to;
+				this.from = from;
+				this.timestamp = timestamp;
+				this.amount = amount;
+			}else{
+				throw new ValidationException(validationResponse);
+			}
+		}else{
+			throw new ValidationException(validationResponse);
+		}
     }
 
 	/**
@@ -69,12 +80,23 @@ public class MovementVo extends AbstractVo implements Serializable{
 	 * @param amount
      * @param status
 	 */
-	public MovementVo(AccountVo to, AccountVo from, Date timestamp, BigDecimal amount,E_MovementStatus status) {
-		this.to = to;
-		this.from = from;
-		this.timestamp = timestamp;
-		this.amount = amount;
-        this.status = status;
+	public MovementVo(AccountVo to, AccountVo from, Date timestamp, BigDecimal amount,E_MovementStatus status) throws ValidationException {
+		String validationResponse = (to!=null)?to.validate():null;
+		if(validationResponse==null){
+			validationResponse = (from!=null)?from.validate():null;
+			if(validationResponse==null){
+				this.to = to;
+				this.from = from;
+				this.timestamp = timestamp;
+				this.amount = amount;
+				this.status = status;
+			}else{
+				throw new ValidationException(validationResponse);
+			}
+		}else{
+			throw new ValidationException(validationResponse);
+		}
+
 	}
 
     public void pay(){
@@ -141,11 +163,28 @@ public class MovementVo extends AbstractVo implements Serializable{
 		this.to = to;
 	}
 
+	@Override
+	public String validate() {
+		if(this.getAmount() == null || this.getAmount().compareTo(new BigDecimal(0))<=0){
+			return "Amount must be more than zero";
+		}
+		if((this.getFrom()==null || this.getFrom().validate()!=null)&&(this.getTo()==null || this.getTo().validate()!=null)){
+			return "Must either have a valid account from or a valid account to";
+		}
+		if(this.getStatus()==null){
+			return "Status cannot be null";
+		}
+		if(this.getTimestamp()==null){
+			return "Movement needs to have a timestamp";
+		}
+		return null;
+	}
+
 	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
+         * (non-Javadoc)
+         *
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return Pojomatic.toString(this);

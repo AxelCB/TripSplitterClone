@@ -1,5 +1,6 @@
 package org.kairos.tripSplitterClone.vo.expense;
 
+import org.apache.commons.lang3.StringUtils;
 import org.kairos.tripSplitterClone.utils.exception.IncompleteProportionException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.account.MovementVo;
@@ -38,8 +39,9 @@ public class ExpenseVo extends AbstractVo{
 
 	public ExpenseVo() {}
 
-	public ExpenseVo(TripVo trip, BigDecimal amount,UserVo payingUser) {
+	public ExpenseVo(TripVo trip, BigDecimal amount,UserVo payingUser,String description) {
 		this.trip = trip;
+		this.description = description;
 		this.paymentMovement = payingUser.getAccountInTrip(trip).spend(amount);
 	}
 
@@ -97,5 +99,25 @@ public class ExpenseVo extends AbstractVo{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public String validate() {
+		if(this.getAmount()==null || this.getAmount().compareTo(new BigDecimal(0))<=0){
+			return "Amount cannot be null, and must be more than zero";
+		}
+		if(StringUtils.isBlank(this.getDescription())){
+			return "Description cannot be blank";
+		}
+		if(this.getExpenseMovements().size()<=0){
+			return "Needs to have at least one expense movement";
+		}
+		if(this.getPaymentMovement()==null || this.getPaymentMovement().validate()!=null){
+			return "Needs to have a valid payment movement";
+		}
+		if(this.getTrip()==null){
+			return "Must be an expense of a given trip.";
+		}
+		return null;
 	}
 }

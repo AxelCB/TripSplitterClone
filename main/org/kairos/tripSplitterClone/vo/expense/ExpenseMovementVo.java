@@ -51,4 +51,15 @@ public class ExpenseMovementVo extends AbstractVo {
     public void setMovement(MovementVo movement) {
         this.movement = movement;
     }
+
+    @Override
+    public String validate() {
+        if(this.getExpense()== null || this.getExpense().validate()!=null){
+            return "Needs to be owned by a valid expense";
+        }
+        if(this.getMovement()== null || this.getMovement().validate()!=null){
+            return "Invalid movement";
+        }
+        return null;
+    }
 }

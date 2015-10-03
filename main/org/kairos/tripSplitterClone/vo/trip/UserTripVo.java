@@ -1,5 +1,6 @@
 package org.kairos.tripSplitterClone.vo.trip;
 
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.account.AccountVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
@@ -36,10 +37,20 @@ public class UserTripVo extends AbstractVo implements Serializable{
 		account = new AccountVo();
 	}
 
-	public UserTripVo(UserVo user, TripVo trip) {
-		this.user = user;
-		this.trip = trip;
-		account = new AccountVo(Calendar.getInstance().getTime());
+	public UserTripVo(UserVo user, TripVo trip) throws ValidationException {
+		String validationResponse = user.validate();
+		if(validationResponse==null){
+			validationResponse=trip.validate();
+			if(validationResponse==null){
+				this.user = user;
+				this.trip = trip;
+				account = new AccountVo(Calendar.getInstance().getTime());
+			}else{
+				throw new ValidationException(validationResponse);
+			}
+		}else{
+			throw new ValidationException(validationResponse);
+		}
 	}
 
 	public UserVo getUser() {
@@ -64,5 +75,19 @@ public class UserTripVo extends AbstractVo implements Serializable{
 
 	public void setAccount(AccountVo account) {
 		this.account = account;
+	}
+
+	@Override
+	public String validate() {
+		if(this.getAccount()==null || this.getAccount().validate()!=null){
+			return "Needs a valid account";
+		}
+		if(this.getUser()==null || this.getUser().validate()!=null){
+			return "Needs a valid user";
+		}
+		if(this.getTrip()==null || this.getTrip().validate()!=null){
+			return "Needs a valid trip";
+		}
+		return null;
 	}
 }

@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.vo.account;
 
 import org.kairos.tripSplitterClone.model.account.E_MovementStatus;
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.trip.UserTripVo;
 import org.kairos.tripSplitterClone.vo.user.UserVo;
@@ -34,12 +35,12 @@ public class AccountVo extends AbstractVo implements Serializable {
 	/**
 	 * List of all out movements.
 	 */
-	private List<MovementVo> outMovements = new ArrayList<>();;
+	private List<MovementVo> outMovements = new ArrayList<>();
 
 	/**
 	 * List of all in movements.
 	 */
-	private List<MovementVo> inMovements = new ArrayList<>();;
+	private List<MovementVo> inMovements = new ArrayList<>();
 
 	/**
 	 * Empty Constructor
@@ -54,10 +55,21 @@ public class AccountVo extends AbstractVo implements Serializable {
 		this.setCreation(date);
 	}
 
+	@Override
+	public String validate() {
+		if(this.getBalance()==null){
+			return "Balance cannot be null";
+		}
+		if(this.getCreation()==null){
+			return "Account must have a creation date";
+		}
+		return null;
+	}
+
 	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+         * (non-Javadoc)
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return Pojomatic.toString(this);
@@ -117,20 +129,20 @@ public class AccountVo extends AbstractVo implements Serializable {
         this.outMovements.add(movementVo);
     }
 
-    public MovementVo spend(BigDecimal amount){
+    public MovementVo spend(BigDecimal amount) throws ValidationException {
         MovementVo movement = new MovementVo(null,this,Calendar.getInstance().getTime(),amount,E_MovementStatus.PAID);
         this.outMovements.add(movement);
 	    this.setBalance(this.getBalance().subtract(movement.getAmount()));
 	    return movement;
 	}
 
-    public MovementVo earn(BigDecimal amount){
+    public MovementVo earn(BigDecimal amount) throws ValidationException {
         MovementVo movement = new MovementVo(this,null,Calendar.getInstance().getTime(),amount,E_MovementStatus.PAID);
         this.inMovements.add(movement);
 	    this.setBalance(this.getBalance().add(movement.getAmount()));
 	    return movement;
     }
-    public MovementVo transfer(BigDecimal amount,AccountVo recipient){
+    public MovementVo transfer(BigDecimal amount,AccountVo recipient) throws ValidationException {
         MovementVo movement = new MovementVo(recipient,this,Calendar.getInstance().getTime(),amount);
 	    if(!recipient.equals(this)){
 		    this.outMovements.add(movement);

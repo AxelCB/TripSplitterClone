@@ -73,6 +73,11 @@ public class TripVo extends AbstractVo implements Serializable {
 		return super.validate(messageSolver);
 	}
 
+	@Override
+	public String validate() {
+		return null;
+	}
+
 	public List<UserTripVo> getTravelers() {
 		return travelers;
 	}
@@ -141,8 +146,9 @@ public class TripVo extends AbstractVo implements Serializable {
 		return null;
 	}
 
-	public ExpenseVo addExpense(BigDecimal amount,UserVo payingUser,E_ExpenseSplittingForm expenseSplittingForm,List<TravelerProportionVo> travelerProportionVos) throws IncompleteProportionException{
-		ExpenseVo expenseVo = new ExpenseVo(this,amount,payingUser);
+	public ExpenseVo addExpense(BigDecimal amount,String description,UserVo payingUser,E_ExpenseSplittingForm expenseSplittingForm,
+									List<TravelerProportionVo> travelerProportionVos) throws IncompleteProportionException{
+		ExpenseVo expenseVo = new ExpenseVo(this,amount,payingUser,description);
 		expenseVo.splitExpense(expenseSplittingForm,travelerProportionVos);
 		this.getExpenses().add(expenseVo);
 		return expenseVo;

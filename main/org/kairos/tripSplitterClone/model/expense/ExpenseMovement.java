@@ -92,7 +92,7 @@ public class ExpenseMovement implements Serializable,I_Model {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
+		/*if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		ExpenseMovement that = (ExpenseMovement) o;
 		if(this.getId()==null || that.getId()==null) return false;
@@ -100,10 +100,15 @@ public class ExpenseMovement implements Serializable,I_Model {
 				Objects.equals(getDeleted(), that.getDeleted()) &&
 				Objects.equals(getMovement(), that.getMovement()) &&
 				Objects.equals(getExpense(), that.getExpense());
+				*/
+		ExpenseMovement that = (ExpenseMovement) o;
+		if(this.getId()==null || that.getId()==null) return false;
+		return Pojomatic.equals(this,that);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getDeleted(), getMovement(), getExpense());
+		//return Objects.hash(getId(), getDeleted(), getMovement(), getExpense());
+		return Pojomatic.hashCode(this);
 	}
 }

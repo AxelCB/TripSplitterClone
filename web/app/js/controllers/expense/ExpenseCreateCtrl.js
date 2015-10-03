@@ -18,6 +18,7 @@ universeControllers.controller('ExpenseCreateCtrl',['$scope', '$rootScope', 'Tri
         $scope.travelerProportions = [];
         $scope.travelerProportion = {};
         $scope.amount=null;
+        $scope.description=null;
 
         $scope.create = function() {
             if ($scope.myForm.$valid && $scope.payingUser && $scope.selectedSplittingForm && $scope.travelerProportions.length>0) {
@@ -26,7 +27,8 @@ universeControllers.controller('ExpenseCreateCtrl',['$scope', '$rootScope', 'Tri
                     "splittingForm":$scope.selectedSplittingForm,
                     "trip":$scope.trip,
                     "travelerProportions":$scope.travelerProportions,
-                    "amount":$scope.amount
+                    "amount":$scope.amount,
+                    "description":$scope.description
                 };
                 TripService.addExpense(newExpense, function(response) {
                     if (response.ok) {

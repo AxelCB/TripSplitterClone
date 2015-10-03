@@ -2,10 +2,10 @@
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
     <Resource name="tripSplitterCloneDS" auth="Container" type="javax.sql.DataSource"
               maxActive="90" maxIdle="30" maxWait="1000" logAbandoned="true"
-              username="postgres" password="jeqkbf" driverClassName="org.postgresql.Driver"
+              username="axel" password="jeqkbf" driverClassName="org.postgresql.Driver"
               url="jdbc:postgresql://localhost:5432/tripsplitterclone" />
     <Resource name="tripSplitterCloneTestDS" auth="Container" type="javax.sql.DataSource"
               maxActive="10" maxIdle="5" maxWait="20" logAbandoned="true"
-              username="postgres" password="jeqkbf" driverClassName="org.postgresql.Driver"
+              username="axel" password="jeqkbf" driverClassName="org.postgresql.Driver"
               url="jdbc:postgresql://localhost:5432/tripsplitterclone" />
 </Context>

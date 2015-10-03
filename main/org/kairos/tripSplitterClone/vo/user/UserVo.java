@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 //import org.apache.commons.validator.routines.EmailValidator;
 import org.kairos.tripSplitterClone.utils.HashUtils;
 import org.kairos.tripSplitterClone.utils.Parameters;
+import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.account.AccountVo;
 import org.kairos.tripSplitterClone.vo.trip.TripVo;
@@ -170,7 +171,11 @@ public class UserVo extends AbstractVo implements Serializable {
 		this.loginAttempts = loginAttempts;
 	}
 
-	public void addTrip(TripVo trip){
+	public void addTrip(TripVo trip) throws ValidationException {
+		String validationResponse = trip.validate();
+		if(validationResponse==null){
+			throw new ValidationException(validationResponse);
+		}
 		Boolean found = Boolean.FALSE;
 		for(UserTripVo userTripVo : this.getTrips()){
 			if(userTripVo.getTrip().equals(trip)){

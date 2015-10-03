@@ -276,7 +276,8 @@ public class TripCtrl {
 			tripVo = this.getTripDao().getById(em, tripVo.getId());
 
 			//Gets the amount of the expense and the splitting form from the request
-			BigDecimal amount = this.getGson().fromJson(jsonObject.get("amount"), BigDecimal.class);
+			BigDecimal amount = jsonObject.get("amount").getAsBigDecimal();
+			String description = jsonObject.get("description").getAsString();
 			E_ExpenseSplittingForm expenseSplittingForm = E_ExpenseSplittingForm.valueOf(jsonObject.get("splittingForm").getAsString());
 
 			//Gets the list of travelers and proportions from the request (proportion's values only used for non-equal splitting)
@@ -288,7 +289,7 @@ public class TripCtrl {
 			}
 
 			//Adds the new expense with all the previous values
-			tripVo.addExpense(amount,payingUser,expenseSplittingForm,travelerProportionVos);
+			tripVo.addExpense(amount,description,payingUser,expenseSplittingForm,travelerProportionVos);
 
 			//Persists all changes
 			Fx_ModifyTrip fx = this.getFxFactory().getNewFxInstance(Fx_ModifyTrip.class);

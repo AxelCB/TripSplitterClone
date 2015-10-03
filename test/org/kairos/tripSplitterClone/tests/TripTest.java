@@ -242,7 +242,7 @@ public class TripTest extends AbstractTestNGSpringContextTests {
 			travelerProportionVo.setProportion(new BigDecimal(38));
 			travelerProportionVos.add(travelerProportionVo);
 
-			ExpenseVo expenseVo = tripVo.addExpense(amount,userAriel, E_ExpenseSplittingForm.EQUAL_SPLITTING,travelerProportionVos);
+			ExpenseVo expenseVo = tripVo.addExpense(amount,"Gasto de Prueba 1",userAriel, E_ExpenseSplittingForm.EQUAL_SPLITTING,travelerProportionVos);
 			assert(expenseVo.getPaymentMovement().getFrom().equals(userAriel.getAccountInTrip(tripVo))):"Payment user wasn't correct";
 			assert(expenseVo.getPaymentMovement().getAmount().equals(amount)):"Amount was incorrect";
 			assert(expenseVo.getExpenseMovements().size()==travelerProportionVos.size()):"Proportions amount was incorrect";

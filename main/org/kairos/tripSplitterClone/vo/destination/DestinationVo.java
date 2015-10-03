@@ -1,5 +1,6 @@
 package org.kairos.tripSplitterClone.vo.destination;
 
+import org.apache.commons.lang3.StringUtils;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 
 /**
@@ -61,5 +62,22 @@ public class DestinationVo extends AbstractVo{
 
     public void setCountryId(Long countryId) {
         this.countryId = countryId;
+    }
+
+    @Override
+    public String validate() {
+        if(this.getCityId()==null){
+            return "City id cannot be null";
+        }
+        if(this.getCountryId()==null){
+            return "Country id cannot be null";
+        }
+        if(StringUtils.isBlank(this.getCityName())){
+            return "City Name cannot be blank";
+        }
+        if(StringUtils.isBlank(this.getCountryName())){
+            return "Country Name cannot be blank";
+        }
+        return null;
     }
 }
