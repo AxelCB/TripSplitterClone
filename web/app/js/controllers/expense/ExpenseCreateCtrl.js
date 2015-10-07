@@ -90,11 +90,17 @@ universeControllers.controller('ExpenseCreateCtrl',['$scope', '$rootScope', 'Tri
             }
         };
 
-        $scope.restingUsers = function(value, index, array){
-            angular.forEach($scope.travelerProportions,function(elem,index){
-               return value.id != elem.traveler.id;
+        $scope.restingUsers = function(){
+            var restingUsersAuxiliarArray = [];
+            angular.forEach($scope.travelers,function(traveler,travelerIndex){
+                restingUsersAuxiliarArray.push(traveler);
+                angular.forEach($scope.travelerProportions,function(travelerProportion,travelerProportionIndex){
+                    if(traveler.id === travelerProportion.traveler.id){
+                        restingUsersAuxiliarArray.splice(restingUsersAuxiliarArray.indexOf(traveler),1);
+                    }
+                });
             });
-            return true;
+            return restingUsersAuxiliarArray;
         };
 
         $scope.makePretty = function(splittingForm){
@@ -107,8 +113,6 @@ universeControllers.controller('ExpenseCreateCtrl',['$scope', '$rootScope', 'Tri
                     break;
             };
         };
-
-        $scope.$watch();
 
         $scope.start= function(){
             $scope.search();

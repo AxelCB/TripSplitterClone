@@ -3,9 +3,11 @@ package org.kairos.tripSplitterClone.tests;
 import com.google.gson.Gson;
 import org.kairos.tripSplitterClone.controller.TripCtrl;
 import org.kairos.tripSplitterClone.dao.EntityManagerHolder;
+import org.kairos.tripSplitterClone.dao.destination.I_CityDao;
 import org.kairos.tripSplitterClone.dao.trip.I_TripDao;
 import org.kairos.tripSplitterClone.dao.user.I_UserDao;
 import org.kairos.tripSplitterClone.json.JsonResponse;
+import org.kairos.tripSplitterClone.vo.destination.CityVo;
 import org.kairos.tripSplitterClone.vo.expense.E_ExpenseSplittingForm;
 import org.kairos.tripSplitterClone.vo.expense.ExpenseMovementVo;
 import org.kairos.tripSplitterClone.vo.expense.ExpenseVo;
@@ -64,6 +66,9 @@ public class TripTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired
 	private I_UserDao userDao;
+
+	@Autowired
+	private I_CityDao cityDao;
 
 	@BeforeClass(dependsOnMethods={"springTestContextPrepareTestInstance"})
 	private void initialize()throws Exception{
@@ -225,9 +230,14 @@ public class TripTest extends AbstractTestNGSpringContextTests {
 			UserVo userAriel = this.getUserDao().getByUsername(em, "ariel@ariel.com");
 			UserVo userTest = this.getUserDao().getByUsername(em, "test@test.com");
 
+			CityVo cityVo = this.getCityDao().listAll(em).get(0);
+
 			TripVo tripVo = new TripVo();
+			tripVo.setOwner(userAriel);
+			tripVo.setDestination(cityVo);
 			tripVo.addTraveler(userAriel);
 			tripVo.addTraveler(userTest);
+
 
 			BigDecimal amount = new BigDecimal(500);
 
@@ -306,5 +316,13 @@ public class TripTest extends AbstractTestNGSpringContextTests {
 
 	public void setTripDao(I_TripDao tripDao) {
 		this.tripDao = tripDao;
+	}
+
+	public I_CityDao getCityDao() {
+		return cityDao;
+	}
+
+	public void setCityDao(I_CityDao cityDao) {
+		this.cityDao = cityDao;
 	}
 }
