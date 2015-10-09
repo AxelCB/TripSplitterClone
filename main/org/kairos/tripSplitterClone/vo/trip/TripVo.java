@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created on 8/22/15 by
@@ -159,5 +160,11 @@ public class TripVo extends AbstractVo implements Serializable {
 		expenseVo.splitExpense(expenseSplittingForm,travelerProportionVos);
 		this.getExpenses().add(expenseVo);
 		return expenseVo;
+	}
+
+	public List<ExpenseVo> listExpenses(){
+		return this.getExpenses().stream().
+				filter(expenseVo -> expenseVo.getDeleted().equals(Boolean.FALSE))
+				.collect(Collectors.<ExpenseVo>toList());
 	}
 }

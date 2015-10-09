@@ -14,6 +14,8 @@ import org.kairos.tripSplitterClone.web.I_MessageSolver;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 /**
  * Created on 8/22/15 by
@@ -201,22 +203,21 @@ public class UserVo extends AbstractVo implements Serializable {
 	}
 
 	public List<TripVo> listTrips(){
-		List<TripVo> trips = new ArrayList<>();
-		for(UserTripVo userTripVo : this.getTrips()){
-			if(!userTripVo.getDeleted() && !userTripVo.getTrip().getDeleted()){
-				trips.add(userTripVo.getTrip());
-			}
-		}
-		return trips;
+		return this.getTrips().stream().
+				filter(userTripVo -> userTripVo.getDeleted().equals(Boolean.FALSE) && userTripVo.getTrip().getDeleted().equals(Boolean.FALSE))
+				.map(userTripVo -> userTripVo.getTrip()).collect(Collectors.toList());
 	}
 
 	public AccountVo getAccountInTrip(TripVo tripVo){
-		for(UserTripVo userTripVo : this.getTrips()){
-			if(!userTripVo.getDeleted() && !userTripVo.getTrip().getDeleted() && userTripVo.getTrip().equals(tripVo)){
-				return userTripVo.getAccount();
-			}
+		try{
+			return this.getTrips().stream().
+					filter(userTripVo -> userTripVo.getDeleted() && userTripVo.getTrip().getDeleted() && userTripVo.getTrip().equals(tripVo))
+					.findFirst().get().getAccount();
+		}catch(NoSuchElementException e){
+			System.out.println("User's account in trip "+tripVo.getId()+" was not found");
+
+			return null;
 		}
-		return null;
 	}
 
 }
