@@ -317,6 +317,34 @@ public class TripCtrl {
 	 * @return
 	 */
 	@ResponseBody
+	@RequestMapping(value = "/listTripExpenses.json")
+	public String listTripExpenses(@RequestBody String data){
+		this.logger.debug("calling TripCtrl.listTripExpenses()");
+		EntityManager em = this.getEntityManagerHolder().getEntityManager();
+		JsonResponse jsonResponse = null;
+
+		try {
+			Long tripId = Long.parseLong(data);
+			TripVo tripVo = this.getTripDao().getById(em,tripId);
+
+			jsonResponse = JsonResponse.ok(this.getGson().toJson(tripVo.getExpenses()));
+		} catch (Exception e) {
+			this.logger.debug("unexpected error", e);
+
+			jsonResponse = this.getWebContextHolder().unexpectedErrorResponse();
+		}finally {
+			this.getEntityManagerHolder().closeEntityManager(em);
+		}
+
+		return this.getGson().toJson(jsonResponse);
+	}
+
+	/**
+	 * Lists user's trips
+	 *
+	 * @return
+	 */
+	@ResponseBody
 	@RequestMapping(value = "/listSplittingForms.json")
 	public String listSplittingForms(){
 		this.logger.debug("calling TripCtrl.listSplittingForms()");

@@ -1,0 +1,34 @@
+<div class="col-sm-9">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Gasto Calculado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="totalOwed in totalOwedList">
+                <td>{{ totalOwed.user.name }}</td>
+                <td>{{ totalOwed.amount}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="col-sm-3">
+    <form class="form-horizontal" role="form" name="myForm" >
+        <div class="form-group">
+            <label for="trip" class="col-xs-2 control-label">Viaje</label>
+            <div class="col-xs-10">
+                <select id="trip" class="form-control" ng-change="listTotalOwed()"
+                    ng-model="selectedTrip" ng-options="trip.title+' ('+trip.destination.name+','+trip.destination.country.name+')' for trip in trips | orderBy:'title'"/>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-8">
+            <button class="btn btn-default" id="btn_volver" ng-click="goBack()" ng-disabled="editing">
+                Volver
+            </button>
+        </div>
+    </div>
+</div>

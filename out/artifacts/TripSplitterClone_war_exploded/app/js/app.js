@@ -81,6 +81,10 @@ angular.module('tripSplitterCloneApp', ['ngRoute','tripSplitterCloneControllers'
 				$location.path(path);
 			}
 		};
+
+		$rootScope.goBack = function(){
+			$window.history.back();
+		};
 		
 		$rootScope.manageError = function () {
 			$rootScope.unDim();

@@ -211,7 +211,7 @@ public class UserVo extends AbstractVo implements Serializable {
 	public AccountVo getAccountInTrip(TripVo tripVo){
 		try{
 			return this.getTrips().stream().
-					filter(userTripVo -> userTripVo.getDeleted() && userTripVo.getTrip().getDeleted() && userTripVo.getTrip().equals(tripVo))
+					filter(userTripVo -> userTripVo.getDeleted().equals(Boolean.FALSE) && userTripVo.getTrip().getDeleted().equals(Boolean.FALSE) && userTripVo.getTrip().equals(tripVo))
 					.findFirst().get().getAccount();
 		}catch(NoSuchElementException e){
 			System.out.println("User's account in trip "+tripVo.getId()+" was not found");

@@ -2,11 +2,12 @@
     <div class="col-sm-12">
         <div class="panel panel-default" ng-repeat="currentTrip in trips">
             <div class="panel-heading">
-                <h3 class="panel-title">{{currentTrip.destination.name}}, {{currentTrip.destination.country.name}}</h3>
+                <h3 class="panel-title">{{currentTrip.title}}</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-6">
+                        <p><b>Destino:</b> {{currentTrip.destination.name}}, {{currentTrip.destination.country.name}}</p>
                         <p><b>Participantes:</b>
                             <span ng-repeat="userTrip in currentTrip.travelers">{{userTrip.user.name}}, </span>
                         </p>

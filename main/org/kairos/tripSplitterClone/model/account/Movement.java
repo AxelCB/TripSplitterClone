@@ -68,7 +68,7 @@ public class Movement implements Serializable, I_Model {
 	/**
 	 * The account to where the amount went
 	 */
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@Property(policy = PojomaticPolicy.NONE)
 	private Account to;
 
@@ -93,8 +93,6 @@ public class Movement implements Serializable, I_Model {
 	/**
 	 * Fixes the accounts relations.
 	 *
-	 * @param em
-	 *            the entity manager
 	 */
 //	private void fixAccounts(EntityManager em) {
 //		if (this.getFrom() != null && this.getFrom().getId() == null) {
@@ -224,6 +222,9 @@ public class Movement implements Serializable, I_Model {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		Movement that = (Movement) obj;
+		if(this.getId()==null || that.getId()==null)
+			return false;
 		return Pojomatic.equals(this, obj);
 	}
 

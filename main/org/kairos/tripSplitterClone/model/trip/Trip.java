@@ -70,6 +70,11 @@ public class Trip implements Serializable,I_Model {
 	private List<Expense> expenses = new ArrayList<>();
 
 	/**
+	 * Trip's title
+	 */
+	private String title;
+
+	/**
 	 * Empty Constructor
 	 */
 	public Trip() {}
@@ -178,5 +183,13 @@ public class Trip implements Serializable,I_Model {
 		if(!found){
 			this.getExpenses().add(expense);
 		}
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }

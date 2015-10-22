@@ -143,59 +143,24 @@ public class TripDaoJPAImpl extends AbstractDao<Trip, TripVo> implements I_TripD
 		}
 	}
 
-	@Override
-	public TripVo persist(EntityManager em, TripVo entityVo) {
-		this.logger.debug("persisting entity");
-
-		Trip trip = null;
-
-		if (entityVo.getId() == null) {
-			trip = this.map(entityVo);
-
-		} else {
-			trip = this.getEntityById(em, entityVo.getId());
-//			for(ExpenseVo expenseVo : entityVo.getExpenses()){
-//				Expense expense = null;
-//				for(Expense auxExpense : trip.getExpenses()){
-//					if(auxExpense.getId().equals(expense.getId())){
-//						expense = auxExpense;
-//					}
-//				}
-//				if(expense == null){
-//					expense = new Expense();
-//					expense.setDeleted(Boolean.FALSE);
-//					expense.setDescription(expenseVo.getDescription());
-//					expense.setPaymentMovement(this.getMapper().map(expenseVo.getPaymentMovement(), Movement.class));
-//					expense.setTrip(trip);
-//					for(ExpenseMovementVo expenseMovementVo : expenseVo.getExpenseMovements()){
-//						expense.getExpenseMovements().add(new ExpenseMovement(this.getMapper().map(expenseMovementVo.getMovement(), Movement.class), expense));
+//	@Override
+//	public TripVo persist(EntityManager em, TripVo entityVo) {
+//		this.logger.debug("persisting entity");
 //
-//					}
-//					trip.addExpense(expense);
-//				}
-//			}
-//			for(UserTripVo userTripVo : entityVo.getTravelers()){
-//				UserTrip userTrip = null;
-//				for(UserTrip auxUserTrip : trip.getTravelers()){
-//					if(auxUserTrip.getId().equals(userTripVo.getId())){
-//						userTrip = auxUserTrip;
-//						userTrip.getAccount().setBalance(userTripVo.getAccount().getBalance());
-//						userTrip.getAccount().setInMovements(DozerUtils.map(this.getMapper(), userTripVo.getAccount().getOutMovements(), Movement.class));
-//						userTrip.getAccount().setOutMovements(DozerUtils.map(this.getMapper(), userTripVo.getAccount().getOutMovements(), Movement.class));
-//					}
+//		Trip trip = null;
 //
-//				}
-//				if(userTrip==null){
-//					trip.addTraveler(this.getMapper().map(userTripVo,UserTrip.class));
-//				}
-//			}
-			this.map(entityVo, trip);
-		}
-
-		trip.setDeleted(Boolean.FALSE);
-		trip = em.merge(trip);
-
-		return this.map(trip);
-	}
+//		if (entityVo.getId() == null) {
+//			trip = this.map(entityVo);
+//
+//		} else {
+//			trip = this.getEntityById(em, entityVo.getId());
+//			this.map(entityVo, trip);
+//		}
+//
+//		trip.setDeleted(Boolean.FALSE);
+//		trip = em.merge(trip);
+//
+//		return this.map(trip);
+//	}
 }
 

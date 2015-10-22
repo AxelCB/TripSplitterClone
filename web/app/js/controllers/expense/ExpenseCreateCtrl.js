@@ -61,6 +61,7 @@ universeControllers.controller('ExpenseCreateCtrl',['$scope', '$rootScope', 'Tri
             $scope.editing = false;
             $scope.travelerProportions = [];
             $scope.amount=null;
+            $scope.description = "";
             if($scope.travelers.length>0){
                 $scope.payingUser = $scope.travelers[0];
             }

@@ -16,6 +16,14 @@
 						</ul>
 					</li>
 					<li><a href="" ng-click="goTo('/trip')">Viajes</a></li>
+					<li class="dropdown">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown">Consultas<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="" ng-click="goTo('/debts')">Deudas</a></li>
+							<li><a href="" ng-click="goTo('/totalSpent')">Totales Gastados</a></li>
+							<li><a href="" ng-click="goTo('/totalOwed')">Totales Debidos</a></li>
+						</ul>
+					</li>
 				</ul>
 				<p class="navbar-text pull-right">Bienvenido, {{ loggedUser.name }} - <a href="" class="navbar-link" ng-click="logout()">Cerrar Sesión</a></p>
 			</div>

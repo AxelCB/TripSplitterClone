@@ -1,6 +1,7 @@
 package org.kairos.tripSplitterClone.model.account;
 
 import org.kairos.tripSplitterClone.model.I_Model;
+import org.kairos.tripSplitterClone.model.trip.UserTrip;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 import org.pojomatic.annotations.DefaultPojomaticPolicy;
@@ -73,6 +74,12 @@ public class Account implements Serializable, I_Model {
 	 */
 	@OneToMany(mappedBy="to",cascade = CascadeType.ALL)
 	private List<Movement> inMovements = new ArrayList<>();
+
+	/**
+	 * User trip that owns this account
+	 */
+	@OneToOne(mappedBy = "account")
+	private UserTrip userTrip;
 
 	/**
 	 * Empty Constructor
@@ -208,7 +215,15 @@ public class Account implements Serializable, I_Model {
 		this.balance = balance;
 	}
 
-//	/**
+	public UserTrip getUserTrip() {
+		return userTrip;
+	}
+
+	public void setUserTrip(UserTrip userTrip) {
+		this.userTrip = userTrip;
+	}
+
+	//	/**
 //	 * @return the minimum
 //	 */
 //	public BigDecimal getMinimum() {

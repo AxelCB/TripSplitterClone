@@ -43,6 +43,11 @@ public class AccountVo extends AbstractVo implements Serializable {
 	private List<MovementVo> inMovements = new ArrayList<>();
 
 	/**
+	 * User owner of the account (used for the view only)
+	 */
+	private UserVo user;
+
+	/**
 	 * Empty Constructor
 	 */
 	public AccountVo() {
@@ -111,7 +116,8 @@ public class AccountVo extends AbstractVo implements Serializable {
 	 * @return the balance
 	 */
 	public BigDecimal getBalance() {
-		return this.balance;
+		return this.getInMovements().stream().filter(movementVo -> movementVo.getStatus().equals(E_MovementStatus.PAID)).map(MovementVo::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)
+				.subtract(this.getOutMovements().stream().filter(movementVo -> movementVo.getStatus().equals(E_MovementStatus.PAID)).map(MovementVo::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
 	}
 
 	/**
@@ -151,6 +157,42 @@ public class AccountVo extends AbstractVo implements Serializable {
 	    return movement;
     }
 
+	public BigDecimal totalOwed(){
+		return this.getOutMovements().stream().filter(movementVo ->
+				movementVo.getStatus().equals(E_MovementStatus.PENDING)
+						&& movementVo.getDeleted().equals(Boolean.FALSE)
+						&& movementVo.getFrom().equals(this)
+						&& movementVo.getTo() != null)
+				.map(movementVo -> movementVo.getAmount())
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+
+	public BigDecimal totalShouldHavePaid(){
+		BigDecimal paidExpenses = this.getInMovements().stream()
+				.filter(movementVo -> movementVo.getDeleted().equals(Boolean.FALSE)
+						&& movementVo.getFrom() == null
+						&& movementVo.getTo().equals(this)
+						&& movementVo.getStatus().equals(E_MovementStatus.PAID))
+				.map(movementVo -> movementVo.getAmount())
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		return this.getOutMovements().stream()
+				.filter(movementVo -> movementVo.getDeleted().equals(Boolean.FALSE)
+						&& ((movementVo.getFrom().equals(this) && movementVo.getTo() != null) && movementVo.getStatus().equals(E_MovementStatus.PENDING)
+							|| (movementVo.getFrom() == null && movementVo.getTo().equals(this) && movementVo.getStatus().equals(E_MovementStatus.PAID))))
+				.map(movementVo -> movementVo.getAmount())
+				.reduce(paidExpenses, BigDecimal::add);
+	}
+
+	public BigDecimal totalPaid(){
+		return this.getOutMovements().stream().filter(movementVo ->
+				movementVo.getStatus().equals(E_MovementStatus.PAID)
+						&& movementVo.getDeleted().equals(Boolean.FALSE)
+						&& movementVo.getFrom().equals(this)
+						&& movementVo.getTo()==null)
+				.map(movementVo -> movementVo.getAmount())
+				.reduce(BigDecimal.ZERO,BigDecimal::add);
+	}
+
 	public List<MovementVo> getOutMovements() {
 		return outMovements;
 	}
@@ -165,5 +207,13 @@ public class AccountVo extends AbstractVo implements Serializable {
 
 	public void setInMovements(List<MovementVo> inMovements) {
 		this.inMovements = inMovements;
+	}
+
+	public UserVo getUser() {
+		return user;
+	}
+
+	public void setUser(UserVo user) {
+		this.user = user;
 	}
 }

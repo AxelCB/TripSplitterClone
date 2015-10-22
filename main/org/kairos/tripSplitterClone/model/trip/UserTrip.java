@@ -56,7 +56,7 @@ public class UserTrip implements I_Model,Serializable{
 	/**
 	 * User's Account on a Trip
 	 */
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
 //	@Property(policy = PojomaticPolicy.NONE)
 	private Account account;
 

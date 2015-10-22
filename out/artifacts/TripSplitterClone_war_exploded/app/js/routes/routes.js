@@ -15,7 +15,9 @@ angular.module('routes', []).config(['$routeProvider', function($routeProvider) 
 		{path: '/trip', template: prefix + 'app/views/trip/trips.html', controller: 'TripCtrl'},
 		{path: '/trip/:tripId/expenses', template: prefix + 'app/views/expense/expenses.html', controller: 'ExpenseCtrl'},
 		{path: '/trip/:tripId/expenses/new', template: prefix + 'app/views/expense/createExpense.html', controller: 'ExpenseCreateCtrl'},
-
+		{path: '/debts', template: prefix + 'app/views/queries/debts.html', controller: 'DebtsCtrl'},
+		{path: '/totalSpent', template: prefix + 'app/views/queries/totalSpent.html', controller: 'TotalSpentCtrl'},
+		{path: '/totalOwed', template: prefix + 'app/views/queries/totalOwed.html', controller: 'TotalOwedCtrl'},
 
 		{path: '/404', template: prefix + 'app/views/404.html', controller: 'NoPageCtrl'}
     ];

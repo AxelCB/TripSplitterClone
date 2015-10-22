@@ -1,0 +1,37 @@
+<div class="col-sm-9">
+    <div class="col-sm-2" ng-repeat="debt in debts">
+        <div class="panel panel-default" >
+            <!--<div class="panel-heading">-->
+                <!--<h3 class="panel-title">{{expense.description}}</h3>-->
+            <!--</div>-->
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p><b>Deudor:</b>{{ debt.debtor.name }}</p>
+                        <p><b>Acreedor:</b>{{ debt.creditor.name }}</p>
+                        <p><b>Monto:</b> ${{ debt.amount }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-3">
+    <form class="form-horizontal" role="form" name="myForm" >
+        <div class="form-group">
+            <label for="trip" class="col-xs-2 control-label">Viaje</label>
+            <div class="col-xs-10">
+                <select id="trip" class="form-control" ng-change="listDebts()"
+                        ng-model="selectedTrip" ng-options="trip.title+' ('+trip.destination.name+','+trip.destination.country.name+')' for trip in trips | orderBy:'title'"/>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-8">
+            <button class="btn btn-default" id="btn_volver" ng-click="goBack()" ng-disabled="editing">
+                Volver
+            </button>
+        </div>
+    </div>
+</div>

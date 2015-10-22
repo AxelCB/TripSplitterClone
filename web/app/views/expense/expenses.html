@@ -1,31 +1,25 @@
 <div class="row">
     <div class="col-sm-12">
-        <div class="panel panel-default" ng-repeat="expense in trip.expenses">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{currentTrip.destination.name}}, {{currentTrip.destination.country.name}}</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <p><b>Participantes:</b>
-                            <span ng-repeat="userTrip in currentTrip.travelers">{{userTrip.user.name}}, </span>
-                        </p>
-                    </div>
-                    <div class="col-sm-1 text-center">
-                        <a ng-href="#/trip/{{currentTrip.id}}/expenses" >Ver Gastos
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </div>
-                    <div class="col-sm-1 text-center">
-                        <a ng-href="#/trip/{{currentTrip.id}}/expenses/new" >Agregar Gasto
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </div>
-                    <div class="col-sm-2 text-center" ng-show="currentTrip.owner.id == loggedUser.id">
-                        <a href="" ng-click="showAddTravelerModal(currentTrip)">Agregar Participante
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                    </div>
-                    <div class="col-sm-1 text-center" ng-show="currentTrip.owner.id == loggedUser.id">
-                        <a href="" ng-click="deleteTrip(currentTrip);">Eliminar
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+        <div class="col-sm-2" ng-repeat="expense in trip.expenses">
+            <div class="panel panel-default" >
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{expense.description}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12" ng-show="expense.expenseMovements.length>1">
+                            <p><b>Proporciones:</b></p>
+                            <ul>
+                                <li ng-repeat="expenseMovement in expense.expenseMovements">
+                                    <span>{{ (expenseMovement.movement.from) |iif: expenseMovement.movement.from.user.name : expenseMovement.movement.to.user.name }}</span>
+                                    <b> ${{expenseMovement.movement.amount}}</b>
+                                </li>
+                            </ul>
+                            <br>
+                            <p><b>Total:</b> ${{ expense.paymentMovement.amount }}</p>
+                            <p>Usuario que pagó: {{ expense.paymentMovement.from.user.name }}</p>
+                            <p>Fecha: {{ expense.paymentMovement.timestamp }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
