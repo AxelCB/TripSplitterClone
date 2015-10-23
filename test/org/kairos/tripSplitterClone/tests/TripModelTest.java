@@ -50,6 +50,8 @@ public class TripModelTest extends AbstractTestNGSpringContextTests {
 	 */
 	private Logger logger = LoggerFactory.getLogger(TripModelTest.class);
 
+	private TripVo tripVo;
+
 
 	@Test(groups = {"trip"},dependsOnGroups = {"user","destination"})
 	public void createTripTest()throws Exception{
@@ -62,13 +64,29 @@ public class TripModelTest extends AbstractTestNGSpringContextTests {
 	}
 
 	@Test(groups = {"trip"},dependsOnMethods = "createTripTest",dependsOnGroups = {"user","destination"})
-	public void addTravelerTest()throws Exception{
+	public void addTravelerTest()throws Exception {
+		UserVo userVo = new UserVo("NuevoViajero1@mail.com", "nuevoviajero1", "Nuevo Viajero 1");
+		userVo.setId(900L);
+		this.getTripVo().addTraveler(userVo);
 
+		UserTripVo addedTraveler = null;
+
+		for (UserTripVo userTripVo : this.getTripVo().getTravelers()) {
+			if (userTripVo.getUser().equals(userVo)) {
+				addedTraveler = userTripVo;
+			}
+		}
+		assert(addedTraveler!=null):"New Traveler was not added";
+		assert(addedTraveler.getAccount()!=null):"New Traveler was added but account creation failed";
+		assert(addedTraveler.getTrip().equals(this.getTripVo())):"New Traveler was added but trip was not setted correctly";
+		assert(userVo.getName().equals(addedTraveler.getUser().getName())):"New Traveler was added but name was incorrect";
+		assert(userVo.getEmail().equals(addedTraveler.getUser().getEmail())):"New Traveler was added but email was incorrect";
+		assert(userVo.getPassword().equals(addedTraveler.getUser().getPassword())):"New Traveler was added but password was incorrect";
 	}
 
 	@Test(groups = {"trip"},dependsOnMethods = {"createTripTest","addTravelerTest"},dependsOnGroups = {"user","destination"})
 	public void addExpense()throws Exception{
-		EntityManager em=null;
+//		EntityManager em=null;
 //		try {
 ////			em = this.getEntityManagerHolder().getEntityManager();
 ////			List<TripVo> tripVoList = this.getTripDao().listAll(em);
@@ -117,5 +135,13 @@ public class TripModelTest extends AbstractTestNGSpringContextTests {
 //		}finally{
 //			this.getEntityManagerHolder().closeEntityManager(em);
 //		}
+	}
+
+	public TripVo getTripVo() {
+		return tripVo;
+	}
+
+	public void setTripVo(TripVo tripVo) {
+		this.tripVo = tripVo;
 	}
 }
