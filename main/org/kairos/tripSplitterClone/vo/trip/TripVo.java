@@ -5,7 +5,6 @@ import org.kairos.tripSplitterClone.utils.exception.ValidationException;
 import org.kairos.tripSplitterClone.vo.AbstractVo;
 import org.kairos.tripSplitterClone.vo.account.AccountVo;
 import org.kairos.tripSplitterClone.vo.destination.CityVo;
-import org.kairos.tripSplitterClone.vo.destination.CountryVo;
 import org.kairos.tripSplitterClone.vo.expense.E_ExpenseSplittingForm;
 import org.kairos.tripSplitterClone.vo.expense.ExpenseVo;
 import org.kairos.tripSplitterClone.vo.expense.TravelerProportionVo;
@@ -16,7 +15,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -69,6 +67,13 @@ public class TripVo extends AbstractVo implements Serializable {
 		}else{
 			return Boolean.FALSE;
 		}
+	}
+
+	public TripVo(UserVo owner, CityVo destination, String title) throws ValidationException{
+		this.owner = owner;
+		this.destination = destination;
+		this.title = title;
+		this.addTraveler(owner);
 	}
 
 	@Override
@@ -185,27 +190,27 @@ public class TripVo extends AbstractVo implements Serializable {
 
 	public List<DebtVo> calculateDebts() throws Exception {
 		List<DebtVo> debts= new ArrayList<>();
-		List<AccountVo> accountVos = this.getTravelers().stream().map(userTripVo -> userTripVo.getAccount()).collect(Collectors.toList());
-		for(AccountVo debitorAccount : accountVos){
-			BigDecimal remainingOwed = debitorAccount.totalOwed().add(debitorAccount.getBalance());
+//		List<AccountVo> accountVos = this.getTravelers().stream().map(userTripVo -> userTripVo.getAccount()).collect(Collectors.toList());
+		for(UserTripVo debitorUserTrip : this.getTravelers()){
+			BigDecimal remainingOwed = debitorUserTrip.getAccount().totalOwed().add(debitorUserTrip.getAccount().getBalance());
 			if(remainingOwed.compareTo(BigDecimal.ZERO)>0){
-				for(AccountVo creditorAccount : accountVos){
-					if(!creditorAccount.equals(debitorAccount)){
-						if(remainingOwed.compareTo(creditorAccount.getBalance())<1){
+				for(UserTripVo creditorUserTrip : this.getTravelers()){
+					if(!creditorUserTrip.equals(debitorUserTrip)){
+						if(remainingOwed.compareTo(creditorUserTrip.getAccount().getBalance())<1){
 							//CREATE DEBT
-							DebtVo debtVo = new DebtVo(debitorAccount.getUser(),creditorAccount.getUser(),this,creditorAccount.getBalance());
+							DebtVo debtVo = new DebtVo(debitorUserTrip.getUser(), creditorUserTrip.getUser(),this, creditorUserTrip.getAccount().getBalance());
 							debts.add(debtVo);
 
 							//Calculate remainders
-							remainingOwed = remainingOwed.subtract(creditorAccount.getBalance());
-							creditorAccount.setBalance(BigDecimal.ZERO);
+							remainingOwed = remainingOwed.subtract(creditorUserTrip.getAccount().getBalance());
+							creditorUserTrip.getAccount().setBalance(BigDecimal.ZERO);
 						}else{
 							//CREATE DEBT
-							DebtVo debtVo = new DebtVo(debitorAccount.getUser(),creditorAccount.getUser(),this,remainingOwed);
+							DebtVo debtVo = new DebtVo(debitorUserTrip.getUser(), creditorUserTrip.getUser(),this,remainingOwed);
 							debts.add(debtVo);
 
 							//Calculate remainders
-							creditorAccount.setBalance(creditorAccount.getBalance().subtract(remainingOwed));
+							creditorUserTrip.getAccount().setBalance(creditorUserTrip.getAccount().getBalance().subtract(remainingOwed));
 							remainingOwed = BigDecimal.ZERO;
 							break;
 						}

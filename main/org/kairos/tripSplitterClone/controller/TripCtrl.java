@@ -100,7 +100,7 @@ public class TripCtrl {
 
 			Fx_CreateTrip fx = this.getFxFactory().getNewFxInstance(Fx_CreateTrip.class);
 			fx.setOwner(this.getWebContextHolder().getUserVo());
-			fx.setVo(tripVo);
+			fx.setVo(new TripVo(tripVo.getOwner(),tripVo.getCity(),tripVo.getTitle()));
 			fx.setEm(em);
 			this.logger.debug("executing Fx_CreateTrip");
 			jsonResponse = fx.execute();
@@ -229,12 +229,12 @@ public class TripCtrl {
 
 		try {
 			TripVo tripVo = this.getGson().fromJson(data, TripVo.class);
+			tripVo.delete();
 
-			Fx_DeleteTrip fx = this.getFxFactory().getNewFxInstance(Fx_DeleteTrip.class);
-
+			Fx_ModifyTrip fx = this.getFxFactory().getNewFxInstance(Fx_ModifyTrip.class);
 			fx.setVo(tripVo);
 			fx.setEm(em);
-			this.logger.debug("executing Fx_DeleteTrip");
+			this.logger.debug("executing Fx_ModifyTrip");
 			jsonResponse = fx.execute();
 		} catch (Exception e) {
 			this.logger.debug("unexpected error", e);

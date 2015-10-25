@@ -55,6 +55,13 @@ public abstract class AbstractVo implements Serializable  {
 		this.id = id;
 	}
 
+	/**
+	 * Sets deleted in true
+	 */
+	public void delete() {
+		this.setDeleted(Boolean.TRUE);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
