@@ -138,6 +138,7 @@ public class TripModelTest extends AbstractTestNGSpringContextTests {
 		travelerProportionVo2.setProportion(new BigDecimal(61));
 		expenseVo = tripVo.addExpense(amount,"Primer gasto de prueba - igual",traveler1, E_ExpenseSplittingForm.EQUAL_SPLITTING,travelerProportionVos);
 
+		assert(expenseVo!=null && tripVo.getExpenses().size()==1):"Expense was not added";
 		assert(expenseVo.getPaymentMovement().getFrom().equals(traveler1.getAccountInTrip(tripVo))):"Payment user wasn't correct";
 		assert(expenseVo.getPaymentMovement().getAmount().equals(amount)):"Amount was incorrect";
 		assert(expenseVo.getExpenseMovements().size()==travelerProportionVos.size()):"Proportions amount was incorrect";
@@ -149,6 +150,7 @@ public class TripModelTest extends AbstractTestNGSpringContextTests {
 
 		expenseVo = tripVo.addExpense(amount,"Primer gasto de prueba - proporcional",traveler2, E_ExpenseSplittingForm.PROPORTIONAL_SPLITTING,travelerProportionVos);
 
+		assert(expenseVo!=null && tripVo.getExpenses().size()==2):"Expense was not added";
 		assert(expenseVo.getPaymentMovement().getFrom().equals(traveler2.getAccountInTrip(tripVo))):"Payment user wasn't correct";
 		assert(expenseVo.getPaymentMovement().getAmount().equals(amount)):"Amount was incorrect";
 		assert(expenseVo.getExpenseMovements().size()==travelerProportionVos.size()):"Proportions amount was incorrect";
@@ -164,18 +166,38 @@ public class TripModelTest extends AbstractTestNGSpringContextTests {
 	@Test(groups = {"trip"},dependsOnMethods = {"createTripTest","addExpenseTest"},dependsOnGroups = {"user","destination"})
 	public void totalOwedTest()throws Exception{
 		List<TotalPerUserVo> totalOwedMap = tripVo.totalOwedMap();
-		//TODO validate this
+
+		assert(totalOwedMap.size()==2):"Amount of total Owed Map was incorrect. It was "+totalOwedMap.size()+" should have been 2";
+		TotalPerUserVo totalPerUserVo = totalOwedMap.get(0);
+		assert(totalPerUserVo.getUser().getId().equals(900L)):"Total owed map item user was incorrect, with id:"+totalPerUserVo.getUser().getId()+" should have been 900";
+		assert(totalPerUserVo.getAmount().equals(new BigDecimal(695))):"Total owed map item amount was incorrect, with amount:"+totalPerUserVo.getAmount()+" should have been 695";
+		totalPerUserVo = totalOwedMap.get(1);
+		assert(totalPerUserVo.getUser().getId().equals(60L)):"Total owed map item user was incorrect, with id:"+totalPerUserVo.getUser().getId()+" should have been 60";
+		assert(totalPerUserVo.getAmount().equals(new BigDecimal(805))):"Total owed map item amount was incorrect, with amount:"+totalPerUserVo.getAmount()+" should have been 805";
 	}
 
 	@Test(groups = {"trip"},dependsOnMethods = {"createTripTest","addExpenseTest"},dependsOnGroups = {"user","destination"})
 	public void totalSpentTest()throws Exception{
 		List<TotalPerUserVo> totalSpentMap = tripVo.totalSpentMap();
-		//TODO validate this
+
+		assert(totalSpentMap.size()==2):"Amount of total Spent Map was incorrect. It was "+totalSpentMap.size()+" should have been 2";
+		TotalPerUserVo totalPerUserVo = totalSpentMap.get(0);
+		assert(totalPerUserVo.getUser().getId().equals(900L)):"Total spent map item user was incorrect, with id:"+totalPerUserVo.getUser().getId()+" should have been 900";
+		assert(totalPerUserVo.getAmount().equals(new BigDecimal(1000))):"Total spent map item amount was incorrect, with amount:"+totalPerUserVo.getAmount()+" should have been 1000";
+		totalPerUserVo = totalSpentMap.get(1);
+		assert(totalPerUserVo.getUser().getId().equals(60L)):"Total spent map item user was incorrect, with id:"+totalPerUserVo.getUser().getId()+" should have been 60";
+		assert(totalPerUserVo.getAmount().equals(new BigDecimal(500))):"Total spent map item amount was incorrect, with amount:"+totalPerUserVo.getAmount()+" should have been 500";
 	}
 	@Test(groups = {"trip"},dependsOnMethods = {"createTripTest","addExpenseTest"},dependsOnGroups = {"user","destination"})
 	public void debtsTest()throws Exception{
 		List<DebtVo> debts = tripVo.calculateDebts();
-		//TODO validate this
+
+		assert(debts.size()==1):"Amount of debts was incorrect. Amount of debts was "+debts.size()+" should have been 1";
+		DebtVo debtVo = debts.get(0);
+		assert(debtVo.getDebtor().getId().equals(60L)):"Debt debtor was incorrect, with Id:"+debtVo.getDebtor().getId()+" should have been 60";
+		assert(debtVo.getCreditor().getId().equals(900L)):"Debt creditor was incorrect, with Id:"+debtVo.getCreditor().getId()+" should have been 900";
+		assert(debtVo.getTrip().getId().equals(342L)):"Debt trip was incorrect, with Id:"+debtVo.getTrip().getId()+" should have been 342";
+		assert(debtVo.getAmount().equals(new BigDecimal(305))):"Debt amount was incorrect, with amount:"+debtVo.getAmount()+" should have been 305";
 	}
 
 	public TripVo getTripVo() {
