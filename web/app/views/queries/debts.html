@@ -16,6 +16,12 @@
         </div>
     </div>
 </div>
+<div class="col-sm-9" ng-if="debts.length==0">
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        No existen deudas que mostrar. Si lo desea, agregue más gastos al viaje.
+    </div>
+</div>
 
 <div class="col-sm-3">
     <form class="form-horizontal" role="form" name="myForm" >
